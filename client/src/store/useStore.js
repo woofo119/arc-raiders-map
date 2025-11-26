@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://port-0-arc-server-mig6pxsra9d587bc.sel3.cloudtype.app';
+const API_URL = 'https://port-0-arc-server-mig6pxsra9d587bc.sel3.cloudtype.app';
 
 // 맵 데이터 정의
 export const MAPS = [
