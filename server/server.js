@@ -26,7 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 // ▼▼▼▼▼ [DB 연결: 사용자님의 진짜 주소 적용 완료] ▼▼▼▼▼
-mongoose.connect("mongodb+srv://root:da868133@cluster0.iienqyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://woofo:da868133@cluster0.iienqyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log("✅ MongoDB Connected Successfully!"))
     .catch(err => console.log("❌ DB Connection Error:", err));
 // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
