@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { MessageCircle, X, Send } from 'lucide-react';
 import useStore from '../store/useStore';
 
-const socket = io(import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000');
+const socket = io(import.meta.env.VITE_API_URL?.replace('/api', '') || 'https://port-0-arc-server-mig6pxsra9d587bc.sel3.cloudtype.app');
 
 const ChatWidget = () => {
     const [isOpen, setIsOpen] = useState(false);
