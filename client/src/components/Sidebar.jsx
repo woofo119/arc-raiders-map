@@ -1,8 +1,8 @@
 import useStore, { MAPS } from '../store/useStore';
 import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
 
-const Sidebar = ({ onOpenLogin }) => {
-    const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap } = useStore();
+const Sidebar = () => {
+    const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal } = useStore();
 
     return (
         <div className="w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000]">
@@ -93,7 +93,10 @@ const Sidebar = ({ onOpenLogin }) => {
                     </div>
                 ) : (
                     <button
-                        onClick={onOpenLogin}
+                        onClick={() => {
+                            console.log('로그인 버튼 클릭됨');
+                            openLoginModal();
+                        }}
                         className="w-full bg-gradient-to-r from-arc-accent to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 rounded-xl transition-all shadow-lg shadow-orange-900/20 font-bold text-sm flex items-center justify-center gap-2 group"
                     >
                         <User size={16} className="group-hover:scale-110 transition-transform" />
