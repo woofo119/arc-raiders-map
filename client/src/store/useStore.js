@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
+// ⚠️ VITE 환경변수를 무시하고, 최종 배포 주소로 고정합니다.
 const API_URL = 'https://port-0-arc-server-mig6pxsra9d587bc.sel3.cloudtype.app';
 
 // 맵 데이터 정의
@@ -120,6 +121,12 @@ const useStore = create((set, get) => ({
             filters: { ...state.filters, [type]: !state.filters[type] },
         }));
     },
-}));
 
-export default useStore;
+    // --------------------------------------------------------------------------
+    // 🖼️ UI 상태 (Modals) - 로그인 창 열고 닫기 (추가된 부분!)
+    // --------------------------------------------------------------------------
+    isLoginModalOpen: false, // 모달이 열렸는지 닫혔는지 저장
+
+    openLoginModal: () => set({ isLoginModalOpen: true }), // 열기 함수
+    closeLoginModal: () => set({ isLoginModalOpen: false }), // 닫기 함수
+}));
