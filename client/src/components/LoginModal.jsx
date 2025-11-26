@@ -5,6 +5,7 @@ import { X, User, Lock, ArrowRight } from 'lucide-react';
 const LoginModal = ({ onClose }) => {
     const [isLogin, setIsLogin] = useState(true);
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +24,7 @@ const LoginModal = ({ onClose }) => {
         if (isLogin) {
             result = await login(username, password);
         } else {
-            result = await register(username, password);
+            result = await register(username, email, password);
         }
 
         setIsLoading(false);
@@ -79,6 +80,23 @@ const LoginModal = ({ onClose }) => {
                                 required
                             />
                         </div>
+
+                        {!isLogin && (
+                            <div className="space-y-1 animate-in slide-in-from-top-2">
+                                <label className="text-xs font-medium text-gray-500 ml-1">EMAIL</label>
+                                <div className="relative">
+                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full bg-black/40 border border-gray-800 rounded-xl py-3 pl-10 pr-4 text-white placeholder-gray-600 focus:border-arc-accent focus:ring-1 focus:ring-arc-accent focus:outline-none transition-all"
+                                        placeholder="이메일 주소를 입력하세요"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="space-y-1">

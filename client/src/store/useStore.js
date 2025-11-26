@@ -33,9 +33,9 @@ const useStore = create((set, get) => ({
         }
     },
 
-    register: async (username, password) => {
+    register: async (username, email, password) => {
         try {
-            const response = await axios.post(`${API_URL}/auth/register`, { username, password });
+            const response = await axios.post(`${API_URL}/auth/register`, { username, email, password });
             const userData = response.data;
             localStorage.setItem('user', JSON.stringify(userData));
             set({ user: userData, isAuthenticated: true });

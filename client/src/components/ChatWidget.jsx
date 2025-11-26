@@ -11,6 +11,18 @@ const ChatWidget = () => {
     const [input, setInput] = useState('');
     const { user } = useStore();
     const messagesEndRef = useRef(null);
+    const [anonymousId, setAnonymousId] = useState('');
+
+    useEffect(() => {
+        // 익명 ID 생성 또는 가져오기
+        let storedId = sessionStorage.getItem('anonymousId');
+        if (!storedId) {
+            const randomSuffix = Math.random().toString(36).substr(2, 5);
+            storedId = `익명(${randomSuffix})`;
+            sessionStorage.setItem('anonymousId', storedId);
+        }
+        setAnonymousId(storedId);
+    }, []);
 
     useEffect(() => {
         socket.on('chat message', (msg) => {
@@ -31,7 +43,7 @@ const ChatWidget = () => {
         if (input.trim()) {
             const messageData = {
                 text: input,
-                sender: user ? user.username : '익명 (Anonymous)',
+                sender: user ? user.username : anonymousId,
                 timestamp: new Date().toISOString(),
             };
             socket.emit('chat message', messageData);

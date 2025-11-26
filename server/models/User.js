@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3 // 최소 3글자 이상
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        match: [/.+\@.+\..+/, '유효한 이메일 주소를 입력해주세요']
+    },
     password: {
         type: String,
         required: true,

@@ -13,19 +13,20 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public (누구나 접근 가능)
 export const registerUser = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
-        // 이미 존재하는 사용자인지 확인
-        const userExists = await User.findOne({ username });
+        // 이미 존재하는 사용자인지 확인 (이메일 또는 사용자명)
+        const userExists = await User.findOne({ $or: [{ username }, { email }] });
 
         if (userExists) {
-            return res.status(400).json({ message: '이미 존재하는 사용자명입니다.' });
+            return res.status(400).json({ message: '이미 존재하는 사용자명 또는 이메일입니다.' });
         }
 
         // 새 사용자 생성
         const user = await User.create({
             username,
+            email,
             password,
         });
 
@@ -34,6 +35,7 @@ export const registerUser = async (req, res) => {
             res.status(201).json({
                 _id: user._id,
                 username: user.username,
+                email: user.email,
                 token: generateToken(user._id),
             });
         } else {
@@ -60,6 +62,7 @@ export const loginUser = async (req, res) => {
             res.json({
                 _id: user._id,
                 username: user.username,
+                email: user.email,
                 token: generateToken(user._id),
             });
         } else {
