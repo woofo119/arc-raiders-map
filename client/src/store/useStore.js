@@ -130,3 +130,5 @@ const useStore = create((set, get) => ({
     openLoginModal: () => set({ isLoginModalOpen: true }), // 열기 함수
     closeLoginModal: () => set({ isLoginModalOpen: false }), // 닫기 함수
 }));
+
+export default useStore;
