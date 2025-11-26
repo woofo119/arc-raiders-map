@@ -28,7 +28,8 @@ const useStore = create((set, get) => ({
             set({ user: userData, isAuthenticated: true });
             return { success: true };
         } catch (error) {
-            return { success: false, message: error.response?.data?.message || '로그인 실패' };
+            console.error('로그인 에러:', error);
+            return { success: false, message: error.response?.data?.message || error.message || '로그인 실패' };
         }
     },
 
@@ -40,7 +41,8 @@ const useStore = create((set, get) => ({
             set({ user: userData, isAuthenticated: true });
             return { success: true };
         } catch (error) {
-            return { success: false, message: error.response?.data?.message || '회원가입 실패' };
+            console.error('회원가입 에러:', error);
+            return { success: false, message: error.response?.data?.message || error.message || '회원가입 실패' };
         }
     },
 
