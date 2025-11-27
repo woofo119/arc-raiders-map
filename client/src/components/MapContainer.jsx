@@ -161,10 +161,27 @@ const MapContainer = () => {
 
             {/* 마커 생성 폼 (우클릭 위치에 표시) */}
             {formPosition && (
-                <MarkerForm
-                    position={formPosition}
-                    onClose={() => setFormPosition(null)}
-                />
+                <>
+                    {/* 미리보기 마커 (클릭한 위치 표시) */}
+                    <Marker
+                        position={[formPosition.x, formPosition.y]}
+                        icon={L.divIcon({
+                            className: 'custom-icon',
+                            html: `<div class="animate-bounce text-arc-accent drop-shadow-lg filter">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s-8-10-8-14a8 8 0 0 1 16 0c0 4-8 14-8 14z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>`,
+                            iconSize: [40, 40],
+                            iconAnchor: [20, 40]
+                        })}
+                    />
+                    <MarkerForm
+                        position={formPosition}
+                        onClose={() => setFormPosition(null)}
+                    />
+                </>
             )}
         </div>
     );
