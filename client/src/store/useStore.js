@@ -6,11 +6,11 @@ const API_URL = 'https://port-0-arc-server-mig6pxsra9d587bc.sel3.cloudtype.app/a
 
 // 맵 데이터 정의
 export const MAPS = [
-    { id: 'dam', name: '댐 전장 (Dam Battlefield)', image: '/map_dam.png' },
-    { id: 'bluegate', name: '블루 게이트 (Blue Gate)', image: '/map_bluegate.png' },
-    { id: 'buriedcity', name: '파묻힌 도시 (Buried City)', image: '/map_buriedcity.png' },
-    { id: 'spacebase', name: '우주 기지 (Space Base)', image: '/map_spacebase.png' },
-    { id: 'stellamontis', name: '스텔라 몬티스 (Stella Montis)', image: '/map_stellamontis.png' },
+    { id: 'dam', name: '댐 전장 (Dam Battlefield)', image: '/map_dam.webp' },
+    { id: 'bluegate', name: '블루 게이트 (Blue Gate)', image: '/map_bluegate.webp' },
+    { id: 'buriedcity', name: '파묻힌 도시 (Buried City)', image: '/map_buriedcity.webp' },
+    { id: 'spacebase', name: '우주 기지 (Space Base)', image: '/map_spacebase.webp' },
+    { id: 'stellamontis', name: '스텔라 몬티스 (Stella Montis)', image: '/map_stellamontis.webp' },
 ];
 
 const useStore = create((set, get) => ({
