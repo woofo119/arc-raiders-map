@@ -32,9 +32,10 @@ const getIcon = (type, category, isOfficial) => {
     let bgColor = 'bg-gray-700'; // 기본 배경
 
     // 카테고리별 기본 색상 설정
-    if (category === 'weapon_case') {
-        borderColor = 'border-orange-500'; // 무기 상자: 주황색 테두리
-        bgColor = 'bg-orange-500'; // 무기 상자: 주황색 배경
+    // 카테고리별 기본 색상 설정
+    if (type === 'container') {
+        borderColor = 'border-orange-500'; // 컨테이너: 주황색 테두리
+        bgColor = 'bg-orange-500'; // 컨테이너: 주황색 배경
     } else if (type === 'nature') {
         borderColor = 'border-white'; // 자연: 흰색 테두리
         bgColor = 'bg-green-500'; // 자연: 초록색 배경
