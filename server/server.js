@@ -12,22 +12,6 @@ dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
-const PORT = process.env.PORT || 5000;
-
-// CORS 설정 (모든 도메인 허용)
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
-
-app.use(express.json());
-
-// MongoDB 연결
-mongoose.connect("mongodb+srv://woofo:da868133@cluster0.iienqyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-    .then(() => console.log("✅ MongoDB Connected Successfully!"))
-    .catch(err => console.log("❌ DB Connection Error:", err));
-
 // 라우트 연결
 app.use('/api/auth', authRoutes);
 app.use('/api/markers', markerRoutes);

@@ -83,15 +83,37 @@ const MarkerForm = ({ position, onClose }) => {
 
                 <div className="space-y-1">
                     <label className="text-[10px] text-gray-500 font-bold uppercase flex items-center gap-1">
-                        <FileText size={10} /> Image URL
+                        <FileText size={10} /> Screenshot
                     </label>
-                    <input
-                        type="text"
-                        placeholder="이미지 주소 (https://...)"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        className="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-sm text-white placeholder-gray-600 focus:border-arc-accent focus:outline-none transition-colors"
-                    />
+                    <div className="relative">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => {
+                                        setImage(reader.result);
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }}
+                            className="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-sm text-gray-400 file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-arc-accent file:text-white hover:file:bg-orange-600 transition-colors cursor-pointer"
+                        />
+                    </div>
+                    {image && (
+                        <div className="mt-2 relative group">
+                            <img src={image} alt="Preview" className="w-full h-24 object-cover rounded-lg border border-gray-700" />
+                            <button
+                                type="button"
+                                onClick={() => setImage('')}
+                                className="absolute top-1 right-1 bg-black/70 text-white rounded-full p-1 hover:bg-red-500 transition-colors"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex gap-2 pt-2">
