@@ -4,21 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import authRoutes from './routes/authRoutes.js';
-import markerRoutes from './routes/markerRoutes.js';
-
-// .env 파일 설정 로드
-dotenv.config();
-
-const app = express();
-const httpServer = createServer(app);
-// 라우트 연결
-app.use('/api/auth', authRoutes);
-app.use('/api/markers', markerRoutes);
-
-// 기본 라우트
-app.get('/', (req, res) => {
-    res.send('ARC Raiders Map API Server Running');
+res.send('ARC Raiders Map API Server Running');
 });
 
 // Socket.IO 설정
