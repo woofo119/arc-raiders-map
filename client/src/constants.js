@@ -12,7 +12,7 @@ export const MARKER_CATEGORIES = {
     location: {
         label: '위치 (Location)',
         types: [
-            { id: 'extraction', label: '탈출구 (Extraction)', icon: 'DoorOpen' },
+            { id: 'extraction', label: '탈출구 (Extraction)', icon: '/icons/extraction.png' }, // Custom Icon
             { id: 'raider_hatch', label: '레이더 해치 (Raider Hatch)', icon: 'Disc' },
             { id: 'locked_room', label: '잠긴 방 (Locked Room)', icon: 'Lock' },
             { id: 'supply_call', label: '보급 호출소 (Supply Call Station)', icon: 'Radio' },
@@ -27,19 +27,19 @@ export const MARKER_CATEGORIES = {
     nature: {
         label: '자연 (Nature)',
         types: [
-            { id: 'mushroom', label: '버섯 (Mushroom)', icon: 'Sprout' },
+            { id: 'mushroom', label: '버섯 (Mushroom)', icon: '/icons/mushroom.png' }, // Custom Icon
             { id: 'prickly_pear', label: '선인장 열매 (Prickly Pear)', icon: 'Sprout' },
             { id: 'agave', label: '용설란 (Agave)', icon: 'Sprout' },
             { id: 'great_mullein', label: '우단담배풀 (Great Mullein)', icon: 'Sprout' },
             { id: 'apricot', label: '살구 (Apricot)', icon: 'Sprout' },
-            { id: 'olives', label: '올리브 (Olives)', icon: 'Sprout' },
+            { id: 'olives', label: '올리브 (Olives)', icon: '/icons/olives.png' }, // Custom Icon
             { id: 'lemon', label: '레몬 (Lemon)', icon: 'Sprout' },
         ]
     },
     container: {
         label: '컨테이너 (Container)',
         types: [
-            { id: 'weapon_case', label: '무기 상자 (Weapon Case)', icon: 'Box' },
+            { id: 'weapon_case', label: '무기 상자 (Weapon Case)', icon: '/icons/weapon_case.png' }, // Custom Icon
             { id: 'security_locker', label: '보안 라커 (Security Locker)', icon: 'Lock' },
             { id: 'armor_crate', label: '방어구 상자 (Armor Crate)', icon: 'Shield' },
             { id: 'medical_box', label: '의료 상자 (Medical Box)', icon: 'PlusSquare' },
