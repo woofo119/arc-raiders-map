@@ -25,9 +25,9 @@ const useStore = create((set, get) => ({
         }
     },
 
-    register: async (username, email, password) => {
+    register: async (username, email, password, nickname) => {
         try {
-            const response = await axios.post(`${API_URL}/auth/register`, { username, email, password });
+            const response = await axios.post(`${API_URL}/auth/register`, { username, email, password, nickname });
             const userData = response.data;
             localStorage.setItem('user', JSON.stringify(userData));
             set({ user: userData, isAuthenticated: true });
@@ -35,6 +35,27 @@ const useStore = create((set, get) => ({
         } catch (error) {
             console.error('회원가입 에러:', error);
             return { success: false, message: error.response?.data?.message || error.message || '회원가입 실패' };
+        }
+    },
+
+    updateProfile: async (nickname, password) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.put(`${API_URL}/auth/profile`, { nickname, password }, config);
+            const updatedUser = response.data;
+
+            // 로컬 스토리지 및 상태 업데이트
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            set({ user: updatedUser });
+            return { success: true };
+        } catch (error) {
+            console.error('프로필 업데이트 에러:', error);
+            return { success: false, message: error.response?.data?.message || '프로필 업데이트 실패' };
         }
     },
 
@@ -120,9 +141,13 @@ const useStore = create((set, get) => ({
     // 🖼️ UI 상태 (Modals) - 로그인 창 열고 닫기 (추가된 부분!)
     // --------------------------------------------------------------------------
     isLoginModalOpen: false, // 모달이 열렸는지 닫혔는지 저장
+    isMyPageModalOpen: false, // 마이페이지 모달 상태
 
     openLoginModal: () => set({ isLoginModalOpen: true }), // 열기 함수
     closeLoginModal: () => set({ isLoginModalOpen: false }), // 닫기 함수
+
+    openMyPageModal: () => set({ isMyPageModalOpen: true }),
+    closeMyPageModal: () => set({ isMyPageModalOpen: false }),
 }));
 
 export default useStore;

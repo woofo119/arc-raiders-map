@@ -8,8 +8,8 @@ export const getMarkers = async (req, res) => {
 
     try {
         const query = mapId ? { mapId } : {};
-        // 작성자 정보(username)를 포함하여 마커 조회
-        const markers = await Marker.find(query).populate('createdBy', 'username');
+        // 작성자 정보(username, nickname)를 포함하여 마커 조회
+        const markers = await Marker.find(query).populate('createdBy', 'username nickname');
         res.json(markers);
     } catch (error) {
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });

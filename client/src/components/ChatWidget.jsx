@@ -44,6 +44,7 @@ const ChatWidget = () => {
             const messageData = {
                 text: input,
                 sender: user ? user.username : anonymousId,
+                nickname: user ? (user.nickname || user.username) : anonymousId,
                 timestamp: new Date().toISOString(),
             };
             socket.emit('chat message', messageData);
@@ -108,7 +109,7 @@ const ChatWidget = () => {
                             <div key={index} className="flex flex-col group">
                                 <div className="flex items-baseline gap-2 mb-1">
                                     <span className={`text-xs font-bold ${msg.sender === (user?.username) ? 'text-arc-accent' : 'text-gray-400'}`}>
-                                        {msg.sender}
+                                        {msg.nickname || msg.sender}
                                     </span>
                                     <span className="text-[10px] text-gray-600">
                                         {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

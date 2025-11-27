@@ -142,7 +142,7 @@ const MapContainer = () => {
                                 )}
 
                                 <div className="flex justify-between items-center text-xs text-gray-500">
-                                    <span>By {marker.createdBy?.username || 'Unknown'}</span>
+                                    <span>By {marker.createdBy?.nickname || marker.createdBy?.username || 'Unknown'}</span>
                                     {/* 작성자 본인 또는 관리자만 삭제 가능 */}
                                     {(user && (user._id === marker.createdBy?._id || user.role === 'admin')) && (
                                         <button

@@ -2,7 +2,7 @@ import useStore, { MAPS } from '../store/useStore';
 import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
 
 const Sidebar = () => {
-    const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal } = useStore();
+    const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
 
     return (
         <div className="w-20 hover:w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000] transition-all duration-300 ease-in-out group/sidebar overflow-hidden">
@@ -89,7 +89,12 @@ const Sidebar = () => {
                             </div>
                             <div className="flex flex-col opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75 hidden group-hover/sidebar:flex">
                                 <span className="text-xs text-gray-500 font-bold uppercase">Operator</span>
-                                <span className="text-sm font-bold text-white">{user.username}</span>
+                                <button
+                                    onClick={openMyPageModal}
+                                    className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors"
+                                >
+                                    {user.nickname || user.username}
+                                </button>
                             </div>
                         </div>
                         <button
