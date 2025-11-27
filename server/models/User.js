@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3 // 최소 3글자 이상
     },
+    nickname: {
+        type: String,
+        unique: true,
+        trim: true,
+        minlength: 2,
+        sparse: true // 기존 데이터에 필드가 없어도 허용 (마이그레이션 전까지)
+    },
     email: {
         type: String,
         required: true,
