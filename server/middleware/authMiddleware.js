@@ -31,3 +31,12 @@ export const protect = async (req, res, next) => {
         res.status(401).json({ message: '인증 실패: 토큰이 없습니다.' });
     }
 };
+
+// 관리자 권한 미들웨어
+export const admin = (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        res.status(403).json({ message: '권한이 없습니다. 관리자만 접근 가능합니다.' });
+    }
+};

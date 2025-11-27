@@ -1,5 +1,5 @@
-import express from 'express';
-import { registerUser, loginUser } from '../controllers/authController.js';
+import { registerUser, loginUser, toggleBan } from '../controllers/authController.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -8,5 +8,8 @@ router.post('/register', registerUser);
 
 // 로그인 라우트
 router.post('/login', loginUser);
+
+// 사용자 밴 라우트 (관리자 전용)
+router.put('/ban/:username', protect, admin, toggleBan);
 
 export default router;

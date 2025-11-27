@@ -51,6 +51,31 @@ const ChatWidget = () => {
         }
     };
 
+    const handleBan = async (username) => {
+        if (!confirm(`${username}님을 밴(Ban) 하시겠습니까?`)) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/ban/${username}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.message);
+            } else {
+                alert(data.message || '밴 처리에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Ban Error:', error);
+            alert('서버 오류가 발생했습니다.');
+        }
+    };
+
     return (
         <div className="fixed bottom-6 right-6 z-[2000] flex flex-col items-end">
             {/* 채팅창 */}
@@ -73,7 +98,7 @@ const ChatWidget = () => {
                     {/* 메시지 목록 */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
                         {messages.map((msg, index) => (
-                            <div key={index} className="flex flex-col">
+                            <div key={index} className="flex flex-col group">
                                 <div className="flex items-baseline gap-2 mb-1">
                                     <span className={`text-xs font-bold ${msg.sender === (user?.username) ? 'text-arc-accent' : 'text-gray-400'}`}>
                                         {msg.sender}
@@ -81,6 +106,15 @@ const ChatWidget = () => {
                                     <span className="text-[10px] text-gray-600">
                                         {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </span>
+                                    {/* 관리자용 밴 버튼 (본인 제외, 익명 제외) */}
+                                    {user?.role === 'admin' && msg.sender !== user.username && !msg.sender.startsWith('익명') && (
+                                        <button
+                                            onClick={() => handleBan(msg.sender)}
+                                            className="opacity-0 group-hover:opacity-100 text-[10px] text-red-500 hover:text-red-400 hover:underline transition-opacity ml-auto"
+                                        >
+                                            BAN
+                                        </button>
+                                    )}
                                 </div>
                                 <div className="bg-gray-800/80 p-2 rounded-lg text-sm text-gray-200 break-words border border-gray-700/50">
                                     {msg.text}

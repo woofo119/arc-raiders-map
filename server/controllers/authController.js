@@ -48,6 +48,34 @@ export const registerUser = async (req, res) => {
     }
 };
 
+// @desc    사용자 밴 처리 (관리자 전용)
+// @route   PUT /api/auth/ban/:username
+// @access  Private (Admin)
+export const toggleBan = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+
+        if (!user) {
+            return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+
+        // 관리자는 밴 불가
+        if (user.role === 'admin') {
+            return res.status(400).json({ message: '관리자는 밴할 수 없습니다.' });
+        }
+
+        user.isBanned = !user.isBanned;
+        await user.save();
+
+        res.json({
+            message: `사용자 ${user.username}의 밴 상태가 ${user.isBanned ? '설정' : '해제'}되었습니다.`,
+            isBanned: user.isBanned
+        });
+    } catch (error) {
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+};
+
 // @desc    로그인 (토큰 발급)
 // @route   POST /api/auth/login
 // @access  Public
