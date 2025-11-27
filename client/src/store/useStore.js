@@ -70,6 +70,9 @@ const useStore = create((set, get) => ({
     currentMap: MAPS[0], // 현재 선택된 맵 (기본값: 댐 전장)
     markers: [],
     filters: {
+        location: true,
+        nature: true,
+        container: true,
         resource: true,
         weapon: true,
         quest: true,
