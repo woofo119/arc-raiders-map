@@ -20,37 +20,37 @@ export const getMarkers = async (req, res) => {
 // @route   POST /api/markers
 // @access  Private (로그인 필요)
 export const createMarker = async (req, res) => {
-    const { x, y, type, title, description, image, mapId } = req.body;
+    const { x, y, type, title, description, mapId, image, category, isOfficial } = req.body;
 
     try {
-        const marker = new Marker({
+        const marker = await Marker.create({
             x,
             y,
+            mapId: mapId || 'dam',
             type,
+            category: category || 'general',
             title,
             description,
             image,
-            mapId,
-            createdBy: req.user._id, // 인증 미들웨어에서 설정된 사용자 ID 사용
+            isOfficial: isOfficial || false,
+            createdBy: req.user._id,
         });
-
-        const createdMarker = await marker.save();
-        res.status(201).json(createdMarker);
+        res.status(201).json(marker);
     } catch (error) {
-        res.status(400).json({ message: '마커 생성 실패: ' + error.message });
+        res.status(500).json({ message: '마커 생성 실패', error: error.message });
     }
 };
 
 // @desc    마커 삭제
 // @route   DELETE /api/markers/:id
-// @access  Private (작성자 본인만 가능)
+// @access  Private (작성자 본인 또는 관리자만 가능)
 export const deleteMarker = async (req, res) => {
     try {
         const marker = await Marker.findById(req.params.id);
 
         if (marker) {
-            // 요청한 사용자가 마커 작성자와 일치하는지 확인
-            if (marker.createdBy.toString() !== req.user._id.toString()) {
+            // 작성자 본인 또는 관리자만 삭제 가능
+            if (marker.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
                 return res.status(401).json({ message: '삭제 권한이 없습니다.' });
             }
 

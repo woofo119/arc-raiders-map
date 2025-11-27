@@ -20,6 +20,14 @@ const markerSchema = new mongoose.Schema({
         enum: ['resource', 'weapon', 'quest'], // 허용된 마커 타입
         required: true
     },
+    category: {
+        type: String, // detailed type: weapon_case, extraction, etc.
+        default: 'general'
+    },
+    isOfficial: {
+        type: Boolean,
+        default: false
+    },
     title: {
         type: String,
         required: true,

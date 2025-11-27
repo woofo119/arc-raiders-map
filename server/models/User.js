@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 6 // 최소 6글자 이상
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
     createdAt: {
         type: Date,
         default: Date.now // 생성 시 현재 시간 자동 저장
