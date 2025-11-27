@@ -112,56 +112,9 @@ const MapContainer = () => {
                         key={marker._id}
                         position={[marker.x, marker.y]}
                         icon={getIcon(marker.type)}
-                    >
-                        <Popup className="custom-popup-dark">
-                            <div className="p-2 min-w-[200px]">
-                                <div className="flex items-center justify-between mb-2 border-b border-gray-700 pb-1">
-                                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wider
-                    ${marker.type === 'resource' ? 'bg-emerald-500/20 text-emerald-400' :
-                                            marker.type === 'weapon' ? 'bg-red-500/20 text-red-400' :
-                                                'bg-blue-500/20 text-blue-400'}`}>
-                                        {marker.type.toUpperCase()}
-                                    </span>
-                                    <span className="text-[10px] text-gray-500">
-                                        {new Date(marker.createdAt).toLocaleDateString()}
-                                    </span>
-                                </div>
-
-                                <h3 className="font-bold text-white text-base mb-1">{marker.title}</h3>
-                                <p className="text-sm text-gray-300 mb-3 leading-relaxed break-words">{marker.description}</p>
-                                {marker.image && (
-                                    <div className="mb-3 rounded-lg overflow-hidden border border-gray-700">
-                                        <img src={marker.image} alt={marker.title} className="w-full h-auto object-cover" />
-                                    </div>
-                                )}
-
-                                <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-700/50">
-                                    <span className="text-xs text-gray-500 flex items-center gap-1">
-                                        👤 {marker.createdBy?.username || '알 수 없음'}
-                                    </span>
-
-                                    {user && user.username === marker.createdBy?.username && (
-                                        <button
-                                            onClick={() => deleteMarker(marker._id)}
-                                            className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2 py-1 rounded transition-colors"
-                                        >
-                                            삭제
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        </Popup>
-                    </Marker>
-                ))}
-            </LeafletMap>
-
-            {/* 마커 생성 폼 (우클릭 위치에 표시) */}
-            {formPosition && (
-                <MarkerForm
-                    position={formPosition}
-                    onClose={() => setFormPosition(null)}
-                />
-            )}
+                        onClose={() => setFormPosition(null)}
+                    />
+                )}
         </div>
     );
 };
