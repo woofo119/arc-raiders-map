@@ -18,9 +18,53 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 // 마커 타입별 커스텀 아이콘 생성 함수 (기본 마커용)
-const getIcon = (type) => {
+// 마커 타입별 커스텀 아이콘 생성 함수
+const getIcon = (type, category, isOfficial) => {
+    // 1. 관리자(Official) 마커: 노란색 테두리
+    if (isOfficial) {
+        return L.divIcon({
+            className: 'custom-icon',
+            html: `<div class="w-8 h-8 bg-yellow-500/20 border-2 border-yellow-500 rounded-full flex items-center justify-center text-white shadow-lg backdrop-blur-sm hover:scale-110 transition-transform">
+                <span class="text-xs font-bold">★</span>
+            </div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+        });
+    }
+
+    // 2. 자연(Nature) 마커: 초록색 배경 + 흰색 테두리
+    if (type === 'nature') {
+        return L.divIcon({
+            className: 'custom-icon',
+            html: `
+          <div class="relative flex items-center justify-center w-4 h-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-green-500"></span>
+            <span class="relative inline-flex rounded-full w-3 h-3 border-2 border-white bg-green-500"></span>
+          </div>
+        `,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+        });
+    }
+
+    // 3. 무기 상자(Weapon Case): 주황색 테두리
+    if (category === 'weapon_case') {
+        return L.divIcon({
+            className: 'custom-icon',
+            html: `
+          <div class="relative flex items-center justify-center w-4 h-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-orange-500"></span>
+            <span class="relative inline-flex rounded-full w-3 h-3 border-2 border-orange-500 bg-orange-500/50"></span>
+          </div>
+        `,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+        });
+    }
+
+    // 4. 기본 마커 색상 매핑
     const colors = {
-        resource: '#10B981', // Emerald 500
+        resource: '#10B981', // Emerald 500 (Legacy)
         weapon: '#EF4444',   // Red 500
         quest: '#3B82F6',    // Blue 500
         container: '#F59E0B', // Amber 500
@@ -42,17 +86,7 @@ const getIcon = (type) => {
     });
 };
 
-// 공식 마커 아이콘 생성 함수
-const getOfficialIcon = (category) => {
-    return L.divIcon({
-        className: 'custom-icon',
-        html: `<div class="w-8 h-8 bg-yellow-500/20 border-2 border-yellow-500 rounded-full flex items-center justify-center text-white shadow-lg backdrop-blur-sm hover:scale-110 transition-transform">
-            <span class="text-xs font-bold">★</span>
-        </div>`,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-    });
-};
+
 
 // 지도 이벤트 처리 및 자동 줌/이동 제어 컴포넌트
 const MapController = ({ onRightClick, bounds }) => {
@@ -125,7 +159,7 @@ const MapContainer = () => {
                     <Marker
                         key={marker._id}
                         position={[marker.x, marker.y]}
-                        icon={marker.isOfficial ? getOfficialIcon(marker.category) : getIcon(marker.type)}
+                        icon={getIcon(marker.type, marker.category, marker.isOfficial)}
                     >
                         <Popup className="custom-popup-dark">
                             <div className="p-1 min-w-[200px]">
