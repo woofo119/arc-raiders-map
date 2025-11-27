@@ -17,12 +17,14 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// 마커 타입별 커스텀 아이콘 생성 함수
+// 마커 타입별 커스텀 아이콘 생성 함수 (기본 마커용)
 const getIcon = (type) => {
     const colors = {
         resource: '#10B981', // Emerald 500
         weapon: '#EF4444',   // Red 500
-        quest: '#3B82F6'     // Blue 500
+        quest: '#3B82F6',    // Blue 500
+        container: '#F59E0B', // Amber 500
+        location: '#8B5CF6'   // Violet 500
     };
 
     const color = colors[type] || '#ffffff';
@@ -37,6 +39,18 @@ const getIcon = (type) => {
     `,
         iconSize: [16, 16],
         iconAnchor: [8, 8]
+    });
+};
+
+// 공식 마커 아이콘 생성 함수
+const getOfficialIcon = (category) => {
+    return L.divIcon({
+        className: 'custom-icon',
+        html: `<div class="w-8 h-8 bg-yellow-500/20 border-2 border-yellow-500 rounded-full flex items-center justify-center text-white shadow-lg backdrop-blur-sm hover:scale-110 transition-transform">
+            <span class="text-xs font-bold">★</span>
+        </div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
     });
 };
 
@@ -84,7 +98,7 @@ const MapContainer = () => {
     };
 
     // 필터링된 마커 목록
-    const filteredMarkers = markers.filter(m => filters[m.type]);
+    const filteredMarkers = markers.filter(m => filters[m.type] || (m.isOfficial && filters.location)); // 임시 필터 로직
 
     return (
         <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-hidden">
@@ -111,10 +125,47 @@ const MapContainer = () => {
                     <Marker
                         key={marker._id}
                         position={[marker.x, marker.y]}
-                        icon={getIcon(marker.type)}
-                        onClose={() => setFormPosition(null)}
-                    />
-                )}
+                        icon={marker.isOfficial ? getOfficialIcon(marker.category) : getIcon(marker.type)}
+                    >
+                        <Popup className="custom-popup-dark">
+                            <div className="p-1 min-w-[200px]">
+                                <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
+                                    {marker.isOfficial && <span className="text-yellow-500 text-xs font-bold">[OFFICIAL]</span>}
+                                    <h3 className="font-bold text-lg text-white">{marker.title}</h3>
+                                </div>
+                                <p className="text-gray-300 text-sm mb-3 break-words">{marker.description}</p>
+
+                                {marker.image && (
+                                    <div className="mb-3 rounded-lg overflow-hidden border border-gray-700">
+                                        <img src={marker.image} alt={marker.title} className="w-full h-auto object-cover" />
+                                    </div>
+                                )}
+
+                                <div className="flex justify-between items-center text-xs text-gray-500">
+                                    <span>By {marker.createdBy?.username || 'Unknown'}</span>
+                                    {/* 작성자 본인 또는 관리자만 삭제 가능 */}
+                                    {(user && (user._id === marker.createdBy?._id || user.role === 'admin')) && (
+                                        <button
+                                            onClick={() => deleteMarker(marker._id)}
+                                            className="text-red-400 hover:text-red-300 flex items-center gap-1 bg-red-900/20 px-2 py-1 rounded transition-colors"
+                                        >
+                                            삭제
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </Popup>
+                    </Marker>
+                ))}
+            </LeafletMap>
+
+            {/* 마커 생성 폼 (우클릭 위치에 표시) */}
+            {formPosition && (
+                <MarkerForm
+                    position={formPosition}
+                    onClose={() => setFormPosition(null)}
+                />
+            )}
         </div>
     );
 };
