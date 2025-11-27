@@ -20,7 +20,7 @@ export const getMarkers = async (req, res) => {
 // @route   POST /api/markers
 // @access  Private (로그인 필요)
 export const createMarker = async (req, res) => {
-    const { x, y, type, title, description, mapId } = req.body;
+    const { x, y, type, title, description, image, mapId } = req.body;
 
     try {
         const marker = new Marker({
@@ -29,6 +29,7 @@ export const createMarker = async (req, res) => {
             type,
             title,
             description,
+            image,
             mapId,
             createdBy: req.user._id, // 인증 미들웨어에서 설정된 사용자 ID 사용
         });

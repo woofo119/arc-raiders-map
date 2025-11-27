@@ -128,7 +128,12 @@ const MapContainer = () => {
                                 </div>
 
                                 <h3 className="font-bold text-white text-base mb-1">{marker.title}</h3>
-                                <p className="text-sm text-gray-300 mb-3 leading-relaxed">{marker.description}</p>
+                                <p className="text-sm text-gray-300 mb-3 leading-relaxed break-words">{marker.description}</p>
+                                {marker.image && (
+                                    <div className="mb-3 rounded-lg overflow-hidden border border-gray-700">
+                                        <img src={marker.image} alt={marker.title} className="w-full h-auto object-cover" />
+                                    </div>
+                                )}
 
                                 <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-700/50">
                                     <span className="text-xs text-gray-500 flex items-center gap-1">

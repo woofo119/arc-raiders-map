@@ -6,10 +6,32 @@
 .leaflet-container {
   width: 100%;
   height: 100%;
-  background-color: #121212; /* Match dark theme */
+  background-color: #121212;
+  /* Match dark theme */
 }
 
 body {
   background-color: #000;
   color: #fff;
+}
+
+/* Custom Dark Popup */
+.custom-popup-dark .leaflet-popup-content-wrapper,
+.custom-popup-dark .leaflet-popup-tip {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #374151;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.custom-popup-dark .leaflet-popup-content {
+  margin: 0;
+}
+
+.custom-popup-dark .leaflet-popup-close-button {
+  color: #9ca3af !important;
+}
+
+.custom-popup-dark .leaflet-popup-close-button:hover {
+  color: #fff !important;
 }

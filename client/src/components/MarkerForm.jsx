@@ -6,6 +6,7 @@ const MarkerForm = ({ position, onClose }) => {
     const [type, setType] = useState('resource');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [image, setImage] = useState('');
     const { addMarker } = useStore();
 
     const handleSubmit = async (e) => {
@@ -16,7 +17,8 @@ const MarkerForm = ({ position, onClose }) => {
             y: position.y,
             type,
             title,
-            description
+            description,
+            image
         });
 
         if (result.success) {

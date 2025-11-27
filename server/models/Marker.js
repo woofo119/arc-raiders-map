@@ -29,6 +29,10 @@ const markerSchema = new mongoose.Schema({
         type: String,
         trim: true // 상세 설명
     },
+    image: {
+        type: String,
+        trim: true // 이미지 URL
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // User 모델 참조
