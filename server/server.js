@@ -15,6 +15,13 @@ const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 5000;
 
+// 🔍 디버깅: JWT_SECRET 확인
+if (!process.env.JWT_SECRET) {
+    console.error("🔥🔥🔥 CRITICAL ERROR: JWT_SECRET 환경 변수가 설정되지 않았습니다! 로그인이 불가능합니다. 🔥🔥🔥");
+} else {
+    console.log("✅ JWT_SECRET이 설정되었습니다:", process.env.JWT_SECRET.substring(0, 3) + "***");
+}
+
 // CORS 설정 (모든 도메인 허용)
 app.use(cors({
     origin: '*',
@@ -24,6 +31,15 @@ app.use(cors({
 
 app.use(express.json({ limit: '50mb' })); // 이미지 업로드를 위해 용량 제한 늘림
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// 🔍 디버깅: 모든 요청 로깅
+app.use((req, res, next) => {
+    console.log(`[REQUEST] ${req.method} ${req.url}`);
+    if (req.method === 'POST' || req.method === 'PUT') {
+        console.log('Body:', JSON.stringify(req.body, null, 2));
+    }
+    next();
+});
 
 // MongoDB 연결
 mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://woofo:da868133@cluster0.iienqyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")

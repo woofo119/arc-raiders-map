@@ -52,6 +52,7 @@ export const registerUser = async (req, res) => {
             res.status(400).json({ message: '잘못된 사용자 데이터입니다.' });
         }
     } catch (error) {
+        console.error('Register Error:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 };
@@ -61,6 +62,7 @@ export const registerUser = async (req, res) => {
 // @access  Public
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
+    console.log(`[LOGIN ATTEMPT] Username: ${username}, Password provided: ${!!password}`);
 
     try {
         // 사용자 조회
@@ -81,6 +83,7 @@ export const loginUser = async (req, res) => {
             res.status(401).json({ message: '아이디 또는 비밀번호가 일치하지 않습니다.' });
         }
     } catch (error) {
+        console.error('Login Error:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 };
@@ -151,6 +154,7 @@ export const toggleBan = async (req, res) => {
             isBanned: user.isBanned
         });
     } catch (error) {
+        console.error('Register Error:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 };
