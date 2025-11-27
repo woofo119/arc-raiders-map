@@ -110,18 +110,21 @@ const Sidebar = () => {
 
 // 필터 아이템 컴포넌트
 const FilterItem = ({ label, icon, checked, onChange, color }) => (
-    <label className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all border
+    <label className={`group flex items-center p-3 rounded-xl cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] border overflow-hidden whitespace-nowrap
     ${checked
             ? `bg-gray-900 border-${color}-500/30 shadow-lg shadow-${color}-900/10`
             : 'bg-transparent border-transparent hover:bg-gray-900 hover:border-gray-800'
-        }`}>
-        <div className="flex items-center gap-3">
+        }
+    w-12 hover:w-full`}>
+        <div className="min-w-[20px] flex items-center justify-center">
             {icon}
-            <span className={`text-sm font-medium ${checked ? 'text-white' : 'text-gray-500'}`}>{label}</span>
         </div>
-        <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors
-      ${checked ? `bg-${color}-500 border-${color}-500` : 'border-gray-700 bg-gray-800'}`}>
-            {checked && <div className="w-2 h-2 bg-white rounded-full" />}
+        <div className="flex items-center justify-between flex-1 ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+            <span className={`text-sm font-medium ${checked ? 'text-white' : 'text-gray-500'}`}>{label}</span>
+            <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors
+          ${checked ? `bg-${color}-500 border-${color}-500` : 'border-gray-700 bg-gray-800'}`}>
+                {checked && <div className="w-2 h-2 bg-white rounded-full" />}
+            </div>
         </div>
         <input
             type="checkbox"
