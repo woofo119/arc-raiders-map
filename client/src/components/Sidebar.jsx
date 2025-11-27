@@ -1,4 +1,5 @@
-import useStore, { MAPS } from '../store/useStore';
+import useStore from '../store/useStore';
+import { MAPS } from '../constants';
 import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
 
 const Sidebar = () => {
