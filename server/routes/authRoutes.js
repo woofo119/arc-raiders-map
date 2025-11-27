@@ -1,3 +1,4 @@
+import express from 'express';
 import { registerUser, loginUser, toggleBan } from '../controllers/authController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
