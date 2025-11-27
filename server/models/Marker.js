@@ -17,7 +17,7 @@ const markerSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['resource', 'weapon', 'quest'], // 허용된 마커 타입
+        enum: ['resource', 'weapon', 'quest', 'container', 'location'], // 허용된 마커 타입
         required: true
     },
     category: {
