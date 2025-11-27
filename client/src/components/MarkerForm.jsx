@@ -81,6 +81,19 @@ const MarkerForm = ({ position, onClose }) => {
                     />
                 </div>
 
+                <div className="space-y-1">
+                    <label className="text-[10px] text-gray-500 font-bold uppercase flex items-center gap-1">
+                        <FileText size={10} /> Image URL
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="이미지 주소 (https://...)"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        className="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-sm text-white placeholder-gray-600 focus:border-arc-accent focus:outline-none transition-colors"
+                    />
+                </div>
+
                 <div className="flex gap-2 pt-2">
                     <button
                         type="submit"
