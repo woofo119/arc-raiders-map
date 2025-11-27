@@ -12,8 +12,26 @@ const generateToken = (id) => {
 // @desc    회원가입
 // @route   POST /api/auth/register
 // @access  Public
+// 제한된 닉네임/아이디 목록
+const RESTRICTED_WORDS = ['admin', 'administrator', 'manager', 'sysadmin', 'root', 'operator', 'support', 'gm', 'master'];
+
+// 제한된 단어 포함 여부 확인 함수
+const containsRestrictedWord = (text) => {
+    if (!text) return false;
+    const lowerText = text.toLowerCase();
+    return RESTRICTED_WORDS.some(word => lowerText.includes(word));
+};
+
+// @desc    회원가입
+// @route   POST /api/auth/register
+// @access  Public
 export const registerUser = async (req, res) => {
     const { username, email, password, nickname } = req.body;
+
+    // 제한된 단어 체크
+    if (containsRestrictedWord(username) || containsRestrictedWord(nickname)) {
+        return res.status(400).json({ message: '사용할 수 없는 단어가 포함되어 있습니다 (admin, manager 등).' });
+    }
 
     try {
         // 사용자 존재 여부 확인
@@ -96,8 +114,11 @@ export const updateProfile = async (req, res) => {
         const user = await User.findById(req.user._id);
 
         if (user) {
-            // 닉네임 변경 요청 시 중복 확인
+            // 닉네임 변경 요청 시 중복 확인 및 제한된 단어 체크
             if (req.body.nickname && req.body.nickname !== user.nickname) {
+                if (containsRestrictedWord(req.body.nickname)) {
+                    return res.status(400).json({ message: '사용할 수 없는 단어가 포함되어 있습니다 (admin, manager 등).' });
+                }
                 const nicknameExists = await User.findOne({ nickname: req.body.nickname });
                 if (nicknameExists) {
                     return res.status(400).json({ message: '이미 사용 중인 닉네임입니다.' });
