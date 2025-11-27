@@ -57,23 +57,43 @@
 - **`models/Marker.js`**:
     - Updated `type` enum to include `'nature'`.
 
-## 3. Future Tasks (앞으로 해야 할 일)
+## 3. Current Status (현재 상태)
 
-### A. Verification (검증)
-- [ ] **Deploy & Test:** Redeploy Frontend to Cloudtype and verify:
-    - Markers appear immediately after creation.
-    - Custom icons (Mushroom, etc.) render correctly with transparent backgrounds.
-    - Admin markers show yellow borders but correct background colors.
-    - No black screen crashes.
+### Latest Changes (2025-01-28 00:44)
+- ✅ **Icon Paths Added:** Updated `constants.js` with paths for 5 additional icons
+  - apricot, security_locker, armor_crate, medical_box, grenade_box
+- ✅ **Container Color Logic:** Changed from `category === 'weapon_case'` to `type === 'container'`
+  - All container items now have orange background
+- ✅ **Code Committed:** All changes pushed to GitHub (commit: 03448ef)
 
-### B. Content Expansion (콘텐츠 확장)
-- [ ] **More Icons:** Generate and add icons for remaining types (e.g., Apricot, Locker, Grenade Box).
-- [ ] **Map Data:** Add more high-quality map images if available.
+### Blocked Items
+- ⏸️ **Icon Generation:** Image generation quota exhausted
+  - **Reset Time:** ~4 hours (around 4:45 AM KST)
+  - **Pending Icons:** 5 items (apricot, security_locker, armor_crate, medical_box, grenade_box)
 
-### C. UX/UI Improvements
-- [ ] **Mobile Responsiveness:** Polish the UI for mobile users.
-- [ ] **Performance:** Optimize image loading if many markers are added.
+## 4. Next Steps for Tomorrow (내일 작업)
+
+### A. Immediate Tasks (우선순위)
+1. **Generate Remaining Icons** (아침 4:45 이후)
+   - [ ] Generate: apricot.png
+   - [ ] Generate: security_locker.png
+   - [ ] Generate: armor_crate.png
+   - [ ] Generate: medical_box.png
+   - [ ] Generate: grenade_box.png
+   - [ ] Copy to `client/public/icons/`
+   - [ ] Commit and push
+
+2. **Deploy & Verify**
+   - [ ] Redeploy Frontend to Cloudtype
+   - [ ] Test all marker types with new icons
+   - [ ] Verify container color (all orange)
+   - [ ] Verify admin markers (yellow border + category background)
+
+### B. Optional Enhancements
+- [ ] Generate icons for remaining nature items (prickly_pear, agave, great_mullein, lemon)
+- [ ] Generate icons for location items (raider_hatch, locked_room, etc.)
+- [ ] Mobile UI testing
 
 ---
 **Note for Next Session:**
-Start by reviewing `client/src/components/MapContainer.jsx` to ensure the latest styling logic is understood. The immediate next step is usually **Deployment Verification**.
+All code is saved and pushed. Start with icon generation (after 4:45 AM), then deploy and test.
