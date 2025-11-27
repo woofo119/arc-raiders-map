@@ -21,23 +21,57 @@ L.Marker.prototype.options.icon = DefaultIcon;
 // 마커 타입별 커스텀 아이콘 생성 함수 (기본 마커용)
 // 마커 타입별 커스텀 아이콘 생성 함수
 const getIcon = (type, category, isOfficial) => {
-    container: '#F59E0B',
-        location: '#8B5CF6'
-};
-const color = colors[type] || '#ffffff';
-iconHtml = `<div class="w-2 h-2 rounded-full" style="background-color: ${color}"></div>`;
+    // 1. 카테고리 정의에서 아이콘 정보 가져오기
+    let iconDef = null;
+    if (MARKER_CATEGORIES[type]) {
+        iconDef = MARKER_CATEGORIES[type].types.find(t => t.id === category);
     }
 
-return L.divIcon({
-    className: 'custom-icon',
-    html: `
+    // 2. 테두리 및 배경 색상 결정
+    let borderColor = 'border-white'; // 기본값
+    let bgColor = 'bg-gray-700'; // 기본 배경
+
+    if (isOfficial) {
+        borderColor = 'border-yellow-500'; // 관리자: 노란색 테두리
+        bgColor = 'bg-gray-900'; // 관리자: 어두운 배경
+    } else if (category === 'weapon_case') {
+        borderColor = 'border-orange-500'; // 무기 상자: 주황색 테두리
+        bgColor = 'bg-orange-500'; // 무기 상자: 주황색 배경
+    } else if (type === 'nature') {
+        borderColor = 'border-white'; // 자연: 흰색 테두리
+        bgColor = 'bg-green-500'; // 자연: 초록색 배경
+    }
+
+    // 3. 아이콘 HTML 생성
+    let iconHtml = '';
+
+    // 이미지 아이콘인 경우 (경로가 /로 시작)
+    if (iconDef && iconDef.icon.startsWith('/')) {
+        // mix-blend-multiply를 사용하여 이미지의 흰색 배경을 투명하게 처리하고 뒤의 배경색이 보이게 함
+        iconHtml = `<img src="${iconDef.icon}" class="w-full h-full object-contain p-1 mix-blend-multiply" alt="${category}" />`;
+    } else {
+        // 기본 색상 점 (이미지가 없는 경우)
+        const colors = {
+            resource: '#10B981',
+            weapon: '#EF4444',
+            quest: '#3B82F6',
+            container: '#F59E0B',
+            location: '#8B5CF6'
+        };
+        const color = colors[type] || '#ffffff';
+        iconHtml = `<div class="w-2 h-2 rounded-full" style="background-color: ${color}"></div>`;
+    }
+
+    return L.divIcon({
+        className: 'custom-icon',
+        html: `
         <div class="relative flex items-center justify-center w-8 h-8 rounded-full border-2 ${borderColor} ${bgColor} shadow-lg overflow-hidden">
             ${iconHtml}
         </div>
         `,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16]
-});
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+    });
 };
 
 
