@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import useStore, { MARKER_CATEGORIES } from '../store/useStore';
+import useStore from '../store/useStore';
+import { MARKER_CATEGORIES } from '../constants';
 import { X, MapPin, FileText, Shield } from 'lucide-react';
 
 const MarkerForm = ({ position, onClose }) => {
