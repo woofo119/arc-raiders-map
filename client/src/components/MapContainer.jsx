@@ -157,12 +157,9 @@ const MapContainer = () => {
                         </Popup>
                     </Marker>
                 ))}
-            </LeafletMap>
 
-            {/* 마커 생성 폼 (우클릭 위치에 표시) */}
-            {formPosition && (
-                <>
-                    {/* 미리보기 마커 (클릭한 위치 표시) */}
+                {/* 미리보기 마커 (클릭한 위치 표시) */}
+                {formPosition && (
                     <Marker
                         position={[formPosition.x, formPosition.y]}
                         icon={L.divIcon({
@@ -177,14 +174,17 @@ const MapContainer = () => {
                             iconAnchor: [20, 40]
                         })}
                     />
-                    <MarkerForm
-                        position={formPosition}
-                        onClose={() => setFormPosition(null)}
-                    />
-                </>
+                )}
+            </LeafletMap>
+
+            {/* 마커 생성 폼 (우클릭 위치에 표시) */}
+            {formPosition && (
+                <MarkerForm
+                    position={formPosition}
+                    onClose={() => setFormPosition(null)}
+                />
             )}
         </div>
     );
 };
-
 export default MapContainer;
