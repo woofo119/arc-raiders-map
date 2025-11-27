@@ -55,7 +55,14 @@ const ChatWidget = () => {
         if (!confirm(`${username}님을 밴(Ban) 하시겠습니까?`)) return;
 
         try {
-            const token = localStorage.getItem('token');
+            // 토큰 가져오기 (localStorage의 user 객체 또는 store의 user 상태 사용)
+            const token = user?.token || JSON.parse(localStorage.getItem('user'))?.token;
+
+            if (!token) {
+                alert('로그인이 필요합니다.');
+                return;
+            }
+
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/ban/${username}`, {
                 method: 'PUT',
                 headers: {
