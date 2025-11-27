@@ -7,8 +7,8 @@ const Sidebar = () => {
     return (
         <div className="w-20 hover:w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000] transition-all duration-300 ease-in-out group/sidebar overflow-hidden">
             {/* 헤더 영역 */}
-            <div className="p-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center overflow-hidden whitespace-nowrap">
-                <div className="mb-6 flex justify-center w-full">
+            <div className="py-6 px-2 group-hover:px-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center overflow-hidden whitespace-nowrap transition-all duration-300">
+                <div className="mb-6 flex justify-center w-full h-12 items-center">
                     <img src="/logo.png" alt="ARC Raiders" className="h-8 object-contain transition-all duration-300 group-hover/sidebar:h-12" />
                 </div>
 
@@ -31,21 +31,21 @@ const Sidebar = () => {
                 </div>
 
                 {/* 맵 아이콘 (축소 시 표시) */}
-                <div className="block group-hover/sidebar:hidden text-gray-400">
+                <div className="block group-hover/sidebar:hidden text-gray-400 mt-2">
                     <Map size={24} />
                 </div>
             </div>
 
             {/* 필터 영역 */}
-            <div className="p-6 flex-1 overflow-y-auto overflow-x-hidden">
-                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2 whitespace-nowrap">
-                    <Filter size={14} />
-                    <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-6 transition-all duration-300">
+                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-center group-hover/sidebar:justify-start gap-2 whitespace-nowrap h-6">
+                    <Filter size={16} className="min-w-[16px]" />
+                    <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100 hidden group-hover/sidebar:inline">
                         Filter Categories
                     </span>
                 </h3>
 
-                <div className="space-y-3">
+                <div className="space-y-3 flex flex-col items-center group-hover/sidebar:items-stretch">
                     <FilterItem
                         label="자원 (Resource)"
                         icon={<Layers size={20} className="text-emerald-400" />}
@@ -80,21 +80,21 @@ const Sidebar = () => {
             </div>
 
             {/* 사용자 프로필 영역 */}
-            <div className="p-4 border-t border-gray-800 bg-[#0f0f0f] overflow-hidden whitespace-nowrap">
+            <div className="py-4 px-2 group-hover:px-4 border-t border-gray-800 bg-[#0f0f0f] overflow-hidden whitespace-nowrap transition-all duration-300">
                 {isAuthenticated ? (
-                    <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
+                    <div className="bg-gray-900 rounded-xl p-2 group-hover/sidebar:p-3 border border-gray-800 flex items-center justify-center group-hover/sidebar:justify-between group hover:border-gray-700 transition-colors w-full">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 min-w-[2.5rem] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-gray-700">
                                 <User size={20} className="text-gray-300" />
                             </div>
-                            <div className="flex flex-col opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75">
+                            <div className="flex flex-col opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75 hidden group-hover/sidebar:flex">
                                 <span className="text-xs text-gray-500 font-bold uppercase">Operator</span>
                                 <span className="text-sm font-bold text-white">{user.username}</span>
                             </div>
                         </div>
                         <button
                             onClick={logout}
-                            className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all opacity-0 group-hover/sidebar:opacity-100"
+                            className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all opacity-0 group-hover/sidebar:opacity-100 hidden group-hover/sidebar:block"
                             title="로그아웃"
                         >
                             <LogOut size={18} />
@@ -109,7 +109,7 @@ const Sidebar = () => {
                         className="w-full bg-gradient-to-r from-arc-accent to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 rounded-xl transition-all shadow-lg shadow-orange-900/20 font-bold text-sm flex items-center justify-center gap-2 group overflow-hidden"
                     >
                         <User size={20} className="min-w-[20px] group-hover:scale-110 transition-transform" />
-                        <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75 whitespace-nowrap">
+                        <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75 whitespace-nowrap hidden group-hover/sidebar:inline">
                             로그인 / 회원가입
                         </span>
                     </button>
