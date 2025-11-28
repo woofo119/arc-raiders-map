@@ -1,6 +1,6 @@
 export const SKILL_DATA = {
     conditioning: {
-        label: "컨디셔닝",
+        label: "단련",
         color: "text-green-500",
         bg: "bg-green-500",
         border: "border-green-500",
@@ -28,7 +28,7 @@ export const SKILL_DATA = {
         ]
     },
     mobility: {
-        label: "기동성",
+        label: "이동성",
         color: "text-yellow-500",
         bg: "bg-yellow-500",
         border: "border-yellow-500",
