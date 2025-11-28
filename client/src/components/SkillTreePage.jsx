@@ -3,6 +3,60 @@ import { ArrowLeft, RotateCcw, Share2, Lock, Check } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { SKILL_DATA } from '../data/skills';
 
+// Base36 encoding helpers
+const BASE36_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+// Get all skill IDs in a deterministic order (alphabetical)
+const ALL_SKILL_IDS = Object.values(SKILL_DATA)
+    .flatMap(category => category.skills.map(s => s.id))
+    .sort();
+
+const encodeSkills = (skillsState) => {
+    const levels = ALL_SKILL_IDS.map(id => skillsState[id] || 0);
+    let result = '';
+
+    // Pack 2 levels into 1 char
+    for (let i = 0; i < levels.length; i += 2) {
+        const l1 = levels[i];
+        const l2 = i + 1 < levels.length ? levels[i + 1] : 0;
+        // Max level is 5. 6 possibilities (0-5).
+        // Value = l1 * 6 + l2. Max val = 5*6 + 5 = 35.
+        // Fits exactly in Base36 (0-35).
+        const val = l1 * 6 + l2;
+        result += BASE36_CHARS[val];
+    }
+
+    // Trim trailing zeros (which are '0' chars in this encoding)
+    // Actually, '0' char means l1=0, l2=0.
+    return result.replace(/0+$/, '');
+};
+
+const decodeSkills = (code) => {
+    const newState = {};
+    let levelIndex = 0;
+
+    for (let i = 0; i < code.length; i++) {
+        const char = code[i];
+        const val = BASE36_CHARS.indexOf(char);
+        if (val === -1) continue;
+
+        const l1 = Math.floor(val / 6);
+        const l2 = val % 6;
+
+        if (levelIndex < ALL_SKILL_IDS.length) {
+            if (l1 > 0) newState[ALL_SKILL_IDS[levelIndex]] = l1;
+        }
+        levelIndex++;
+
+        if (levelIndex < ALL_SKILL_IDS.length) {
+            if (l2 > 0) newState[ALL_SKILL_IDS[levelIndex]] = l2;
+        }
+        levelIndex++;
+    }
+
+    return newState;
+};
+
 const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
@@ -103,8 +157,14 @@ const SkillTreePage = () => {
 
     // Load state from URL on mount
     useEffect(() => {
+        const codeParam = searchParams.get('code');
         const buildParam = searchParams.get('build');
-        if (buildParam) {
+
+        if (codeParam) {
+            // New short format
+            setSkillsState(decodeSkills(codeParam));
+        } else if (buildParam) {
+            // Legacy format
             try {
                 const newState = {};
                 buildParam.split(',').forEach(pair => {
@@ -135,13 +195,8 @@ const SkillTreePage = () => {
     };
 
     const handleShare = () => {
-        // Serialize state: id:level,id:level
-        const buildString = Object.entries(skillsState)
-            .filter(([_, level]) => level > 0)
-            .map(([id, level]) => `${id}:${level}`)
-            .join(',');
-
-        const url = `${window.location.origin}${window.location.pathname}?build=${buildString}`;
+        const code = encodeSkills(skillsState);
+        const url = `${window.location.origin}${window.location.pathname}?code=${code}`;
 
         navigator.clipboard.writeText(url).then(() => {
             setIsCopied(true);
