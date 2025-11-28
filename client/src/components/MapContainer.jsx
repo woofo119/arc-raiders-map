@@ -44,10 +44,10 @@ const getIcon = (type, category, isOfficial) => {
         bgColor = 'bg-white'; // 위치: 흰색 배경
     }
 
-    // 관리자(Official) 마커인 경우 테두리만 노란색으로 덮어쓰기
-    if (isOfficial) {
-        borderColor = 'border-yellow-500';
-    }
+    // 관리자(Official) 마커인 경우 테두리만 노란색으로 덮어쓰기 (제거됨)
+    // if (isOfficial) {
+    //     borderColor = 'border-yellow-500';
+    // }
 
     // 3. 아이콘 HTML 생성
     let iconHtml = '';
