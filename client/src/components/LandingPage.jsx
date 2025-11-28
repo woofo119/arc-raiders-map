@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield } from 'lucide-react';
+import skillTreeBanner from '../assets/skill_tree_banner.png';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -99,19 +100,30 @@ const LandingPage = () => {
                 <h2 className="text-3xl font-bold mb-12 text-center">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Skill Tree Banner */}
                     <div
-                        className="col-span-1 md:col-span-2 lg:col-span-3 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 border border-white/10 hover:border-yellow-500/50 transition-colors group cursor-pointer"
+                        className="col-span-1 md:col-span-2 lg:col-span-3 relative rounded-2xl overflow-hidden border border-white/10 hover:border-yellow-500/50 transition-all group cursor-pointer h-32"
                         onClick={() => navigate('/skills')}
                     >
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                            <div className="text-left">
-                                <div className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold inline-block mb-4">NEW FEATURE</div>
-                                <h3 className="text-2xl font-bold mb-2 group-hover:text-yellow-400 transition-colors">실시간 스킬 트리 제작</h3>
-                                <p className="text-gray-400">나만의 최적화된 스킬 트리를 구성하고 공유하세요.</p>
+                        {/* Background Image */}
+                        <div
+                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            style={{ backgroundImage: `url(${skillTreeBanner})` }}
+                        />
+
+                        {/* Dark Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
+
+                        {/* Content */}
+                        <div className="relative h-full flex flex-col justify-center px-8 z-10">
+                            <div className="flex items-center gap-3 mb-1">
+                                <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-[10px] font-bold border border-blue-500/30">NEW FEATURE</div>
                             </div>
-                            <div className="flex-1 w-full h-32 bg-black/30 rounded-xl flex items-center justify-center border border-white/5">
-                                <Zap className="text-gray-600" size={48} />
-                            </div>
+                            <h3 className="text-2xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center gap-2">
+                                실시간 스킬 트리 제작
+                                <Zap size={18} className="text-yellow-500" />
+                            </h3>
+                            <p className="text-gray-300 text-sm mt-1 max-w-md">나만의 최적화된 스킬 트리를 구성하고 공유하세요.</p>
                         </div>
                     </div>
 
