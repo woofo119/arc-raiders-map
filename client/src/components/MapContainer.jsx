@@ -272,7 +272,6 @@ const MapContainer = () => {
                     const isDraggable = user && (user._id === marker.createdBy?._id || user.role === 'admin');
 
                     return (
-                    return (
                         <Marker
                             key={marker._id}
                             position={[marker.x, marker.y]}
@@ -296,7 +295,6 @@ const MapContainer = () => {
                                 <MarkerPopupContent marker={marker} />
                             </Popup>
                         </Marker>
-                    );
                     );
                 })}
 
