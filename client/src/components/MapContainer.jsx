@@ -138,7 +138,7 @@ const MarkerPopupContent = ({ marker }) => {
     return (
         <div className="p-1 min-w-[200px]">
             <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
-                {marker.isOfficial && <span className="text-yellow-500 text-xs font-bold">[OFFICIAL]</span>}
+                {/* OFFICIAL 태그 제거 */}
                 <h3 className="font-bold text-lg text-white">{marker.title}</h3>
             </div>
             <p className="text-gray-300 text-sm mb-3 break-words whitespace-pre-wrap">{marker.description}</p>
@@ -204,17 +204,9 @@ const MapContainer = () => {
     }, [fetchMarkers, currentMap]); // 맵이 변경될 때마다 마커 다시 불러오기
 
     // 우클릭 핸들러: 마커 생성 폼 표시
+    // 우클릭 핸들러: 마커 생성 폼 표시
     const handleMapRightClick = (e) => {
-        if (!isAuthenticated) {
-            alert('🔒 마커를 추가하려면 로그인이 필요합니다.');
-            return;
-        }
-
-        // 관리자 권한 확인
-        if (user?.role !== 'admin') {
-            alert('🔒 마커 추가는 관리자만 가능합니다.');
-            return;
-        }
+        // 로그인 및 권한 체크 제거됨
 
         setFormPosition({
             x: e.latlng.lat,

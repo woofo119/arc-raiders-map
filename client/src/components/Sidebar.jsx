@@ -77,14 +77,7 @@ const Sidebar = () => {
                     ))}
                 </div>
 
-                {/* 안내 메시지 */}
-                <div className="mt-8 p-4 bg-gray-900/50 rounded-xl border border-gray-800 opacity-100 block">
-                    <h4 className="text-white text-sm font-bold mb-2">💡 사용 팁</h4>
-                    <p className="text-xs text-gray-400 leading-relaxed">
-                        지도에서 원하는 위치를 <span className="text-arc-accent font-bold">우클릭</span>하여<br />
-                        새로운 마커를 추가할 수 있습니다.
-                    </p>
-                </div>
+
             </div>
 
             {/* 사용자 프로필 영역 */}
