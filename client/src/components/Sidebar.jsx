@@ -127,14 +127,21 @@ const Sidebar = () => {
 
 // 아코디언 필터 컴포넌트
 const AccordionFilter = ({ mainType, category }) => {
-    const { filters, toggleFilter, toggleCategory } = useStore();
+    const { filters, toggleFilter, toggleCategory, markers } = useStore();
     const [isOpen, setIsOpen] = useState(true); // Default open
 
     // Check if all items in this category are checked
     const typeIds = category.types.map(t => t.id);
     const allChecked = typeIds.every(id => filters[id]);
     const someChecked = typeIds.some(id => filters[id]);
-    const activeCount = typeIds.filter(id => filters[id]).length;
+
+    // Calculate counts
+    const categoryMarkers = markers.filter(m => m.type === mainType);
+    const totalCount = categoryMarkers.length;
+
+    const getTypeCount = (typeId) => {
+        return categoryMarkers.filter(m => m.category === typeId).length;
+    };
 
     // 아이콘 매핑 (카테고리별 대표 아이콘)
     const getCategoryIcon = (type) => {
@@ -161,14 +168,14 @@ const AccordionFilter = ({ mainType, category }) => {
                     }}
                 >
                     {getCategoryIcon(mainType)}
-                    <span className="font-bold text-sm text-gray-300 opacity-100 whitespace-nowrap">
+                    <span className="font-bold text-sm text-gray-300 opacity-100 whitespace-nowrap flex items-center gap-1">
                         {category.label.split('(')[0].trim()}
+                        <span className="text-gray-500 font-mono text-xs">({totalCount})</span>
                     </span>
                 </div>
 
                 {/* 전체 토글 스위치 */}
                 <div className="opacity-100 flex items-center gap-2">
-                    <span className="text-[10px] text-gray-500 font-mono">{activeCount} items</span>
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -189,16 +196,20 @@ const AccordionFilter = ({ mainType, category }) => {
                         onClick={() => toggleFilter(type.id)}
                         className="flex items-center justify-between py-2 px-3 pl-10 hover:bg-white/5 cursor-pointer transition-colors group/item"
                     >
-                        <div className="flex items-center gap-2 overflow-hidden">
+                        <div className="flex items-center gap-2 overflow-hidden flex-1">
                             <div className={`w-1.5 h-1.5 rounded-full ${filters[type.id] ? 'bg-arc-accent' : 'bg-gray-600'}`} />
                             <span className={`text-xs transition-colors truncate ${filters[type.id] ? 'text-gray-300' : 'text-gray-600'}`}>
                                 {type.label.split('(')[0].trim()}
                             </span>
                         </div>
 
-                        {/* 체크박스 (커스텀 스타일) */}
-                        <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent'}`}>
-                            {filters[type.id] && <div className="w-2 h-2 bg-white rounded-[1px]" />}
+                        <div className="flex items-center gap-3">
+                            <span className="text-[10px] text-gray-500 font-mono">{getTypeCount(type.id)}</span>
+
+                            {/* 체크박스 (커스텀 스타일) */}
+                            <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent'}`}>
+                                {filters[type.id] && <div className="w-2 h-2 bg-white rounded-[1px]" />}
+                            </div>
                         </div>
                     </div>
                 ))}
