@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield } from 'lucide-react';
-import skillTreeBanner from '../assets/arc_raiders_banner_v3.png';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -108,7 +107,7 @@ const LandingPage = () => {
                         {/* Background Image */}
                         <div
                             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            style={{ backgroundImage: `url(${skillTreeBanner})` }}
+                            style={{ backgroundImage: "url('/banners/skill_tree.png')" }}
                         />
 
                         {/* Dark Overlay */}
