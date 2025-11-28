@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { MAPS, MARKER_CATEGORIES } from '../constants';
-import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home } from 'lucide-react';
+import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap } from 'lucide-react';
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -26,6 +26,15 @@ const Sidebar = () => {
                 >
                     <Home size={16} />
                     Back to Home
+                </button>
+
+                {/* Skill Tree 버튼 */}
+                <button
+                    onClick={() => navigate('/skills')}
+                    className="w-full mb-4 bg-gray-800 hover:bg-gray-700 text-white py-2 rounded-lg border border-gray-700 transition-colors flex items-center justify-center gap-2 text-sm font-bold"
+                >
+                    <Zap size={16} className="text-yellow-400" />
+                    Skill Tree
                 </button>
 
                 {/* 맵 선택 드롭다운 */}

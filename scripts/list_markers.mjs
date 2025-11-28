@@ -3,7 +3,7 @@ import Marker from '../server/models/Marker.js';
 import User from '../server/models/User.js';
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://woofo:da868133@cluster0.iienqyl.mongodb.net/arc-raiders-map?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://woofo:da868133@cluster0.iienqyl.mongodb.net/arc-raiders-map?retryWrites=true&w=majority&appName=Cluster0', { serverSelectionTimeoutMS: 30000 })
     .then(() => {
         console.log('MongoDB Connected');
         listMarkers();

@@ -77,7 +77,10 @@ const LandingPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Skill Tree Card (Wide) */}
-                    <div className="col-span-1 md:col-span-2 lg:col-span-3 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 border border-white/10 hover:border-yellow-500/50 transition-colors group cursor-pointer">
+                    <div
+                        className="col-span-1 md:col-span-2 lg:col-span-3 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 border border-white/10 hover:border-yellow-500/50 transition-colors group cursor-pointer"
+                        onClick={() => navigate('/skills')}
+                    >
                         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                             <div className="text-left">
                                 <div className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold inline-block mb-4">COMING SOON</div>

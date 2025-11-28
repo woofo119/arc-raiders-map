@@ -2,6 +2,7 @@
   "dependencies": {
     "@cloudtype/cli": "^0.7.1",
     "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
     "mongoose": "^9.0.0"
   }
 }
