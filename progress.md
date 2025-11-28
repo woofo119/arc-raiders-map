@@ -74,7 +74,12 @@
 ## 4. Next Steps for Tomorrow (내일 작업)
 
 ### A. Immediate Tasks (우선순위)
-1. **Generate Remaining Icons** (아침 4:45 이후)
+1. **Feature: Marker Editing (New)**
+   - [ ] Implement Backend API (PUT /markers/:id)
+   - [ ] Implement Frontend Edit UI (Button & Modal)
+   - [ ] Verify Admin & Owner permissions
+
+2. **Generate Remaining Icons** (아침 4:45 이후)
    - [ ] Generate: apricot.png
    - [ ] Generate: security_locker.png
    - [ ] Generate: armor_crate.png
@@ -83,7 +88,7 @@
    - [ ] Copy to `client/public/icons/`
    - [ ] Commit and push
 
-2. **Deploy & Verify**
+3. **Deploy & Verify**
    - [ ] Redeploy Frontend to Cloudtype
    - [ ] Test all marker types with new icons
    - [ ] Verify container color (all orange)
