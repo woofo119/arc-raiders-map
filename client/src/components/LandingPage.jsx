@@ -4,7 +4,11 @@ import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield } fro
 
 const LandingPage = () => {
     const navigate = useNavigate();
-    // Scroll effect removed for new laser animation
+
+    // Shared background style for all cards to create the "masked" effect
+    const cardBackgroundStyle = "bg-[url('/banners/dashboard_bg.png')] bg-fixed bg-cover bg-center border border-white/20 hover:border-yellow-500/50 transition-all group cursor-pointer relative overflow-hidden";
+    const cardOverlayStyle = "absolute inset-0 bg-black/60 hover:bg-black/50 transition-colors z-0";
+    const cardContentStyle = "relative z-10 h-full flex flex-col justify-center p-6";
 
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
@@ -17,19 +21,12 @@ const LandingPage = () => {
                 }}
             >
                 {[
-                    // Fast & Thin
                     { color: 'bg-cyan-500', delay: '0s', left: '10%', duration: '2s', width: 'w-0.5 md:w-1', height: 'h-[30vh]', opacity: 'opacity-60' },
                     { color: 'bg-red-500', delay: '0.5s', left: '85%', duration: '1.8s', width: 'w-0.5 md:w-1', height: 'h-[25vh]', opacity: 'opacity-70' },
-
-                    // Medium & Standard
                     { color: 'bg-green-500', delay: '1.5s', left: '30%', duration: '4s', width: 'w-1 md:w-2', height: 'h-[40vh]', opacity: 'opacity-40' },
                     { color: 'bg-yellow-500', delay: '0.8s', left: '60%', duration: '3.5s', width: 'w-1 md:w-2', height: 'h-[45vh]', opacity: 'opacity-50' },
-
-                    // Slow & Thick (Background feel)
                     { color: 'bg-cyan-500', delay: '2.5s', left: '45%', duration: '5s', width: 'w-1.5 md:w-3', height: 'h-[60vh]', opacity: 'opacity-20' },
                     { color: 'bg-red-500', delay: '3.2s', left: '15%', duration: '4.5s', width: 'w-1.5 md:w-3', height: 'h-[50vh]', opacity: 'opacity-30' },
-
-                    // Extra Fast Bursts
                     { color: 'bg-yellow-500', delay: '4s', left: '75%', duration: '1.5s', width: 'w-0.5', height: 'h-[20vh]', opacity: 'opacity-80' },
                     { color: 'bg-green-500', delay: '2.8s', left: '5%', duration: '2.2s', width: 'w-0.5', height: 'h-[35vh]', opacity: 'opacity-60' }
                 ].map((laser, index) => (
@@ -95,26 +92,17 @@ const LandingPage = () => {
             </section >
 
             {/* Feature Cards Grid */}
-            < section className="relative z-10 py-20 px-8 max-w-7xl mx-auto" >
-                <h2 className="text-3xl font-bold mb-12 text-center">환영합니다, 레이더!</h2>
+            <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto">
+                <h2 className="text-3xl font-bold mb-12 text-center text-white drop-shadow-lg">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Skill Tree Banner */}
+                    {/* Skill Tree */}
                     <div
-                        className="col-span-1 md:col-span-2 lg:col-span-3 relative rounded-2xl overflow-hidden border border-white/10 hover:border-yellow-500/50 transition-all group cursor-pointer h-32"
+                        className={`col-span-1 md:col-span-2 lg:col-span-3 h-32 ${cardBackgroundStyle}`}
                         onClick={() => navigate('/skills')}
                     >
-                        {/* Background Image */}
-                        <div
-                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            style={{ backgroundImage: "url('/banners/skill_tree.png')" }}
-                        />
-
-                        {/* Dark Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
-
-                        {/* Content */}
-                        <div className="relative h-full flex flex-col justify-center px-8 z-10">
+                        <div className={cardOverlayStyle} />
+                        <div className={`${cardContentStyle} px-8`}>
                             <div className="flex items-center gap-3 mb-1">
                                 <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-[10px] font-bold border border-blue-500/30">NEW FEATURE</div>
                             </div>
@@ -126,48 +114,72 @@ const LandingPage = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gray-900 rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer">
-                        <BookOpen className="text-cyan-400 mb-4" size={32} />
-                        <h3 className="text-xl font-bold mb-2">가이드</h3>
-                        <p className="text-gray-400 text-sm mb-4">초보자부터 전문가까지, 생존을 위한 필수 지식.</p>
-                        <button className="text-cyan-400 text-sm font-bold hover:underline">자세히 보기</button>
+                    {/* Guide */}
+                    <div className={cardBackgroundStyle}>
+                        <div className={cardOverlayStyle} />
+                        <div className={cardContentStyle}>
+                            <BookOpen className="text-cyan-400 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 relative z-10">가이드</h3>
+                            <p className="text-gray-300 text-sm mb-4 relative z-10">초보자부터 전문가까지, 생존을 위한 필수 지식.</p>
+                            <button className="text-cyan-400 text-sm font-bold hover:underline relative z-10">자세히 보기</button>
+                        </div>
                     </div>
 
+                    {/* Map */}
                     <div
                         onClick={() => navigate('/map')}
-                        className="bg-gray-900 rounded-2xl p-6 border border-white/10 hover:border-yellow-500/50 transition-all hover:-translate-y-1 cursor-pointer group"
+                        className={cardBackgroundStyle}
                     >
-                        <MapIcon className="text-yellow-500 mb-4" size={32} />
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-400">맵</h3>
-                        <p className="text-gray-400 text-sm mb-4">자원, 탈출구, 위험 지역을 한눈에 파악하세요.</p>
-                        <button className="bg-yellow-500/10 text-yellow-500 px-4 py-2 rounded-lg text-sm font-bold group-hover:bg-yellow-500 group-hover:text-black transition-colors">
-                            입장하기
-                        </button>
+                        <div className={cardOverlayStyle} />
+                        <div className={cardContentStyle}>
+                            <MapIcon className="text-yellow-500 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-400 relative z-10">맵</h3>
+                            <p className="text-gray-300 text-sm mb-4 relative z-10">자원, 탈출구, 위험 지역을 한눈에 파악하세요.</p>
+                            <button className="bg-yellow-500/10 text-yellow-500 px-4 py-2 rounded-lg text-sm font-bold group-hover:bg-yellow-500 group-hover:text-black transition-colors relative z-10">
+                                입장하기
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="bg-gray-900 rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer">
-                        <Zap className="text-orange-400 mb-4" size={32} />
-                        <h3 className="text-xl font-bold mb-2">스킬 & 진행</h3>
-                        <p className="text-gray-400 text-sm mb-4">캐릭터 성장과 스킬 마스터리 가이드.</p>
-                        <button className="text-orange-400 text-sm font-bold hover:underline">살펴보기</button>
+                    {/* Skills & Progress */}
+                    <div className={cardBackgroundStyle}>
+                        <div className={cardOverlayStyle} />
+                        <div className={cardContentStyle}>
+                            <Zap className="text-orange-400 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 relative z-10">스킬 & 진행</h3>
+                            <p className="text-gray-300 text-sm mb-4 relative z-10">캐릭터 성장과 스킬 마스터리 가이드.</p>
+                            <button className="text-orange-400 text-sm font-bold hover:underline relative z-10">살펴보기</button>
+                        </div>
                     </div>
 
-                    <div className="bg-gray-900 rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer">
-                        <Crosshair className="text-red-400 mb-4" size={32} />
-                        <h3 className="text-xl font-bold mb-2">무기 데이터베이스</h3>
-                        <p className="text-gray-400 text-sm">모든 무기의 스탯과 파츠 정보.</p>
+                    {/* Weapons DB */}
+                    <div className={cardBackgroundStyle}>
+                        <div className={cardOverlayStyle} />
+                        <div className={cardContentStyle}>
+                            <Crosshair className="text-red-400 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 relative z-10">무기 데이터베이스</h3>
+                            <p className="text-gray-300 text-sm relative z-10">모든 무기의 스탯과 파츠 정보.</p>
+                        </div>
                     </div>
 
-                    <div className="bg-gray-900 rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer">
-                        <Box className="text-purple-400 mb-4" size={32} />
-                        <h3 className="text-xl font-bold mb-2">아이템 데이터베이스</h3>
-                        <p className="text-gray-400 text-sm">파밍 가능한 모든 아이템 목록.</p>
+                    {/* Items DB */}
+                    <div className={cardBackgroundStyle}>
+                        <div className={cardOverlayStyle} />
+                        <div className={cardContentStyle}>
+                            <Box className="text-purple-400 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 relative z-10">아이템 데이터베이스</h3>
+                            <p className="text-gray-300 text-sm relative z-10">파밍 가능한 모든 아이템 목록.</p>
+                        </div>
                     </div>
 
-                    <div className="bg-gray-900 rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-1 cursor-pointer">
-                        <Shield className="text-green-400 mb-4" size={32} />
-                        <h3 className="text-xl font-bold mb-2">로드아웃</h3>
-                        <p className="text-gray-400 text-sm">상황별 추천 장비 세팅.</p>
+                    {/* Loadout */}
+                    <div className={cardBackgroundStyle}>
+                        <div className={cardOverlayStyle} />
+                        <div className={cardContentStyle}>
+                            <Shield className="text-green-400 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 relative z-10">로드아웃</h3>
+                            <p className="text-gray-300 text-sm relative z-10">상황별 추천 장비 세팅.</p>
+                        </div>
                     </div>
                 </div>
             </section >
