@@ -256,7 +256,7 @@ const MapContainer = () => {
                 center={mapCenter}
                 zoom={0} // 초기 줌 레벨 조정
                 minZoom={-2} // 더 넓게 볼 수 있도록 최소 줌 레벨 조정
-                maxZoom={2} // 너무 확대되지 않도록 최대 줌 레벨 조정
+                maxZoom={3.5} // 10배 이상 확대 가능하도록 조정 (2^3.32 ≈ 10)
                 style={{ height: '100%', width: '100%', background: '#0a0a0a' }}
                 attributionControl={false}
             >
