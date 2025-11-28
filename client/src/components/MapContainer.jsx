@@ -200,13 +200,13 @@ const MapController = ({ onRightClick, bounds }) => {
     return null;
 };
 
+// 지도 설정 (CRS.Simple 모드: 위도/경도 대신 픽셀 좌표 사용)
+const bounds = [[0, 0], [1000, 1000]]; // 이미지 비율에 맞춰 조정 필요
+const mapCenter = [500, 500];
+
 const MapContainer = () => {
     const { markers, fetchMarkers, filters, isAuthenticated, deleteMarker, user, currentMap } = useStore();
     const [formPosition, setFormPosition] = useState(null);
-
-    // 지도 설정 (CRS.Simple 모드: 위도/경도 대신 픽셀 좌표 사용)
-    const bounds = [[0, 0], [1000, 1000]]; // 이미지 비율에 맞춰 조정 필요
-    const mapCenter = [500, 500];
 
     useEffect(() => {
         fetchMarkers();
