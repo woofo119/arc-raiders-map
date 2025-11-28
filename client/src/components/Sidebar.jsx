@@ -1,6 +1,6 @@
 import useStore from '../store/useStore';
 import { MAPS } from '../constants';
-import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
+import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Box, MapPin, Leaf } from 'lucide-react';
 
 const Sidebar = () => {
     const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
@@ -48,18 +48,25 @@ const Sidebar = () => {
 
                 <div className="space-y-3 flex flex-col items-center group-hover/sidebar:items-stretch">
                     <FilterItem
-                        label="자원 (Resource)"
-                        icon={<Layers size={20} className="text-emerald-400" />}
-                        checked={filters.resource}
-                        onChange={() => toggleFilter('resource')}
-                        color="emerald"
+                        label="컨테이너 (Container)"
+                        icon={<Box size={20} className="text-orange-400" />}
+                        checked={filters.container}
+                        onChange={() => toggleFilter('container')}
+                        color="orange"
                     />
                     <FilterItem
-                        label="무기 (Weapon)"
-                        icon={<Crosshair size={20} className="text-red-400" />}
-                        checked={filters.weapon}
-                        onChange={() => toggleFilter('weapon')}
-                        color="red"
+                        label="위치 (Location)"
+                        icon={<MapPin size={20} className="text-purple-400" />}
+                        checked={filters.location}
+                        onChange={() => toggleFilter('location')}
+                        color="purple"
+                    />
+                    <FilterItem
+                        label="자연 (Nature)"
+                        icon={<Leaf size={20} className="text-green-400" />}
+                        checked={filters.nature}
+                        onChange={() => toggleFilter('nature')}
+                        color="green"
                     />
                     <FilterItem
                         label="퀘스트 (Quest)"

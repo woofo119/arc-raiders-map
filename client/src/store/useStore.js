@@ -73,8 +73,6 @@ const useStore = create((set, get) => ({
         location: true,
         nature: true,
         container: true,
-        resource: true,
-        weapon: true,
         quest: true,
     },
 
