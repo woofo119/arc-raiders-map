@@ -61,19 +61,29 @@ const LandingPage = () => {
             </header>
 
             {/* Hero Section */}
-            <section className="relative z-10 pt-32 pb-20 px-8 max-w-7xl mx-auto text-center">
-                <h1 className="text-6xl md:text-7xl font-black mb-6 tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                    ARC Raiders 마스터하기
+            <section className="relative z-10 h-screen flex flex-col items-center justify-center text-center px-8">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
+                    style={{
+                        backgroundImage: "url('/1401751.jpg')",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-black/60" /> {/* Dark overlay for text readability */}
+                </div>
+
+                <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter text-white drop-shadow-2xl">
+                    레이더스여, 집결하라!
                 </h1>
-                <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-                    전략, 루트, 그리고 생존을 위한 모든 것이 이곳에 있습니다.
+                <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-lg">
+                    아크의 위협에 맞서 생존을 위한 여정이 시작된다.
                     <br />
-                    ARC Raiders의 세계를 지배하기 위한 가장 완벽한 가이드.
+                    <span className="text-sm text-gray-400 mt-2 block">ARC Raiders Hub에서 당신의 여정을 준비하세요.</span>
                 </p>
                 <div className="flex justify-center gap-4">
                     <button
                         onClick={() => navigate('/map')}
-                        className="group bg-white text-black font-bold py-4 px-8 rounded-xl text-lg hover:bg-gray-200 transition-all flex items-center gap-2"
+                        className="group bg-arc-accent hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg transition-all flex items-center gap-2 shadow-lg hover:shadow-orange-500/20 hover:scale-105"
                     >
                         맵 정보 확인하기
                         <ArrowRight className="group-hover:translate-x-1 transition-transform" />
