@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { ArrowLeft, RotateCcw, Share2, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from 'react';
+import { ArrowLeft, RotateCcw, Share2, Lock, Check } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SKILL_DATA } from '../data/skills';
 
 const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
@@ -95,6 +95,27 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
 
 const SkillTreePage = () => {
     const [skillsState, setSkillsState] = useState({});
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [isCopied, setIsCopied] = useState(false);
+
+    // Load state from URL on mount
+    useEffect(() => {
+        const buildParam = searchParams.get('build');
+        if (buildParam) {
+            try {
+                const newState = {};
+                buildParam.split(',').forEach(pair => {
+                    const [id, level] = pair.split(':');
+                    if (id && level) {
+                        newState[id] = parseInt(level, 10);
+                    }
+                });
+                setSkillsState(newState);
+            } catch (e) {
+                console.error("Failed to parse build param", e);
+            }
+        }
+    }, [searchParams]);
 
     const handleSkillChange = (skillId, newLevel) => {
         setSkillsState(prev => ({
@@ -106,7 +127,23 @@ const SkillTreePage = () => {
     const handleReset = () => {
         if (window.confirm('스킬 트리를 초기화하시겠습니까?')) {
             setSkillsState({});
+            setSearchParams({}); // Clear URL
         }
+    };
+
+    const handleShare = () => {
+        // Serialize state: id:level,id:level
+        const buildString = Object.entries(skillsState)
+            .filter(([_, level]) => level > 0)
+            .map(([id, level]) => `${id}:${level}`)
+            .join(',');
+
+        const url = `${window.location.origin}${window.location.pathname}?build=${buildString}`;
+
+        navigator.clipboard.writeText(url).then(() => {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        });
     };
 
     // Calculate total points per category
@@ -211,9 +248,15 @@ const SkillTreePage = () => {
                         <RotateCcw size={14} />
                         <span>트리 초기화</span>
                     </button>
-                    <button className="flex items-center gap-2 px-3 py-1.5 bg-yellow-600 hover:bg-yellow-500 rounded-md text-sm transition-colors text-black font-bold">
-                        <Share2 size={14} />
-                        <span>공유</span>
+                    <button
+                        onClick={handleShare}
+                        className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-all font-bold ${isCopied
+                                ? 'bg-green-600 text-white hover:bg-green-500'
+                                : 'bg-yellow-600 text-black hover:bg-yellow-500'
+                            }`}
+                    >
+                        {isCopied ? <Check size={14} /> : <Share2 size={14} />}
+                        <span>{isCopied ? '복사됨!' : '공유'}</span>
                     </button>
                 </div>
             </div>
