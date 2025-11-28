@@ -9,12 +9,12 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
 
     return (
         <div
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group z-10"
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-200 hover:z-[100]"
             style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
             {/* Skill Icon Circle */}
             <div
-                className={`w-10 h-10 md:w-14 md:h-14 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
+                className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -33,12 +33,12 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                 }}
             >
                 {/* Icon */}
-                <div className="w-full h-full p-1 rounded-full overflow-hidden relative">
+                <div className="w-full h-full p-1 rounded-full overflow-hidden relative flex items-center justify-center">
                     {skill.icon ? (
                         <img
                             src={skill.icon}
                             alt={skill.name}
-                            className={`w-full h-full object-cover transition-all duration-300 ${isActive ? 'opacity-100 grayscale-0' : 'opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-80'
+                            className={`w-full h-full object-contain transition-all duration-300 ${isActive ? 'opacity-100 grayscale-0' : 'opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-80'
                                 }`}
                             onError={(e) => {
                                 e.target.style.display = 'none';
@@ -54,14 +54,14 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
 
                 {/* Lock Overlay */}
                 {isLocked && (
-                    <div className="absolute -top-1 -right-1 bg-gray-900 rounded-full p-1 border border-gray-700">
-                        <Lock size={12} className="text-red-500" />
+                    <div className="absolute -top-1 -right-1 bg-gray-900 rounded-full p-1 border border-gray-700 z-20">
+                        <Lock size={14} className="text-red-500" />
                     </div>
                 )}
             </div>
 
             {/* Counter Pill */}
-            <div className={`mt-1 px-1.5 py-0.5 rounded-full text-[9px] md:text-[10px] font-bold border transition-colors whitespace-nowrap z-20
+            <div className={`mt-1 px-2 py-0.5 rounded-full text-[10px] md:text-xs font-bold border transition-colors whitespace-nowrap z-20
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -73,17 +73,18 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 hidden group-hover:block w-64 bg-gray-950 border border-gray-700 rounded-lg p-3 shadow-xl z-50 pointer-events-none">
-                <h4 className={`font-bold text-sm mb-1 text-${color}`}>{skill.name}</h4>
-                <p className="text-xs text-gray-300 mb-2 leading-relaxed whitespace-pre-wrap">{skill.description}</p>
-                <div className="flex flex-col gap-1 text-[10px] text-gray-500 border-t border-gray-800 pt-2">
+            <div className="absolute bottom-full mb-3 hidden group-hover:block w-72 bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-50 pointer-events-none">
+                <h4 className={`font-bold text-base mb-2 text-${color}`}>{skill.name}</h4>
+                <p className="text-sm text-gray-300 mb-3 leading-relaxed whitespace-pre-wrap">{skill.description}</p>
+                <div className="flex flex-col gap-1 text-xs text-gray-500 border-t border-gray-800 pt-2">
                     <div className="flex justify-between">
                         <span>Max Level: {skill.maxLevel}</span>
                         {skill.reqPoints > 0 && <span className={isLocked ? "text-red-500" : "text-green-500"}>Req: {skill.reqPoints} pts</span>}
                     </div>
                     {isPrereqLocked && (
-                        <div className="text-red-500 font-bold">
-                            🔒 이전 단계 스킬 필요
+                        <div className="text-red-500 font-bold flex items-center gap-1">
+                            <Lock size={12} />
+                            <span>이전 단계 스킬 필요</span>
                         </div>
                     )}
                 </div>
