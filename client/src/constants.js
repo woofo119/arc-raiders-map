@@ -12,13 +12,13 @@ export const MARKER_CATEGORIES = {
     location: {
         label: '위치 (Location)',
         types: [
-            { id: 'extraction', label: '탈출구 (Extraction)', icon: '/icons/extraction.png' }, // Custom Icon
-            { id: 'raider_hatch', label: '레이더 해치 (Raider Hatch)', icon: 'Disc' },
-            { id: 'locked_room', label: '잠긴 방 (Locked Room)', icon: 'Lock' },
-            { id: 'supply_call', label: '보급 호출소 (Supply Call Station)', icon: 'Radio' },
-            { id: 'field_depot', label: '야전 저장소 (Field Depot)', icon: 'Archive' },
-            { id: 'player_spawn', label: '플레이어 스폰 (Player Spawn)', icon: 'User' },
-            { id: 'field_crate', label: '야전 상자 (Field Crate)', icon: 'Box' },
+            { id: 'extraction', label: '탈출구 (Extraction)', icon: '/icons/icon_extraction.png' },
+            { id: 'raider_hatch', label: '레이더 해치 (Raider Hatch)', icon: '/icons/icon_raider_hatch.png' },
+            { id: 'locked_room', label: '잠긴 방 (Locked Room)', icon: '/icons/icon_locked_room.png' },
+            { id: 'supply_call', label: '보급 호출소 (Supply Call Station)', icon: '/icons/icon_supply_call.png' },
+            { id: 'field_depot', label: '야전 저장소 (Field Depot)', icon: '/icons/icon_field_depot.png' },
+            { id: 'player_spawn', label: '플레이어 스폰 (Player Spawn)', icon: '/icons/icon_player_spawn.png' },
+            { id: 'field_crate', label: '야전 상자 (Field Crate)', icon: '/icons/icon_field_crate.png' },
             { id: 'vent_extraction', label: '환풍구 탈출구 (Vent Extraction)', icon: 'Wind' },
             { id: 'train_extraction', label: '기차 탈출구 (Train Extraction)', icon: 'Train' },
             { id: 'stairs_down', label: '지하 계단 (Stairs Down)', icon: 'ArrowDownCircle' },
@@ -27,20 +27,20 @@ export const MARKER_CATEGORIES = {
     nature: {
         label: '자연 (Nature)',
         types: [
-            { id: 'mushroom', label: '버섯 (Mushroom)', icon: '/icons/mushroom.png' }, // Custom Icon
-            { id: 'prickly_pear', label: '선인장 열매 (Prickly Pear)', icon: 'Sprout' },
-            { id: 'agave', label: '용설란 (Agave)', icon: 'Sprout' },
-            { id: 'great_mullein', label: '우단담배풀 (Great Mullein)', icon: 'Sprout' },
-            { id: 'apricot', label: '살구 (Apricot)', icon: 'Sprout' },
-            { id: 'olives', label: '올리브 (Olives)', icon: '/icons/olives.png' }, // Custom Icon
+            { id: 'mushroom', label: '버섯 (Mushroom)', icon: '/icons/icon_mushroom.png' },
+            { id: 'prickly_pear', label: '선인장 열매 (Prickly Pear)', icon: '/icons/icon_prickly_pear.png' },
+            { id: 'agave', label: '용설란 (Agave)', icon: '/icons/icon_agave.png' },
+            { id: 'great_mullein', label: '우단담배풀 (Great Mullein)', icon: '/icons/icon_great_mullein.png' },
+            { id: 'apricot', label: '살구 (Apricot)', icon: '/icons/icon_apricot.png' },
+            { id: 'olives', label: '올리브 (Olives)', icon: '/icons/olives.png' }, // Existing
             { id: 'lemon', label: '레몬 (Lemon)', icon: 'Sprout' },
         ]
     },
     container: {
         label: '컨테이너 (Container)',
         types: [
-            { id: 'weapon_case', label: '무기 상자 (Weapon Case)', icon: '/icons/weapon_case.png' }, // Custom Icon
-            { id: 'security_locker', label: '보안 라커 (Security Locker)', icon: 'Box' },
+            { id: 'weapon_case', label: '무기 상자 (Weapon Case)', icon: '/icons/weapon_case.png' }, // Existing
+            { id: 'security_locker', label: '보안 라커 (Security Locker)', icon: '/icons/icon_security_locker.png' },
             { id: 'armor_crate', label: '방어구 상자 (Armor Crate)', icon: 'Box' },
             { id: 'medical_box', label: '의료 상자 (Medical Box)', icon: 'Briefcase' },
             { id: 'grenade_box', label: '수류탄 상자 (Grenade Box)', icon: 'Box' },
