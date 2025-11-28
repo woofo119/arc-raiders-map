@@ -159,7 +159,7 @@ const MarkerPopupContent = ({ marker }) => {
             )}
 
             <div className="flex justify-between items-center text-xs text-gray-500">
-                <span>By {marker.isOfficial ? 'Admin' : (marker.createdBy?.nickname || marker.createdBy?.username || 'Unknown')}</span>
+                <div />
 
                 {canEdit && (
                     <div className="flex gap-2">
