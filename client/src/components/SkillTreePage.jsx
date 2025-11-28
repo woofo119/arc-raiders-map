@@ -66,7 +66,7 @@ const SkillTreePage = () => {
                         <ArrowLeft size={24} />
                     </button>
                     <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
-                        Arc Raiders 실시간 스킬 트리
+                        ARC Raiders KR 실시간 스킬 트리
                     </h1>
                 </div>
 

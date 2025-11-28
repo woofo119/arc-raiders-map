@@ -57,7 +57,7 @@ const LoginModal = ({ onClose }) => {
                         {isLogin ? 'Welcome Back' : 'Join the Squad'}
                     </h2>
                     <p className="text-gray-400 text-sm">
-                        {isLogin ? 'ARC Raiders 커뮤니티 맵에 로그인하세요.' : '새로운 계정을 생성하고 작전을 시작하세요.'}
+                        {isLogin ? 'ARC Raiders KR에 로그인하세요.' : '새로운 계정을 생성하고 작전을 시작하세요.'}
                     </p>
                 </div>
 
