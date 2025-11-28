@@ -68,7 +68,7 @@ const LandingPage = () => {
                 <div
                     className="absolute inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
                     style={{
-                        backgroundImage: "url('/1-8f93acea.png')",
+                        backgroundImage: "url('/1-8f93acea.jpg')",
                     }}
                 >
                     <div className="absolute inset-0 bg-black/40" />
@@ -92,10 +92,10 @@ const LandingPage = () => {
                         <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>
-            </section>
+            </section >
 
             {/* Feature Cards Grid */}
-            <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto">
+            < section className="relative z-10 py-20 px-8 max-w-7xl mx-auto" >
                 <h2 className="text-3xl font-bold mb-12 text-center">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -159,10 +159,10 @@ const LandingPage = () => {
                         <p className="text-gray-400 text-sm">상황별 추천 장비 세팅.</p>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* News Section */}
-            <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5">
+            < section className="relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5" >
                 <h2 className="text-2xl font-bold mb-8">아크레이더스 소식</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
@@ -220,14 +220,14 @@ const LandingPage = () => {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section >
 
             {/* Footer */}
-            <footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm">
+            < footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm" >
                 <p>&copy; 2025 ARC Raiders KR. All rights reserved.</p>
                 <p className="mt-2">This is a fan-made site and is not affiliated with Embark Studios.</p>
-            </footer>
-        </div>
+            </footer >
+        </div >
     );
 };
 
