@@ -59,40 +59,28 @@
 
 ## 3. Current Status (현재 상태)
 
-### Latest Changes (2025-01-28 00:44)
-- ✅ **Icon Paths Added:** Updated `constants.js` with paths for 5 additional icons
-  - apricot, security_locker, armor_crate, medical_box, grenade_box
-- ✅ **Container Color Logic:** Changed from `category === 'weapon_case'` to `type === 'container'`
-  - All container items now have orange background
-- ✅ **Code Committed:** All changes pushed to GitHub (commit: 03448ef)
+### Latest Changes (2025-01-28 Session 2)
+- ✅ **Icons Completed:** All 5 missing icons (apricot, security_locker, etc.) are generated and integrated.
+- ✅ **News Images:** Updated landing page with real images from Steam/YouTube.
+- ✅ **Animation Refined:** Replaced static lines with dynamic "shooting laser" effect on landing page.
+- ✅ **Marker Editing:** Verified backend/frontend code exists (ready for testing).
 
 ### Blocked Items
-- ⏸️ **Icon Generation:** Image generation quota exhausted
-  - **Reset Time:** ~4 hours (around 4:45 AM KST)
-  - **Pending Icons:** 5 items (apricot, security_locker, armor_crate, medical_box, grenade_box)
+- None. Ready for deployment and verification.
 
 ## 4. Next Steps for Tomorrow (내일 작업)
 
-### A. Immediate Tasks (우선순위)
-1. **Feature: Marker Editing (New)**
-   - [ ] Implement Backend API (PUT /markers/:id)
-   - [ ] Implement Frontend Edit UI (Button & Modal)
-   - [ ] Verify Admin & Owner permissions
+### A. Immediate Tasks (Next Session)
+1.  **Deployment & Verification**
+    - [ ] Redeploy Frontend to Cloudtype
+    - [ ] Verify new icons in-game
+    - [ ] Verify news images on landing page
+    - [ ] Verify new laser animation
+    - [ ] Test Marker Editing feature
 
-2. **Generate Remaining Icons** (아침 4:45 이후)
-   - [ ] Generate: apricot.png
-   - [ ] Generate: security_locker.png
-   - [ ] Generate: armor_crate.png
-   - [ ] Generate: medical_box.png
-   - [ ] Generate: grenade_box.png
-   - [ ] Copy to `client/public/icons/`
-   - [ ] Commit and push
-
-3. **Deploy & Verify**
-   - [ ] Redeploy Frontend to Cloudtype
-   - [ ] Test all marker types with new icons
-   - [ ] Verify container color (all orange)
-   - [ ] Verify admin markers (yellow border + category background)
+2.  **Mobile Optimization**
+    - [ ] Check UI on mobile devices
+    - [ ] Adjust touch targets if needed
 
 ### B. Optional Enhancements
 - [ ] Generate icons for remaining nature items (prickly_pear, agave, great_mullein, lemon)
