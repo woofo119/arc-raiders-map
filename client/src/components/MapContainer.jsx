@@ -80,8 +80,148 @@ const getIcon = (type, category, isOfficial) => {
 
 
 
-            </div >
-        </div >
+// 마커 팝업 내용 컴포넌트 (수정 기능 포함)
+const MarkerPopupContent = ({ marker }) => {
+    const { user, deleteMarker, updateMarker } = useStore();
+    const [isEditing, setIsEditing] = useState(false);
+    const [editTitle, setEditTitle] = useState(marker.title);
+    const [editDescription, setEditDescription] = useState(marker.description);
+    const [editImage, setEditImage] = useState(marker.image);
+
+    // 마커가 변경되면 에디팅 상태 초기화
+    useEffect(() => {
+        setEditTitle(marker.title);
+        setEditDescription(marker.description);
+        setEditImage(marker.image);
+        setIsEditing(false);
+    }, [marker]);
+
+    const handleSave = async (e) => {
+        e.stopPropagation(); // 이벤트 전파 방지
+        const result = await updateMarker(marker._id, editTitle, editDescription, editImage);
+        if (result.success) {
+            setIsEditing(false);
+        } else {
+            alert(result.message);
+        }
+    };
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setEditImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // 작성자 확인 로직 개선 (populate된 객체인 경우와 ID 문자열인 경우 모두 처리)
+    const isCreator = user && (user._id === (marker.createdBy?._id || marker.createdBy));
+    const isAdmin = user && user.role === 'admin';
+    const canEdit = isCreator || isAdmin;
+
+    if (isEditing) {
+        return (
+            <div className="p-1 min-w-[200px]" onClick={(e) => e.stopPropagation()}>
+                <div className="mb-2">
+                    <input
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        className="w-full bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm mb-2"
+                        placeholder="제목"
+                    />
+                    <textarea
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        className="w-full bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm h-20 resize-none mb-2"
+                        placeholder="설명"
+                    />
+
+                    {/* 이미지 업로드 UI */}
+                    <div className="mb-2">
+                        <label className="block text-xs text-gray-400 mb-1">이미지 수정</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-gray-700 file:text-white hover:file:bg-gray-600"
+                        />
+                        {editImage && (
+                            <div className="mt-2 relative group">
+                                <img src={editImage} alt="Preview" className="w-full h-20 object-cover rounded border border-gray-600" />
+                                <button
+                                    onClick={() => setEditImage('')}
+                                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                    title="이미지 삭제"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="flex justify-end gap-2">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); setIsEditing(false); }}
+                        className="px-2 py-1 text-xs bg-gray-600 hover:bg-gray-500 text-white rounded"
+                    >
+                        취소
+                    </button>
+                    <button
+                        onClick={handleSave}
+                        className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-500 text-white rounded"
+                    >
+                        저장
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="p-1 min-w-[200px]">
+            <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
+                {marker.isOfficial && <span className="text-yellow-500 text-xs font-bold">[OFFICIAL]</span>}
+                <h3 className="font-bold text-lg text-white">{marker.title}</h3>
+            </div>
+            <p className="text-gray-300 text-sm mb-3 break-words whitespace-pre-wrap">{marker.description}</p>
+
+            {marker.image && (
+                <div className="mb-3 rounded-lg overflow-hidden border border-gray-700">
+                    <img src={marker.image} alt={marker.title} className="w-full h-auto object-cover" />
+                </div>
+            )}
+
+            <div className="flex justify-between items-center text-xs text-gray-500">
+                <span>By {marker.isOfficial ? 'Admin' : (marker.createdBy?.nickname || marker.createdBy?.username || 'Unknown')}</span>
+
+                {canEdit && (
+                    <div className="flex gap-2">
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation(); // 팝업 닫힘 방지
+                                setIsEditing(true);
+                            }}
+                            className="text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-900/20 px-2 py-1 rounded transition-colors"
+                        >
+                            수정
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation(); // 팝업 닫힘 방지
+                                deleteMarker(marker._id);
+                            }}
+                            className="text-red-400 hover:text-red-300 flex items-center gap-1 bg-red-900/20 px-2 py-1 rounded transition-colors"
+                        >
+                            삭제
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 };
 

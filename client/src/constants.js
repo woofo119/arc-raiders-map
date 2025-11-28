@@ -31,7 +31,7 @@ export const MARKER_CATEGORIES = {
             { id: 'prickly_pear', label: '선인장 열매 (Prickly Pear)', icon: 'Sprout' },
             { id: 'agave', label: '용설란 (Agave)', icon: 'Sprout' },
             { id: 'great_mullein', label: '우단담배풀 (Great Mullein)', icon: 'Sprout' },
-            { id: 'apricot', label: '살구 (Apricot)', icon: '/icons/apricot.png' },
+            { id: 'apricot', label: '살구 (Apricot)', icon: 'Sprout' },
             { id: 'olives', label: '올리브 (Olives)', icon: '/icons/olives.png' }, // Custom Icon
             { id: 'lemon', label: '레몬 (Lemon)', icon: 'Sprout' },
         ]
@@ -40,10 +40,10 @@ export const MARKER_CATEGORIES = {
         label: '컨테이너 (Container)',
         types: [
             { id: 'weapon_case', label: '무기 상자 (Weapon Case)', icon: '/icons/weapon_case.png' }, // Custom Icon
-            { id: 'security_locker', label: '보안 라커 (Security Locker)', icon: '/icons/security_locker.png' },
-            { id: 'armor_crate', label: '방어구 상자 (Armor Crate)', icon: '/icons/armor_crate.png' },
-            { id: 'medical_box', label: '의료 상자 (Medical Box)', icon: '/icons/medical_box.png' },
-            { id: 'grenade_box', label: '수류탄 상자 (Grenade Box)', icon: '/icons/grenade_box.png' },
+            { id: 'security_locker', label: '보안 라커 (Security Locker)', icon: 'Box' },
+            { id: 'armor_crate', label: '방어구 상자 (Armor Crate)', icon: 'Box' },
+            { id: 'medical_box', label: '의료 상자 (Medical Box)', icon: 'Briefcase' },
+            { id: 'grenade_box', label: '수류탄 상자 (Grenade Box)', icon: 'Box' },
         ]
     },
     quest: {
