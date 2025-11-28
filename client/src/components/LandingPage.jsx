@@ -173,25 +173,29 @@ const LandingPage = () => {
                             id: 41,
                             title: "MCN 대전 X 아크 레이더스",
                             date: "2024. 10. 22",
-                            link: "https://arcraiders.nexon.com/ko-KR/news/41"
+                            link: "https://arcraiders.nexon.com/ko-KR/news/41",
+                            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/header.jpg"
                         },
                         {
                             id: 39,
                             title: "The Evolution of ARC Raiders EP2: The Life of a Raider",
                             date: "2024. 10. 21",
-                            link: "https://arcraiders.nexon.com/ko-KR/news/39"
+                            link: "https://arcraiders.nexon.com/ko-KR/news/39",
+                            image: "https://img.youtube.com/vi/C8w79-x1gqE/maxresdefault.jpg"
                         },
                         {
                             id: 38,
                             title: "Update 1.4.0",
                             date: "2024. 10. 21",
-                            link: "https://arcraiders.nexon.com/ko-KR/news/38"
+                            link: "https://arcraiders.nexon.com/ko-KR/news/38",
+                            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/capsule_616x353.jpg"
                         },
                         {
                             id: 37,
                             title: "A Scrappy origin story",
                             date: "2024. 10. 16",
-                            link: "https://arcraiders.nexon.com/ko-KR/news/37"
+                            link: "https://arcraiders.nexon.com/ko-KR/news/37",
+                            image: "https://img.youtube.com/vi/QjJ2wKCMq5w/maxresdefault.jpg"
                         }
                     ].map((item) => (
                         <div
@@ -200,7 +204,11 @@ const LandingPage = () => {
                             onClick={() => window.open(item.link, '_blank')}
                         >
                             <div className="aspect-video bg-gray-800 rounded-xl mb-4 overflow-hidden relative">
-                                <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 group-hover:scale-105 transition-transform duration-500" />
+                                <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
                                     <ArrowRight className="text-white" />
                                 </div>
