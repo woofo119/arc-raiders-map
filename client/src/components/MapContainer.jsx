@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer as LeafletMap, ImageOverlay, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { MapContainer as LeafletMap, ImageOverlay, Marker, Popup, Tooltip, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { MARKER_CATEGORIES } from '../constants';
 import useStore from '../store/useStore';
@@ -281,6 +281,11 @@ const MapContainer = () => {
                                 }
                             }}
                         >
+                            <Tooltip direction="top" offset={[0, -30]} opacity={1} permanent={false}>
+                                <span className="font-bold text-sm">
+                                    {marker.title ? marker.title.split('(')[0].trim() : ''}
+                                </span>
+                            </Tooltip>
                             <Popup className="custom-popup-dark">
                                 <MarkerPopupContent marker={marker} />
                             </Popup>
