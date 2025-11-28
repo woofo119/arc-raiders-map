@@ -15,7 +15,7 @@ const LandingPage = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const beam Offset = scrollY * 2.5;
+    const beamOffset = scrollY * 2.5;
 
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
