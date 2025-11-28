@@ -63,6 +63,7 @@
 - ✅ **Icons Completed:** All 5 missing icons (apricot, security_locker, etc.) are generated and integrated.
 - ✅ **News Images:** Updated landing page with real images from Steam/YouTube.
 - ✅ **Animation Refined:** Replaced static lines with dynamic "shooting laser" effect on landing page.
+  - Added variation in speed, size, and opacity for a more dynamic look.
 - ✅ **Marker Editing:** Verified backend/frontend code exists (ready for testing).
 
 ### Blocked Items

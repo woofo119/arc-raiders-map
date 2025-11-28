@@ -11,14 +11,25 @@ const LandingPage = () => {
             {/* Dynamic Laser Animation */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                 {[
-                    { color: 'bg-cyan-500', delay: '0s', left: '10%', duration: '3s' },
-                    { color: 'bg-green-500', delay: '1.5s', left: '30%', duration: '4s' },
-                    { color: 'bg-yellow-500', delay: '0.8s', left: '60%', duration: '3.5s' },
-                    { color: 'bg-red-500', delay: '2.2s', left: '80%', duration: '4.5s' }
+                    // Fast & Thin
+                    { color: 'bg-cyan-500', delay: '0s', left: '10%', duration: '2s', width: 'w-0.5 md:w-1', height: 'h-[30vh]', opacity: 'opacity-60' },
+                    { color: 'bg-red-500', delay: '0.5s', left: '85%', duration: '1.8s', width: 'w-0.5 md:w-1', height: 'h-[25vh]', opacity: 'opacity-70' },
+
+                    // Medium & Standard
+                    { color: 'bg-green-500', delay: '1.5s', left: '30%', duration: '4s', width: 'w-1 md:w-2', height: 'h-[40vh]', opacity: 'opacity-40' },
+                    { color: 'bg-yellow-500', delay: '0.8s', left: '60%', duration: '3.5s', width: 'w-1 md:w-2', height: 'h-[45vh]', opacity: 'opacity-50' },
+
+                    // Slow & Thick (Background feel)
+                    { color: 'bg-cyan-500', delay: '2.5s', left: '45%', duration: '5s', width: 'w-1.5 md:w-3', height: 'h-[60vh]', opacity: 'opacity-20' },
+                    { color: 'bg-red-500', delay: '3.2s', left: '15%', duration: '4.5s', width: 'w-1.5 md:w-3', height: 'h-[50vh]', opacity: 'opacity-30' },
+
+                    // Extra Fast Bursts
+                    { color: 'bg-yellow-500', delay: '4s', left: '75%', duration: '1.5s', width: 'w-0.5', height: 'h-[20vh]', opacity: 'opacity-80' },
+                    { color: 'bg-green-500', delay: '2.8s', left: '5%', duration: '2.2s', width: 'w-0.5', height: 'h-[35vh]', opacity: 'opacity-60' }
                 ].map((laser, index) => (
                     <div
                         key={index}
-                        className={`absolute bottom-0 w-1 md:w-2 h-[40vh] ${laser.color} opacity-0`}
+                        className={`absolute bottom-0 ${laser.width} ${laser.height} ${laser.color} ${laser.opacity}`}
                         style={{
                             left: laser.left,
                             animation: `laser-shoot ${laser.duration} infinite linear`,
