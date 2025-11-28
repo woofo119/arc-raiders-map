@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, RotateCcw, Share2 } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Share2, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SKILL_DATA } from '../data/skills';
 
-const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) => {
+const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
 
@@ -55,7 +55,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) =>
                 {/* Lock Overlay */}
                 {isLocked && (
                     <div className="absolute -top-1 -right-1 bg-gray-900 rounded-full p-1 border border-gray-700">
-                        <div className="w-2 h-2 bg-red-500 rounded-full" />
+                        <Lock size={12} className="text-red-500" />
                     </div>
                 )}
             </div>
@@ -73,12 +73,19 @@ const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) =>
             </div>
 
             {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 hidden group-hover:block w-56 bg-gray-950 border border-gray-700 rounded-lg p-3 shadow-xl z-50 pointer-events-none">
+            <div className="absolute bottom-full mb-2 hidden group-hover:block w-64 bg-gray-950 border border-gray-700 rounded-lg p-3 shadow-xl z-50 pointer-events-none">
                 <h4 className={`font-bold text-sm mb-1 text-${color}`}>{skill.name}</h4>
-                <p className="text-xs text-gray-300 mb-2 leading-relaxed">{skill.description}</p>
-                <div className="flex justify-between text-[10px] text-gray-500 border-t border-gray-800 pt-2">
-                    <span>Max Level: {skill.maxLevel}</span>
-                    {skill.reqPoints > 0 && <span className={isLocked ? "text-red-500" : "text-green-500"}>Req: {skill.reqPoints} pts</span>}
+                <p className="text-xs text-gray-300 mb-2 leading-relaxed whitespace-pre-wrap">{skill.description}</p>
+                <div className="flex flex-col gap-1 text-[10px] text-gray-500 border-t border-gray-800 pt-2">
+                    <div className="flex justify-between">
+                        <span>Max Level: {skill.maxLevel}</span>
+                        {skill.reqPoints > 0 && <span className={isLocked ? "text-red-500" : "text-green-500"}>Req: {skill.reqPoints} pts</span>}
+                    </div>
+                    {isPrereqLocked && (
+                        <div className="text-red-500 font-bold">
+                            🔒 이전 단계 스킬 필요
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
@@ -248,13 +255,22 @@ const SkillTreePage = () => {
                     {/* Skill Nodes */}
                     {allSkills.map(skill => {
                         const totalPoints = points[skill.category];
-                        const isLocked = skill.reqPoints > totalPoints;
+                        // Check if locked by points
+                        const isPointsLocked = skill.reqPoints > totalPoints;
+
+                        // Check if locked by prerequisites (parent must be active)
+                        const isPrereqLocked = skill.prerequisites && skill.prerequisites.length > 0 &&
+                            !skill.prerequisites.some(pid => skillsState[pid] > 0);
+
+                        const isLocked = isPointsLocked || isPrereqLocked;
+
                         return (
                             <SkillNode
                                 key={skill.id}
                                 skill={skill}
                                 currentLevel={skillsState[skill.id] || 0}
                                 isLocked={isLocked}
+                                isPrereqLocked={isPrereqLocked}
                                 color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                 onAdd={(id) => {
                                     if (skillsState[id] >= skill.maxLevel) return;
