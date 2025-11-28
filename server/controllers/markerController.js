@@ -68,7 +68,7 @@ export const deleteMarker = async (req, res) => {
 // @route   PUT /api/markers/:id
 // @access  Private (작성자 본인 또는 관리자만 가능)
 export const updateMarker = async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, x, y } = req.body;
 
     try {
         const marker = await Marker.findById(req.params.id);
@@ -81,6 +81,8 @@ export const updateMarker = async (req, res) => {
 
             marker.title = title || marker.title;
             marker.description = description || marker.description;
+            if (x !== undefined) marker.x = x;
+            if (y !== undefined) marker.y = y;
 
             const updatedMarker = await marker.save();
             res.json(updatedMarker);

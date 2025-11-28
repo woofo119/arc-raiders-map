@@ -246,17 +246,30 @@ const MapContainer = () => {
 
                 <MapController onRightClick={handleMapRightClick} bounds={bounds} />
 
-                {filteredMarkers.map((marker) => (
-                    <Marker
-                        key={marker._id}
-                        position={[marker.x, marker.y]}
-                        icon={getIcon(marker.type, marker.category, marker.isOfficial)}
-                    >
-                        <Popup className="custom-popup-dark">
-                            <MarkerPopupContent marker={marker} />
-                        </Popup>
-                    </Marker>
-                ))}
+                {filteredMarkers.map((marker) => {
+                    const isDraggable = user && (user._id === marker.createdBy?._id || user.role === 'admin');
+
+                    return (
+                        <Marker
+                            key={marker._id}
+                            position={[marker.x, marker.y]}
+                            icon={getIcon(marker.type, marker.category, marker.isOfficial)}
+                            draggable={isDraggable}
+                            eventHandlers={{
+                                dragend: async (e) => {
+                                    const newPos = e.target.getLatLng();
+                                    // 좌표 업데이트 (x: lat, y: lng) - Leaflet CRS.Simple에서는 lat이 x(세로), lng이 y(가로)로 매핑됨에 주의
+                                    // 하지만 여기서는 x, y를 그대로 저장하므로 lat -> x, lng -> y로 매핑
+                                    await useStore.getState().updateMarker(marker._id, undefined, undefined, newPos.lat, newPos.lng);
+                                }
+                            }}
+                        >
+                            <Popup className="custom-popup-dark">
+                                <MarkerPopupContent marker={marker} />
+                            </Popup>
+                        </Marker>
+                    );
+                })}
 
                 {/* 미리보기 마커 (클릭한 위치 표시) */}
                 {formPosition && (
