@@ -9,7 +9,13 @@ const LandingPage = () => {
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
             {/* Dynamic Laser Animation */}
-            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            <div
+                className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
+                style={{
+                    maskImage: 'linear-gradient(to top, black 0%, black 70%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to top, black 0%, black 70%, transparent 100%)'
+                }}
+            >
                 {[
                     // Fast & Thin
                     { color: 'bg-cyan-500', delay: '0s', left: '10%', duration: '2s', width: 'w-0.5 md:w-1', height: 'h-[30vh]', opacity: 'opacity-60' },
