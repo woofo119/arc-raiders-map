@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useStore from '../store/useStore';
-import { MAPS } from '../constants';
-import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
+import { MAPS, MARKER_CATEGORIES } from '../constants';
+import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
 
 const Sidebar = () => {
     const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
@@ -34,14 +34,14 @@ const Sidebar = () => {
 
                 {/* 맵 아이콘 (축소 시 표시) */}
                 <div className="block group-hover/sidebar:hidden text-gray-400 mt-2">
-                    <Map size={24} />
+                    <MapIcon size={24} />
                 </div>
             </div>
 
             {/* 필터 영역 */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-4 transition-all duration-300 scrollbar-hide">
                 <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-center group-hover/sidebar:justify-start gap-2 whitespace-nowrap h-6">
-                    <Filter size={16} className="min-w-[16px]" />
+                    <FilterIcon size={16} className="min-w-[16px]" />
                     <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100 hidden group-hover/sidebar:inline">
                         FILTER CATEGORIES
                     </span>
@@ -126,7 +126,7 @@ const AccordionFilter = ({ mainType, category }) => {
     // 아이콘 매핑 (카테고리별 대표 아이콘)
     const getCategoryIcon = (type) => {
         switch (type) {
-            case 'location': return <Map size={18} className="text-purple-400" />;
+            case 'location': return <MapIcon size={18} className="text-purple-400" />;
             case 'nature': return <Layers size={18} className="text-emerald-400" />;
             case 'container': return <Layers size={18} className="text-orange-400" />; // Box icon replacement
             case 'resource': return <Layers size={18} className="text-blue-400" />;
