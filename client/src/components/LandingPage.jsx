@@ -4,50 +4,30 @@ import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield } fro
 
 const LandingPage = () => {
     const navigate = useNavigate();
-    const [scrollY, setScrollY] = useState(0);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollY(window.scrollY);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const beamOffset = scrollY * 2.5;
+    // Scroll effect removed for new laser animation
 
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
-            {/* Curved Vertical Laser Animation */}
+            {/* Dynamic Laser Animation */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                 {[
-                    { color: 'bg-cyan-500', delay: 0, left: '8%' },
-                    { color: 'bg-green-500', delay: 0.15, left: '14%' },
-                    { color: 'bg-yellow-500', delay: 0.3, left: '20%' },
-                    { color: 'bg-red-500', delay: 0.45, left: '26%' }
+                    { color: 'bg-cyan-500', delay: '0s', left: '10%', duration: '3s' },
+                    { color: 'bg-green-500', delay: '1.5s', left: '30%', duration: '4s' },
+                    { color: 'bg-yellow-500', delay: '0.8s', left: '60%', duration: '3.5s' },
+                    { color: 'bg-red-500', delay: '2.2s', left: '80%', duration: '4.5s' }
                 ].map((laser, index) => (
                     <div
                         key={index}
-                        className={`absolute bottom-0 w-12 md:w-16 h-[200vh] ${laser.color} opacity-70`}
+                        className={`absolute bottom-0 w-1 md:w-2 h-[40vh] ${laser.color} opacity-0`}
                         style={{
                             left: laser.left,
-                            transform: `translateY(-${beamOffset + (index * 60)}px) skewY(-3deg)`,
-                            clipPath: 'polygon(35% 0%, 65% 0%, 95% 100%, 5% 100%)',
-                            boxShadow: `0 0 30px rgba(255, 255, 255, 0.5)`,
-                            filter: 'blur(0.5px)',
-                            transition: 'transform 0.05s linear',
-                            borderRadius: '50% 50% 0 0'
+                            animation: `laser-shoot ${laser.duration} infinite linear`,
+                            animationDelay: laser.delay,
+                            boxShadow: `0 0 15px ${laser.color === 'bg-cyan-500' ? '#06b6d4' : laser.color === 'bg-green-500' ? '#22c55e' : laser.color === 'bg-yellow-500' ? '#eab308' : '#ef4444'}`,
+                            filter: 'blur(1px)',
+                            borderRadius: '9999px'
                         }}
-                    >
-                        <div
-                            className="absolute inset-0"
-                            style={{
-                                backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.7) 1.5px, transparent 1.5px)',
-                                backgroundSize: '5px 5px'
-                            }}
-                        />
-                    </div>
+                    />
                 ))}
             </div>
 
