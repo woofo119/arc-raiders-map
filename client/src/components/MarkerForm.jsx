@@ -4,13 +4,13 @@ import { MARKER_CATEGORIES } from '../constants';
 import { X, MapPin, FileText, Shield } from 'lucide-react';
 
 const MarkerForm = ({ position, onClose }) => {
-    const { addMarker, user } = useStore();
-    const [mainType, setMainType] = useState('container');
-    const [subType, setSubType] = useState(MARKER_CATEGORIES.container.types[0].id);
+    const { addMarker, user, lastMarkerOptions, setLastMarkerOptions } = useStore();
+    const [mainType, setMainType] = useState(lastMarkerOptions?.mainType || 'container');
+    const [subType, setSubType] = useState(lastMarkerOptions?.subType || MARKER_CATEGORIES.container.types[0].id);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const [isOfficial, setIsOfficial] = useState(false);
+    const [isOfficial, setIsOfficial] = useState(lastMarkerOptions?.isOfficial || false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,6 +29,7 @@ const MarkerForm = ({ position, onClose }) => {
         });
 
         if (result.success) {
+            setLastMarkerOptions({ mainType, subType, isOfficial: finalIsOfficial });
             onClose();
         } else {
             alert(result.message || '마커 추가에 실패했습니다.');

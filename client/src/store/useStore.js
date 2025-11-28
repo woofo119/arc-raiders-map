@@ -220,6 +220,18 @@ const useStore = create((set, get) => ({
 
     openMyPageModal: () => set({ isMyPageModalOpen: true }),
     closeMyPageModal: () => set({ isMyPageModalOpen: false }),
+
+    // --------------------------------------------------------------------------
+    // 💾 UI 상태 (Persisted UI State) - 마커 생성 폼 설정 기억
+    // --------------------------------------------------------------------------
+    lastMarkerOptions: {
+        mainType: 'container',
+        subType: MARKER_CATEGORIES.container.types[0].id,
+        isOfficial: false
+    },
+    setLastMarkerOptions: (options) => set((state) => ({
+        lastMarkerOptions: { ...state.lastMarkerOptions, ...options }
+    })),
 }));
 
 export default useStore;
