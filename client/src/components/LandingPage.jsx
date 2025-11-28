@@ -143,20 +143,53 @@ const LandingPage = () => {
 
             {/* News Section */}
             <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5">
-                <h2 className="text-2xl font-bold mb-8">최신 Arc Raiders 가이드 & 뉴스</h2>
+                <h2 className="text-2xl font-bold mb-8">아크레이더스 소식</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {[1, 2, 3, 4].map((item) => (
-                        <div key={item} className="group cursor-pointer">
-                            <div className="aspect-video bg-gray-800 rounded-xl mb-4 overflow-hidden">
+                    {[
+                        {
+                            id: 41,
+                            title: "MCN 대전 X 아크 레이더스",
+                            date: "2024. 10. 22",
+                            link: "https://arcraiders.nexon.com/ko-KR/news/41",
+                            image: "https://rs.nxfs.nexon.com/game/arcraiders/common/img_news_41.jpg" // Placeholder or try to guess? I'll use a generic placeholder or the one from the design if I can't get real ones. The user didn't provide images. I will keep the CSS gradient placeholder for now but make it clickable.
+                        },
+                        {
+                            id: 39,
+                            title: "The Evolution of ARC Raiders EP2: The Life of a Raider",
+                            date: "2024. 10. 21",
+                            link: "https://arcraiders.nexon.com/ko-KR/news/39"
+                        },
+                        {
+                            id: 38,
+                            title: "Update 1.4.0",
+                            date: "2024. 10. 21",
+                            link: "https://arcraiders.nexon.com/ko-KR/news/38"
+                        },
+                        {
+                            id: 37,
+                            title: "A Scrappy origin story",
+                            date: "2024. 10. 16",
+                            link: "https://arcraiders.nexon.com/ko-KR/news/37"
+                        }
+                    ].map((item) => (
+                        <div
+                            key={item.id}
+                            className="group cursor-pointer"
+                            onClick={() => window.open(item.link, '_blank')}
+                        >
+                            <div className="aspect-video bg-gray-800 rounded-xl mb-4 overflow-hidden relative">
                                 <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 group-hover:scale-105 transition-transform duration-500" />
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                                    <ArrowRight className="text-white" />
+                                </div>
                             </div>
                             <div className="flex gap-2 mb-2">
                                 <span className="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded">NEWS</span>
                             </div>
-                            <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-blue-400 transition-colors">
-                                ARC Raiders 얼리 액세스 시작: 지금 바로 참여하세요!
+                            <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+                                {item.title}
                             </h3>
-                            <p className="text-gray-500 text-sm">2024. 03. 15</p>
+                            <p className="text-gray-500 text-sm">{item.date}</p>
                         </div>
                     ))}
                 </div>
