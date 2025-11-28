@@ -53,6 +53,12 @@ const MarkerForm = ({ position, onClose }) => {
                 </button>
             </div>
 
+            {/* 좌표 표시 (디버깅/보정용) */}
+            <div className="mb-4 p-2 bg-gray-800 rounded text-xs text-gray-400 font-mono flex justify-between">
+                <span>X: {Math.round(position.x)}</span>
+                <span>Y: {Math.round(position.y)}</span>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* 메인 카테고리 선택 */}
                 <div className="space-y-1">
