@@ -272,15 +272,31 @@ const MapContainer = () => {
                     const isDraggable = user && (user._id === marker.createdBy?._id || user.role === 'admin');
 
                     return (
+                    return (
                         <Marker
                             key={marker._id}
                             position={[marker.x, marker.y]}
                             icon={getIcon(marker.type, marker.category, marker.isOfficial)}
+                            draggable={isDraggable}
+                            eventHandlers={{
+                                dragend: async (e) => {
+                                    const newPos = e.target.getLatLng();
+                                    // 즉시 서버에 업데이트 요청 (Manual Calibration)
+                                    // updateMarker(id, title, description, x, y)
+                                    // title, description은 기존 값 유지 (undefined 전달 시 유지됨 - useStore 로직 확인 필요하지만, 
+                                    // useStore.js의 updateMarker는 undefined 체크를 하므로 x, y만 보내면 됨.
+                                    // 단, title/desc 인자가 앞에 있으므로 undefined를 명시적으로 넘겨야 함.
+                                    const { updateMarker } = useStore.getState();
+                                    await updateMarker(marker._id, undefined, undefined, newPos.lat, newPos.lng);
+                                    console.log(`Marker ${marker.title} moved to:`, newPos);
+                                }
+                            }}
                         >
                             <Popup className="custom-popup-dark">
                                 <MarkerPopupContent marker={marker} />
                             </Popup>
                         </Marker>
+                    );
                     );
                 })}
 

@@ -35,12 +35,30 @@ const Sidebar = () => {
 
             {/* 필터 영역 */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-4 scrollbar-hide">
-                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-start gap-2 whitespace-nowrap h-6">
-                    <FilterIcon size={16} className="min-w-[16px]" />
-                    <span className="opacity-100 inline">
-                        FILTER CATEGORIES
-                    </span>
+                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-between gap-2 whitespace-nowrap h-6">
+                    <div className="flex items-center gap-2">
+                        <FilterIcon size={16} className="min-w-[16px]" />
+                        <span className="opacity-100 inline">
+                            FILTER CATEGORIES
+                        </span>
+                    </div>
                 </h3>
+
+                {/* 전체 제어 버튼 */}
+                <div className="flex gap-2 mb-4">
+                    <button
+                        onClick={useStore.getState().showAllFilters}
+                        className="flex-1 bg-gray-800 hover:bg-gray-700 text-xs text-gray-300 py-1.5 rounded border border-gray-700 transition-colors"
+                    >
+                        Show All
+                    </button>
+                    <button
+                        onClick={useStore.getState().hideAllFilters}
+                        className="flex-1 bg-gray-800 hover:bg-gray-700 text-xs text-gray-300 py-1.5 rounded border border-gray-700 transition-colors"
+                    >
+                        Hide All
+                    </button>
+                </div>
 
                 <div className="space-y-2 flex flex-col items-stretch">
                     {Object.entries(MARKER_CATEGORIES).map(([key, category]) => (

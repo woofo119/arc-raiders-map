@@ -187,6 +187,28 @@ const useStore = create((set, get) => ({
         });
     },
 
+    // 모든 필터 켜기
+    showAllFilters: () => {
+        set((state) => {
+            const newFilters = { ...state.filters };
+            Object.keys(newFilters).forEach(key => {
+                newFilters[key] = true;
+            });
+            return { filters: newFilters };
+        });
+    },
+
+    // 모든 필터 끄기
+    hideAllFilters: () => {
+        set((state) => {
+            const newFilters = { ...state.filters };
+            Object.keys(newFilters).forEach(key => {
+                newFilters[key] = false;
+            });
+            return { filters: newFilters };
+        });
+    },
+
     // --------------------------------------------------------------------------
     // 🖼️ UI 상태 (Modals) - 로그인 창 열고 닫기 (추가된 부분!)
     // --------------------------------------------------------------------------
