@@ -39,6 +39,9 @@ const getIcon = (type, category, isOfficial) => {
     } else if (type === 'nature') {
         borderColor = 'border-white'; // 자연: 흰색 테두리
         bgColor = 'bg-green-500'; // 자연: 초록색 배경
+    } else if (type === 'location') {
+        borderColor = 'border-yellow-500'; // 위치: 노란색 테두리
+        bgColor = 'bg-white'; // 위치: 흰색 배경
     }
 
     // 관리자(Official) 마커인 경우 테두리만 노란색으로 덮어쓰기
