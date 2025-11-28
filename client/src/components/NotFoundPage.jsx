@@ -15,9 +15,9 @@ const NotFoundPage = () => {
                 />
             </div>
 
-            <h1 className="text-4xl font-bold mb-4 text-center">Page Not Found</h1>
+            <h1 className="text-4xl font-bold mb-4 text-center">Not Found</h1>
             <p className="text-gray-400 mb-8 text-center max-w-md">
-                요청하신 페이지를 찾을 수 없습니다. 주소를 다시 확인하시거나 홈으로 돌아가세요.
+                존재하지 않는 주소를 입력하셨거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다.
             </p>
 
             <button
@@ -25,7 +25,7 @@ const NotFoundPage = () => {
                 className="flex items-center gap-2 bg-arc-accent hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full transition-all hover:scale-105"
             >
                 <Home size={20} />
-                홈으로 돌아가기
+                메인으로
             </button>
         </div>
     );
