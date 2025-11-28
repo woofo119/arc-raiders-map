@@ -218,6 +218,13 @@ const MapContainer = () => {
             alert('🔒 마커를 추가하려면 로그인이 필요합니다.');
             return;
         }
+
+        // 관리자 권한 확인
+        if (user?.role !== 'admin') {
+            alert('🔒 마커 추가는 관리자만 가능합니다.');
+            return;
+        }
+
         setFormPosition({
             x: e.latlng.lat,
             y: e.latlng.lng,

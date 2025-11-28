@@ -170,7 +170,7 @@ const AccordionFilter = ({ mainType, category }) => {
                     {getCategoryIcon(mainType)}
                     <span className="font-bold text-sm text-gray-300 opacity-100 whitespace-nowrap flex items-center gap-1">
                         {category.label.split('(')[0].trim()}
-                        <span className="text-gray-500 font-mono text-xs">({totalCount})</span>
+                        <span className="text-gray-500 font-mono text-sm">({totalCount})</span>
                     </span>
                 </div>
 
@@ -204,7 +204,7 @@ const AccordionFilter = ({ mainType, category }) => {
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <span className="text-[10px] text-gray-500 font-mono">{getTypeCount(type.id)}</span>
+                            <span className="text-xs text-gray-500 font-mono">{getTypeCount(type.id)}</span>
 
                             {/* 체크박스 (커스텀 스타일) */}
                             <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent'}`}>
