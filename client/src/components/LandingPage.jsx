@@ -6,8 +6,8 @@ const LandingPage = () => {
     const navigate = useNavigate();
 
     // Shared background style for all cards to create the "masked" effect
-    // Using dashboard_wallpaper.png (vertical) and bg-fixed to create the window effect
-    const cardBackgroundStyle = "bg-[url('/banners/dashboard_wallpaper.png')] bg-fixed bg-cover bg-center bg-no-repeat border border-white/20 hover:border-yellow-500/50 transition-all group cursor-pointer relative overflow-hidden rounded-2xl";
+    // Using skill_tree.png as requested by user
+    const cardBackgroundStyle = "bg-[url('/banners/skill_tree.png')] bg-fixed bg-cover bg-center bg-no-repeat border border-white/20 hover:border-yellow-500/50 transition-all group cursor-pointer relative overflow-hidden rounded-2xl";
 
     // Reduced opacity to make the background more visible (masking effect)
     const cardOverlayStyle = "absolute inset-0 bg-black/40 hover:bg-black/30 transition-colors z-0";
