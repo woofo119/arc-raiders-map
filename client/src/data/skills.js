@@ -38,39 +38,6 @@ export const SKILL_DATA = {
             { id: "m3", name: "날렵한 움직임", maxLevel: 5, description: "장애물 넘기 속도 증가", reqPoints: 0, x: 50, y: 25, icon: "/sk/imgi_55_vigorous_vaulter.png" },
             { id: "m5", name: "등반 전문가", maxLevel: 5, description: "등반 기력 소모 감소", reqPoints: 0, x: 50, y: 75, icon: "/sk/imgi_45_nimble_climber.png" },
             { id: "m6", name: "빠른 손놀림", maxLevel: 5, description: "무기 교체 속도 증가", reqPoints: 0, x: 55, y: 25, icon: "/sk/imgi_57_ready_to_roll.png" },
-            { id: "m8", name: "은밀한 접근", maxLevel: 5, description: "앉아 이동 소음 감소", reqPoints: 0, x: 75, y: 75, icon: "/sk/imgi_60_agile_croucher.png" }, // Wait, agile_croucher is x=75, y=75 which is Survival area?
-            // Let's re-check agile_croucher mapping.
-            // agile_croucher: x=75, y=75. That is in the Survival column (70-80).
-            // But 'agile_croucher' (은밀한 접근) is listed under Mobility in my data?
-            // Let's check the skill.txt text labels.
-            // x=25: Conditioning, x=50: Mobility, x=75: Survival.
-            // So x=75 is Survival.
-            // 'agile_croucher' is '은밀한 접근'.
-            // In Namu Wiki, '은밀한 접근' might be Survival?
-            // Or maybe my mapping of English filename to Korean name is wrong?
-            // Let's assume the coordinates are correct for the *visual* layout, and I should trust the visual grouping.
-            // If x=75, it belongs to Survival visually.
-            // But 'agile_croucher' sounds like Mobility.
-            // Let's check the skill.txt again.
-            // <text x="50" ...>기동성</text> (Mobility)
-            // <text x="75" ...>생존</text> (Survival)
-            // <text x="25" ...>컨디셔닝</text> (Conditioning)
-            // So 20-30 is Conditioning.
-            // 45-55 is Mobility.
-            // 70-80 is Survival.
-            // My mapping says 'agile_croucher' is at 75, 75. So it is Survival.
-            // But in my `skills.js`, I put '은밀한 접근' (m8) in Mobility.
-            // Let's check Namu Wiki or just move it to Survival if the user wants the layout from the file.
-            // However, the user said "Use the code to adjust the position".
-            // If the code says it's at 75, it's in Survival column.
-            // I will trust the coordinates and move skills to the correct category if needed, OR just keep the category but render at x,y.
-            // But rendering a Mobility skill in the Survival column would be weird if I keep columns.
-            // The user wants the *layout* from the file.
-            // I should probably render the *entire* tree as a single SVG using these coordinates, rather than 3 separate columns.
-            // This solves the category mismatch issue visually.
-
-            // Let's just update the coordinates for now and I will render them in a single SVG container.
-
             { id: "m9", name: "재빠른 재장전", maxLevel: 5, description: "재장전 속도 증가", reqPoints: 0, x: 45, y: 45, icon: "/sk/imgi_50_carry_the_momentum.png" },
             { id: "m10", name: "도약", maxLevel: 1, description: "점프 높이 증가", reqPoints: 0, x: 45, y: 25, icon: "/sk/imgi_56_heroic_leap.png" },
             { id: "m11", name: "곡예사", maxLevel: 1, description: "낙하 대미지 감소", reqPoints: 0, x: 55, y: 55, icon: "/sk/imgi_49_sturdy_ankles.png" },
@@ -84,7 +51,7 @@ export const SKILL_DATA = {
             // Tier 2
             { id: "m14", name: "그림자", maxLevel: 1, description: "앉아 이동 시 발각 확률 감소", reqPoints: 36, x: 50, y: 35, icon: "/sk/imgi_52_crawl_before_you_walk.png" },
             { id: "m15", name: "유령", maxLevel: 1, description: "전력 질주 시 발각 확률 감소", reqPoints: 36, x: 55, y: 15, icon: "/sk/imgi_59_vault_spring.png" },
-            { id: "m16", name: "곡예", maxLevel: 1, description: "추가", reqPoints: 0, x: 45, y: 15, icon: "/sk/imgi_58_vaults_on_vaults_on_vaults.png" } // Added missing one?
+            { id: "m16", name: "곡예", maxLevel: 1, description: "추가", reqPoints: 0, x: 45, y: 15, icon: "/sk/imgi_58_vaults_on_vaults_on_vaults.png" }
         ]
     },
     survival: {
@@ -107,7 +74,6 @@ export const SKILL_DATA = {
 
             // Tier 1
             { id: "s4", name: "야전 의무병", maxLevel: 1, description: "소생 속도 증가", reqPoints: 15, x: 70, y: 55, icon: "/sk/imgi_63_silent_scavenger.png" },
-            { id: "s7", name: "구급 상자", maxLevel: 1, description: "치료 시 추가 체력 회복", reqPoints: 15, x: 80, y: 25, icon: "/sk/imgi_72_three_deep_breaths.png" }, // Duplicate icon?
 
             // Tier 2
             { id: "s14", name: "지뢰 해체", maxLevel: 1, description: "폭발물 해체 가능", reqPoints: 36, x: 80, y: 15, icon: "/sk/imgi_74_minesweeper.png" },
