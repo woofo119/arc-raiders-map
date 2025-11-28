@@ -1,18 +1,32 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { MAPS, MARKER_CATEGORIES } from '../constants';
-import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
+import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home } from 'lucide-react';
 
 const Sidebar = () => {
+    const navigate = useNavigate();
     const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
 
     return (
         <div className="w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000] transition-all duration-300 ease-in-out overflow-hidden">
             {/* 헤더 영역 */}
             <div className="py-6 px-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center overflow-hidden whitespace-nowrap">
-                <div className="mb-6 flex justify-center w-full h-12 items-center">
+                <div
+                    className="mb-6 flex justify-center w-full h-12 items-center cursor-pointer hover:opacity-80 transition-opacity"
+                    onClick={() => navigate('/')}
+                >
                     <img src="/logo.png" alt="ARC Raiders" className="h-12 object-contain" />
                 </div>
+
+                {/* 홈 버튼 */}
+                <button
+                    onClick={() => navigate('/')}
+                    className="w-full mb-4 bg-gray-800 hover:bg-gray-700 text-white py-2 rounded-lg border border-gray-700 transition-colors flex items-center justify-center gap-2 text-sm font-bold"
+                >
+                    <Home size={16} />
+                    Back to Home
+                </button>
 
                 {/* 맵 선택 드롭다운 */}
                 <div className="relative w-full block animate-in fade-in duration-300">
@@ -199,8 +213,8 @@ const AccordionFilter = ({ mainType, category }) => {
                             key={type.id}
                             onClick={() => !isDisabled && toggleFilter(type.id)}
                             className={`flex items-center justify-between py-2 px-3 pl-10 transition-colors group/item ${isDisabled
-                                    ? 'opacity-30 cursor-not-allowed'
-                                    : 'hover:bg-white/5 cursor-pointer'
+                                ? 'opacity-30 cursor-not-allowed'
+                                : 'hover:bg-white/5 cursor-pointer'
                                 }`}
                         >
                             <div className="flex items-center gap-2 overflow-hidden flex-1">
@@ -217,8 +231,8 @@ const AccordionFilter = ({ mainType, category }) => {
 
                                 {/* 체크박스 (커스텀 스타일) */}
                                 <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isDisabled
-                                        ? 'border-gray-700 bg-transparent'
-                                        : (filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent')
+                                    ? 'border-gray-700 bg-transparent'
+                                    : (filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent')
                                     }`}>
                                     {!isDisabled && filters[type.id] && <div className="w-2 h-2 bg-white rounded-[1px]" />}
                                 </div>

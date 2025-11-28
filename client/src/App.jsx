@@ -1,27 +1,15 @@
-import Sidebar from './components/Sidebar';
-import MapContainer from './components/MapContainer';
-import LoginModal from './components/LoginModal';
-import MyPageModal from './components/MyPageModal';
-import ChatWidget from './components/ChatWidget';
-import useStore from './store/useStore';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import MapPage from './components/MapPage';
 
 function App() {
-    const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
-
     return (
-        <div className="flex h-screen w-screen bg-black text-white overflow-hidden font-sans">
-            <Sidebar />
-            <MapContainer />
-            <ChatWidget />
-
-            {isLoginModalOpen && (
-                <LoginModal onClose={closeLoginModal} />
-            )}
-
-            {isMyPageModalOpen && (
-                <MyPageModal onClose={closeMyPageModal} />
-            )}
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/map" element={<MapPage />} />
+            </Routes>
+        </Router>
     );
 }
 
