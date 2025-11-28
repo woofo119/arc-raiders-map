@@ -1,46 +1,9 @@
-import { useState } from 'react';
 import useStore from '../store/useStore';
-import { MAPS, MARKER_CATEGORIES } from '../constants';
-import { Map, Filter, LogOut, User, ChevronDown, Box, MapPin, Leaf, Shield, ChevronRight } from 'lucide-react';
+import { MAPS } from '../constants';
+import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
 
 const Sidebar = () => {
-    const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal, markers } = useStore();
-    const [expandedCategories, setExpandedCategories] = useState({
-        location: true,
-        nature: true,
-        container: true,
-        quest: true
-    });
-
-    const toggleCategory = (cat) => {
-        setExpandedCategories(prev => ({
-            ...prev,
-            [cat]: !prev[cat]
-        }));
-    };
-
-    // 카테고리별 아이콘 매핑
-    const categoryIcons = {
-        container: <Box size={20} className="text-orange-400" />,
-        location: <MapPin size={20} className="text-purple-400" />,
-        nature: <Leaf size={20} className="text-green-400" />,
-        quest: <Shield size={20} className="text-blue-400" />
-    };
-
-    const categoryColors = {
-        container: 'orange',
-        location: 'purple',
-        nature: 'green',
-        quest: 'blue'
-    };
-
-    // 마커 개수 계산
-    const getCount = (type, category) => {
-        if (category) {
-            return markers.filter(m => m.category === category).length;
-        }
-        return markers.filter(m => m.type === type).length;
-    };
+    const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
 
     return (
         <div className="w-20 hover:w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000] transition-all duration-300 ease-in-out group/sidebar overflow-hidden">
@@ -75,7 +38,7 @@ const Sidebar = () => {
             </div>
 
             {/* 필터 영역 */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-6 transition-all duration-300 scrollbar-hide">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-6 transition-all duration-300">
                 <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-center group-hover/sidebar:justify-start gap-2 whitespace-nowrap h-6">
                     <Filter size={16} className="min-w-[16px]" />
                     <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100 hidden group-hover/sidebar:inline">
@@ -83,54 +46,28 @@ const Sidebar = () => {
                     </span>
                 </h3>
 
-                <div className="space-y-2 flex flex-col items-center group-hover/sidebar:items-stretch">
-                    {Object.entries(MARKER_CATEGORIES).map(([key, category]) => (
-                        <div key={key} className="w-full">
-                            {/* 메인 카테고리 */}
-                            <div className="flex items-center w-full">
-                                <FilterItem
-                                    label={category.label}
-                                    icon={categoryIcons[key]}
-                                    checked={filters[key]}
-                                    onChange={() => toggleFilter(key)}
-                                    color={categoryColors[key]}
-                                    count={getCount(key)}
-                                    isExpanded={expandedCategories[key]}
-                                    onExpand={() => toggleCategory(key)}
-                                    hasChildren={true}
-                                />
-                            </div>
-
-                            {/* 하위 아이템 (아코디언) */}
-                            <div className={`
-                                overflow-hidden transition-all duration-300 ease-in-out
-                                ${expandedCategories[key] ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
-                                hidden group-hover/sidebar:block
-                            `}>
-                                <div className="ml-4 mt-1 space-y-1 border-l border-gray-800 pl-2">
-                                    {category.types.map((type) => (
-                                        <label key={type.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-800/50 cursor-pointer group/item transition-colors">
-                                            <div className="flex items-center gap-2 overflow-hidden">
-                                                <div className={`w-1.5 h-1.5 rounded-full ${filters[type.id] ? `bg-${categoryColors[key]}-500` : 'bg-gray-600'}`} />
-                                                <span className={`text-xs truncate ${filters[type.id] ? 'text-gray-300' : 'text-gray-500'}`}>
-                                                    {type.label.split('(')[0].trim()}
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-[10px] text-gray-600">{getCount(null, type.id)}</span>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={filters[type.id] || false}
-                                                    onChange={() => toggleFilter(type.id)}
-                                                    className="w-3 h-3 rounded border-gray-600 bg-gray-700 text-arc-accent focus:ring-0 focus:ring-offset-0"
-                                                />
-                                            </div>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                <div className="space-y-3 flex flex-col items-center group-hover/sidebar:items-stretch">
+                    <FilterItem
+                        label="자원 (Resource)"
+                        icon={<Layers size={20} className="text-emerald-400" />}
+                        checked={filters.resource}
+                        onChange={() => toggleFilter('resource')}
+                        color="emerald"
+                    />
+                    <FilterItem
+                        label="무기 (Weapon)"
+                        icon={<Crosshair size={20} className="text-red-400" />}
+                        checked={filters.weapon}
+                        onChange={() => toggleFilter('weapon')}
+                        color="red"
+                    />
+                    <FilterItem
+                        label="퀘스트 (Quest)"
+                        icon={<Shield size={20} className="text-blue-400" />}
+                        checked={filters.quest}
+                        onChange={() => toggleFilter('quest')}
+                        color="blue"
+                    />
                 </div>
 
                 {/* 안내 메시지 */}
@@ -188,61 +125,30 @@ const Sidebar = () => {
     );
 };
 
-// 필터 아이템 컴포넌트 (수정됨)
-const FilterItem = ({ label, icon, checked, onChange, color, count, isExpanded, onExpand, hasChildren }) => (
-    <div className={`flex items-center p-2 rounded-xl transition-all duration-300 border overflow-hidden whitespace-nowrap w-full group/filter
+// 필터 아이템 컴포넌트
+const FilterItem = ({ label, icon, checked, onChange, color }) => (
+    <label className={`flex items-center p-3 rounded-xl cursor-pointer transition-all duration-300 border overflow-hidden whitespace-nowrap w-full
     ${checked
             ? `bg-gray-900 border-${color}-500/30 shadow-lg shadow-${color}-900/10`
             : 'bg-transparent border-transparent hover:bg-gray-900 hover:border-gray-800'
         }`}>
-
-        {/* 아이콘 영역 (클릭 시 토글) */}
-        <div
-            className="min-w-[20px] flex items-center justify-center cursor-pointer"
-            onClick={onChange}
-        >
+        <div className="min-w-[20px] flex items-center justify-center">
             {icon}
         </div>
-
-        {/* 라벨 및 컨트롤 영역 */}
-        <div className="flex items-center justify-between flex-1 ml-3 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100 hidden group-hover/sidebar:flex">
-            <div className="flex flex-col cursor-pointer flex-1" onClick={onExpand}>
-                <span className={`text-sm font-medium truncate ${checked ? 'text-white' : 'text-gray-500'}`}>
-                    {label.split('(')[0].trim()}
-                </span>
-                <span className="text-[10px] text-gray-600">
-                    {count} items
-                </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-                {/* 확장/축소 버튼 */}
-                {hasChildren && (
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onExpand();
-                        }}
-                        className="text-gray-500 hover:text-white transition-colors"
-                    >
-                        {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                    </button>
-                )}
-
-                {/* 체크박스 */}
-                <div
-                    className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors cursor-pointer
-                    ${checked ? `bg-${color}-500 border-${color}-500` : 'border-gray-700 bg-gray-800'}`}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onChange();
-                    }}
-                >
-                    {checked && <div className="w-2 h-2 bg-white rounded-full" />}
-                </div>
+        <div className="flex items-center justify-between flex-1 ml-3 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100">
+            <span className={`text-sm font-medium ${checked ? 'text-white' : 'text-gray-500'}`}>{label}</span>
+            <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors
+          ${checked ? `bg-${color}-500 border-${color}-500` : 'border-gray-700 bg-gray-800'}`}>
+                {checked && <div className="w-2 h-2 bg-white rounded-full" />}
             </div>
         </div>
-    </div>
+        <input
+            type="checkbox"
+            checked={checked}
+            onChange={onChange}
+            className="hidden"
+        />
+    </label>
 );
 
 export default Sidebar;

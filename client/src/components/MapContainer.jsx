@@ -86,19 +86,16 @@ const MarkerPopupContent = ({ marker }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState(marker.title);
     const [editDescription, setEditDescription] = useState(marker.description);
-    const [editImage, setEditImage] = useState(marker.image);
 
     // 마커가 변경되면 에디팅 상태 초기화
     useEffect(() => {
         setEditTitle(marker.title);
         setEditDescription(marker.description);
-        setEditImage(marker.image);
         setIsEditing(false);
     }, [marker]);
 
-    const handleSave = async (e) => {
-        e.stopPropagation(); // 이벤트 전파 방지
-        const result = await updateMarker(marker._id, editTitle, editDescription, editImage);
+    const handleSave = async () => {
+        const result = await updateMarker(marker._id, editTitle, editDescription);
         if (result.success) {
             setIsEditing(false);
         } else {
@@ -106,25 +103,11 @@ const MarkerPopupContent = ({ marker }) => {
         }
     };
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setEditImage(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    // 작성자 확인 로직 개선 (populate된 객체인 경우와 ID 문자열인 경우 모두 처리)
-    const isCreator = user && (user._id === (marker.createdBy?._id || marker.createdBy));
-    const isAdmin = user && user.role === 'admin';
-    const canEdit = isCreator || isAdmin;
+    const canEdit = user && (user._id === marker.createdBy?._id || user.role === 'admin');
 
     if (isEditing) {
         return (
-            <div className="p-1 min-w-[200px]" onClick={(e) => e.stopPropagation()}>
+            <div className="p-1 min-w-[200px]">
                 <div className="mb-2">
                     <input
                         type="text"
@@ -136,36 +119,13 @@ const MarkerPopupContent = ({ marker }) => {
                     <textarea
                         value={editDescription}
                         onChange={(e) => setEditDescription(e.target.value)}
-                        className="w-full bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm h-20 resize-none mb-2"
+                        className="w-full bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm h-20 resize-none"
                         placeholder="설명"
                     />
-
-                    {/* 이미지 업로드 UI */}
-                    <div className="mb-2">
-                        <label className="block text-xs text-gray-400 mb-1">이미지 수정</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-gray-700 file:text-white hover:file:bg-gray-600"
-                        />
-                        {editImage && (
-                            <div className="mt-2 relative group">
-                                <img src={editImage} alt="Preview" className="w-full h-20 object-cover rounded border border-gray-600" />
-                                <button
-                                    onClick={() => setEditImage('')}
-                                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                                    title="이미지 삭제"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                </button>
-                            </div>
-                        )}
-                    </div>
                 </div>
                 <div className="flex justify-end gap-2">
                     <button
-                        onClick={(e) => { e.stopPropagation(); setIsEditing(false); }}
+                        onClick={() => setIsEditing(false)}
                         className="px-2 py-1 text-xs bg-gray-600 hover:bg-gray-500 text-white rounded"
                     >
                         취소
@@ -201,19 +161,13 @@ const MarkerPopupContent = ({ marker }) => {
                 {canEdit && (
                     <div className="flex gap-2">
                         <button
-                            onClick={(e) => {
-                                e.stopPropagation(); // 팝업 닫힘 방지
-                                setIsEditing(true);
-                            }}
+                            onClick={() => setIsEditing(true)}
                             className="text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-900/20 px-2 py-1 rounded transition-colors"
                         >
                             수정
                         </button>
                         <button
-                            onClick={(e) => {
-                                e.stopPropagation(); // 팝업 닫힘 방지
-                                deleteMarker(marker._id);
-                            }}
+                            onClick={() => deleteMarker(marker._id)}
                             className="text-red-400 hover:text-red-300 flex items-center gap-1 bg-red-900/20 px-2 py-1 rounded transition-colors"
                         >
                             삭제
@@ -269,18 +223,7 @@ const MapContainer = () => {
     };
 
     // 필터링된 마커 목록
-    const filteredMarkers = markers.filter(m => {
-        // 1. 구체적인 카테고리(예: mushroom) 필터가 있으면 그것을 따름
-        if (filters[m.category] !== undefined) {
-            return filters[m.category];
-        }
-        // 2. 카테고리가 없거나 필터에 없으면 상위 타입(예: nature) 필터를 따름
-        if (filters[m.type] !== undefined) {
-            return filters[m.type];
-        }
-        // 3. 그 외는 기본적으로 표시
-        return true;
-    });
+    const filteredMarkers = markers.filter(m => filters[m.type] || (m.isOfficial && filters.location)); // 임시 필터 로직
 
     return (
         <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-hidden">
