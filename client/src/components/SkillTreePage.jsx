@@ -1,16 +1,23 @@
 import { useState, useMemo } from 'react';
 import { SKILL_DATA } from '../data/skills';
-import { Shield, Zap, Heart, Lock, Info, Check } from 'lucide-react';
+import { Shield, Zap, Heart, Lock, Check } from 'lucide-react';
 
 const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
 
+    // SVG coordinates are 0-100, convert to percentage for absolute positioning
+    // Note: In SVG, (0,0) is top-left. The provided coordinates seem to match this.
+    // x is 0-100, y is 0-100.
+
     return (
-        <div className="relative flex flex-col items-center group z-10">
+        <div
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group z-10"
+            style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
+        >
             {/* Skill Icon Circle */}
             <div
-                className={`w-14 h-14 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer
+                className={`w-10 h-10 md:w-14 md:h-14 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -53,7 +60,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) =>
             </div>
 
             {/* Counter Pill */}
-            <div className={`mt-2 px-2 py-0.5 rounded-full text-[10px] font-bold border transition-colors
+            <div className={`mt-1 px-1.5 py-0.5 rounded-full text-[9px] md:text-[10px] font-bold border transition-colors whitespace-nowrap
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -77,70 +84,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) =>
     );
 };
 
-const SkillTreeColumn = ({ categoryKey, data, skillsState, onSkillChange }) => {
-    const totalPoints = useMemo(() => {
-        return data.skills.reduce((sum, skill) => sum + (skillsState[skill.id] || 0), 0);
-    }, [data, skillsState]);
-
-    // Group skills by row for rendering
-    const rows = useMemo(() => {
-        const grouped = {};
-        data.skills.forEach(skill => {
-            if (!grouped[skill.row]) grouped[skill.row] = [];
-            grouped[skill.row].push(skill);
-        });
-        return grouped;
-    }, [data]);
-
-    const maxRow = Math.max(...Object.keys(rows).map(Number));
-
-    return (
-        <div className="flex-1 flex flex-col items-center min-w-[250px]">
-            {/* Header */}
-            <div className="mb-8 text-center">
-                <h2 className={`text-2xl font-bold mb-1 ${data.color.replace('text-', 'text-')}`}>{data.label}</h2>
-                <p className={`text-sm font-bold ${data.color}`}>{totalPoints} 포인트</p>
-            </div>
-
-            {/* Tree Container */}
-            <div className="relative flex flex-col-reverse gap-8 p-4">
-                {/* SVG Lines Background - Simplified for vertical flow */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
-                    {/* Add lines here if needed, complex to calculate exactly without fixed positions */}
-                    <line x1="50%" y1="5%" x2="50%" y2="95%" stroke="currentColor" strokeWidth="2" className="text-gray-700" />
-                </svg>
-
-                {Array.from({ length: maxRow + 1 }).map((_, rowIndex) => (
-                    <div key={rowIndex} className="flex justify-center gap-8 relative z-10 w-full">
-                        {rows[rowIndex]?.map(skill => {
-                            const isLocked = skill.reqPoints > totalPoints;
-                            return (
-                                <SkillNode
-                                    key={skill.id}
-                                    skill={skill}
-                                    currentLevel={skillsState[skill.id] || 0}
-                                    isLocked={isLocked}
-                                    color={categoryKey === 'conditioning' ? 'green-500' : categoryKey === 'mobility' ? 'yellow-500' : 'red-500'}
-                                    onAdd={(id) => {
-                                        if (skillsState[id] >= skill.maxLevel) return;
-                                        onSkillChange(id, (skillsState[id] || 0) + 1);
-                                    }}
-                                    onRemove={(id) => {
-                                        if (!skillsState[id] || skillsState[id] <= 0) return;
-                                        onSkillChange(id, skillsState[id] - 1);
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-};
-
 const SkillTreePage = () => {
-    // State to track skill levels: { [skillId]: level }
     const [skillsState, setSkillsState] = useState({});
 
     const handleSkillChange = (skillId, newLevel) => {
@@ -150,27 +94,79 @@ const SkillTreePage = () => {
         }));
     };
 
+    // Calculate total points per category
+    const points = useMemo(() => {
+        const result = { conditioning: 0, mobility: 0, survival: 0 };
+        Object.keys(SKILL_DATA).forEach(key => {
+            SKILL_DATA[key].skills.forEach(skill => {
+                result[key] += (skillsState[skill.id] || 0);
+            });
+        });
+        return result;
+    }, [skillsState]);
+
+    // Flatten all skills for rendering
+    const allSkills = useMemo(() => {
+        return [
+            ...SKILL_DATA.conditioning.skills.map(s => ({ ...s, category: 'conditioning' })),
+            ...SKILL_DATA.mobility.skills.map(s => ({ ...s, category: 'mobility' })),
+            ...SKILL_DATA.survival.skills.map(s => ({ ...s, category: 'survival' }))
+        ];
+    }, []);
+
     return (
-        <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-y-auto overflow-x-hidden">
-            <div className="min-h-full flex justify-center p-10 gap-4">
-                <SkillTreeColumn
-                    categoryKey="conditioning"
-                    data={SKILL_DATA.conditioning}
-                    skillsState={skillsState}
-                    onSkillChange={handleSkillChange}
-                />
-                <SkillTreeColumn
-                    categoryKey="mobility"
-                    data={SKILL_DATA.mobility}
-                    skillsState={skillsState}
-                    onSkillChange={handleSkillChange}
-                />
-                <SkillTreeColumn
-                    categoryKey="survival"
-                    data={SKILL_DATA.survival}
-                    skillsState={skillsState}
-                    onSkillChange={handleSkillChange}
-                />
+        <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-hidden flex flex-col">
+            {/* Header / Points Display */}
+            <div className="absolute top-4 left-0 right-0 flex justify-center gap-20 z-20 pointer-events-none">
+                <div className="text-center">
+                    <h2 className="text-green-500 font-bold text-xl">컨디셔닝</h2>
+                    <p className="text-green-500 text-sm">{points.conditioning} 포인트</p>
+                </div>
+                <div className="text-center">
+                    <h2 className="text-yellow-500 font-bold text-xl">기동성</h2>
+                    <p className="text-yellow-500 text-sm">{points.mobility} 포인트</p>
+                </div>
+                <div className="text-center">
+                    <h2 className="text-red-500 font-bold text-xl">생존</h2>
+                    <p className="text-red-500 text-sm">{points.survival} 포인트</p>
+                </div>
+            </div>
+
+            {/* Main SVG/HTML Container */}
+            <div className="flex-1 relative w-full h-full min-h-[600px] overflow-auto">
+                <div className="relative w-full h-full min-w-[1000px] min-h-[800px]">
+                    {/* Background Lines (SVG) - Reusing lines from skill.txt logic or just simple connections */}
+                    {/* Since we don't have the exact line coordinates from the file easily mapped to IDs, 
+                        we will use the background image or just leave lines empty for now, 
+                        OR we can try to render the lines from the file if we extracted them. 
+                        For now, let's focus on nodes. */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
+                        {/* Placeholder for lines */}
+                    </svg>
+
+                    {/* Skill Nodes */}
+                    {allSkills.map(skill => {
+                        const totalPoints = points[skill.category];
+                        const isLocked = skill.reqPoints > totalPoints;
+                        return (
+                            <SkillNode
+                                key={skill.id}
+                                skill={skill}
+                                currentLevel={skillsState[skill.id] || 0}
+                                isLocked={isLocked}
+                                color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
+                                onAdd={(id) => {
+                                    if (skillsState[id] >= skill.maxLevel) return;
+                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                }}
+                                onRemove={(id) => {
+                                    if (!skillsState[id] || skillsState[id] <= 0) return;
+                                    handleSkillChange(id, skillsState[id] - 1);
+                                }}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
