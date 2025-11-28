@@ -28,10 +28,20 @@ const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) =>
                     onRemove(skill.id);
                 }}
             >
-                {/* Icon Placeholder (Using generic icons based on category if specific not available) */}
-                <div className="transform group-hover:scale-110 transition-transform">
-                    {/* We can map specific icons here if we had them, for now using text/generic */}
-                    {skill.maxLevel === 1 ? <Check size={24} /> : <div className="text-xs font-bold">{skill.name.slice(0, 1)}</div>}
+                {/* Icon */}
+                <div className="w-full h-full p-1 rounded-full overflow-hidden relative">
+                    {skill.icon ? (
+                        <img
+                            src={skill.icon}
+                            alt={skill.name}
+                            className={`w-full h-full object-cover transition-all duration-300 ${isActive ? 'opacity-100 grayscale-0' : 'opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-80'
+                                }`}
+                        />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                            {skill.maxLevel === 1 ? <Check size={24} /> : <div className="text-xs font-bold">{skill.name.slice(0, 1)}</div>}
+                        </div>
+                    )}
                 </div>
 
                 {/* Lock Overlay */}
