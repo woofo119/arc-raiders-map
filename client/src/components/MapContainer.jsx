@@ -191,6 +191,13 @@ const MapController = ({ onRightClick, bounds }) => {
     return null;
 };
 
+// 레거시 데이터(야전 -> 필드) 변환 헬퍼 함수
+const getDisplayTitle = (title) => {
+    if (!title) return '';
+    return title.replace(/야전 저장소/g, '필드 창고')
+        .replace(/야전 상자/g, '필드 상자');
+};
+
 // 지도 설정 (CRS.Simple 모드: 위도/경도 대신 픽셀 좌표 사용)
 const bounds = [[0, 0], [1000, 1000]]; // 이미지 비율에 맞춰 조정 필요
 const mapCenter = [500, 500];
@@ -204,10 +211,8 @@ const MapContainer = () => {
     }, [fetchMarkers, currentMap]); // 맵이 변경될 때마다 마커 다시 불러오기
 
     // 우클릭 핸들러: 마커 생성 폼 표시
-    // 우클릭 핸들러: 마커 생성 폼 표시
     const handleMapRightClick = (e) => {
         // 로그인 및 권한 체크 제거됨
-
         setFormPosition({
             x: e.latlng.lat,
             y: e.latlng.lng,
@@ -221,14 +226,6 @@ const MapContainer = () => {
         if (filters[m.category]) return true;
 
         // 2. 하위 호환성: category가 없거나 'general'인 경우 type으로 확인 (기존 데이터)
-        // 하지만 이제 filters는 sub-type ID만 키로 가짐.
-        // 따라서 기존 데이터(category='general')는 필터링에서 제외되거나, 별도 처리가 필요함.
-        // 현재 스크립트로 생성된 마커는 모두 category가 있음.
-        // 예전 마커를 위해 type 기반 필터링을 유지하려면, filters에 type 키도 있어야 하는데,
-        // useStore 리팩토링에서 type 키는 제거됨.
-        // 해결책: 마커의 category가 없으면 보여주거나(true), type에 해당하는 첫 번째 sub-type의 상태를 따르거나...
-        // 여기서는 안전하게 category가 있으면 그것을 따르고, 없으면 true(보임)로 처리하거나 숨김.
-        // 일단 category가 있는 것만 필터링 적용.
         if (m.category && m.category !== 'general') {
             return filters[m.category];
         }
@@ -260,6 +257,7 @@ const MapContainer = () => {
 
                 {filteredMarkers.map((marker) => {
                     const isDraggable = user && (user._id === marker.createdBy?._id || user.role === 'admin');
+                    const displayTitle = getDisplayTitle(marker.title);
 
                     return (
                         <Marker
@@ -270,11 +268,6 @@ const MapContainer = () => {
                             eventHandlers={{
                                 dragend: async (e) => {
                                     const newPos = e.target.getLatLng();
-                                    // 즉시 서버에 업데이트 요청 (Manual Calibration)
-                                    // updateMarker(id, title, description, x, y)
-                                    // title, description은 기존 값 유지 (undefined 전달 시 유지됨 - useStore 로직 확인 필요하지만, 
-                                    // useStore.js의 updateMarker는 undefined 체크를 하므로 x, y만 보내면 됨.
-                                    // 단, title/desc 인자가 앞에 있으므로 undefined를 명시적으로 넘겨야 함.
                                     const { updateMarker } = useStore.getState();
                                     await updateMarker(marker._id, undefined, undefined, newPos.lat, newPos.lng);
                                     console.log(`Marker ${marker.title} moved to:`, newPos);
@@ -283,11 +276,11 @@ const MapContainer = () => {
                         >
                             <Tooltip direction="top" offset={[0, -30]} opacity={1} permanent={false}>
                                 <span className="font-bold text-sm">
-                                    {marker.title ? marker.title.split('(')[0].trim() : ''}
+                                    {displayTitle ? displayTitle.split('(')[0].trim() : ''}
                                 </span>
                             </Tooltip>
                             <Popup className="custom-popup-dark">
-                                <MarkerPopupContent marker={marker} />
+                                <MarkerPopupContent marker={{ ...marker, title: displayTitle }} />
                             </Popup>
                         </Marker>
                     );
