@@ -244,6 +244,35 @@ if (iconDef && iconDef.icon && iconDef.icon.startsWith('/')) {
 
 ---
 
+## 8. Verification Walkthrough (검증 가이드)
+
+### A. Deployment Info
+- **Frontend:** `https://web-arc-map-mig6pxsra9d587bc.sel3.cloudtype.app/`
+- **Backend:** `https://port-0-arc-server-mig6pxsra9d587bc.sel3.cloudtype.app/api`
+- **Admin Account:** ID `arc` / PW `123123@`
+
+### B. Test Steps (After Deployment)
+
+#### 1. Normal Marker Test
+1. Login as Admin.
+2. Click map to create marker.
+3. Select **Category: Nature**, **Type: Mushroom**.
+4. Click "Add".
+5. **Verify:** Green background + Mushroom icon.
+
+#### 2. Official Marker Test
+1. Click map to create marker.
+2. Select **Category: Container**, **Type: Weapon Case**.
+3. Check **"Official Marker"** box.
+4. Click "Add".
+5. **Verify:** Orange background + **Yellow Border**.
+
+#### 3. Container Color Test
+1. Create any container marker (e.g., Medical Box).
+2. **Verify:** Orange background (even if not official).
+
+---
+
 **Quick Start Command for Next Session:**
 ```bash
 # After 4:45 AM, run in order:
@@ -251,5 +280,5 @@ if (iconDef && iconDef.icon && iconDef.icon.startsWith('/')) {
 2. Copy to client/public/icons/
 3. git add client/public/icons/ && git commit -m "Feat: Add remaining icons" && git push
 4. Redeploy Frontend on Cloudtype
-5. Test marker creation with all types
+5. Run verification steps above (Section 8)
 ```
