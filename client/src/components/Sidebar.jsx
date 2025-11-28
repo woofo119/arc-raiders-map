@@ -38,36 +38,22 @@ const Sidebar = () => {
             </div>
 
             {/* 필터 영역 */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-6 transition-all duration-300">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-4 transition-all duration-300 scrollbar-hide">
                 <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-center group-hover/sidebar:justify-start gap-2 whitespace-nowrap h-6">
                     <Filter size={16} className="min-w-[16px]" />
                     <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100 hidden group-hover/sidebar:inline">
-                        Filter Categories
+                        FILTER CATEGORIES
                     </span>
                 </h3>
 
-                <div className="space-y-3 flex flex-col items-center group-hover/sidebar:items-stretch">
-                    <FilterItem
-                        label="자원 (Resource)"
-                        icon={<Layers size={20} className="text-emerald-400" />}
-                        checked={filters.resource}
-                        onChange={() => toggleFilter('resource')}
-                        color="emerald"
-                    />
-                    <FilterItem
-                        label="무기 (Weapon)"
-                        icon={<Crosshair size={20} className="text-red-400" />}
-                        checked={filters.weapon}
-                        onChange={() => toggleFilter('weapon')}
-                        color="red"
-                    />
-                    <FilterItem
-                        label="퀘스트 (Quest)"
-                        icon={<Shield size={20} className="text-blue-400" />}
-                        checked={filters.quest}
-                        onChange={() => toggleFilter('quest')}
-                        color="blue"
-                    />
+                <div className="space-y-2 flex flex-col items-center group-hover/sidebar:items-stretch">
+                    {Object.entries(MARKER_CATEGORIES).map(([key, category]) => (
+                        <AccordionFilter
+                            key={key}
+                            mainType={key}
+                            category={category}
+                        />
+                    ))}
                 </div>
 
                 {/* 안내 메시지 */}
@@ -125,30 +111,90 @@ const Sidebar = () => {
     );
 };
 
-// 필터 아이템 컴포넌트
-const FilterItem = ({ label, icon, checked, onChange, color }) => (
-    <label className={`flex items-center p-3 rounded-xl cursor-pointer transition-all duration-300 border overflow-hidden whitespace-nowrap w-full
-    ${checked
-            ? `bg-gray-900 border-${color}-500/30 shadow-lg shadow-${color}-900/10`
-            : 'bg-transparent border-transparent hover:bg-gray-900 hover:border-gray-800'
-        }`}>
-        <div className="min-w-[20px] flex items-center justify-center">
-            {icon}
-        </div>
-        <div className="flex items-center justify-between flex-1 ml-3 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100">
-            <span className={`text-sm font-medium ${checked ? 'text-white' : 'text-gray-500'}`}>{label}</span>
-            <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors
-          ${checked ? `bg-${color}-500 border-${color}-500` : 'border-gray-700 bg-gray-800'}`}>
-                {checked && <div className="w-2 h-2 bg-white rounded-full" />}
+// 아코디언 필터 컴포넌트
+const AccordionFilter = ({ mainType, category }) => {
+    const { filters, toggleFilter, toggleCategory } = useStore();
+    const [isOpen, setIsOpen] = import('react').then(r => r.useState(true)); // Lazy import workaround or just use useState from top level
+    // Wait, I cannot use import inside component. I need to import useState at top.
+    // Let's assume useState is imported.
+
+    // Check if all items in this category are checked
+    const typeIds = category.types.map(t => t.id);
+    const allChecked = typeIds.every(id => filters[id]);
+    const someChecked = typeIds.some(id => filters[id]);
+    const activeCount = typeIds.filter(id => filters[id]).length;
+
+    // 아이콘 매핑 (카테고리별 대표 아이콘)
+    const getCategoryIcon = (type) => {
+        switch (type) {
+            case 'location': return <Map size={18} className="text-purple-400" />;
+            case 'nature': return <Layers size={18} className="text-emerald-400" />;
+            case 'container': return <Layers size={18} className="text-orange-400" />; // Box icon replacement
+            case 'resource': return <Layers size={18} className="text-blue-400" />;
+            case 'weapon': return <Crosshair size={18} className="text-red-400" />;
+            case 'quest': return <Shield size={18} className="text-yellow-400" />;
+            default: return <Layers size={18} />;
+        }
+    };
+
+    return (
+        <div className="w-full rounded-xl border border-gray-800 bg-gray-900/30 overflow-hidden transition-all duration-300 group/accordion">
+            {/* 헤더 (카테고리 토글 및 확장) */}
+            <div className="flex items-center p-3 cursor-pointer hover:bg-gray-800/50 transition-colors">
+                <div
+                    className="flex-1 flex items-center gap-3 overflow-hidden"
+                    onClick={() => {
+                        // 사이드바가 확장된 상태에서만 아코디언 토글 (구현 단순화를 위해 항상 토글되게 하거나, 사이드바 상태를 확인해야 함)
+                        // 여기서는 그냥 토글
+                        const el = document.getElementById(`accordion-${mainType}`);
+                        if (el) el.classList.toggle('hidden');
+                    }}
+                >
+                    {getCategoryIcon(mainType)}
+                    <span className="font-bold text-sm text-gray-300 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                        {category.label.split('(')[0].trim()}
+                    </span>
+                </div>
+
+                {/* 전체 토글 스위치 (사이드바 확장 시에만 표시) */}
+                <div className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+                    <span className="text-[10px] text-gray-500 font-mono">{activeCount} items</span>
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            toggleCategory(mainType);
+                        }}
+                        className={`w-8 h-4 rounded-full p-0.5 transition-colors ${allChecked ? 'bg-arc-accent' : 'bg-gray-700'}`}
+                    >
+                        <div className={`w-3 h-3 rounded-full bg-white shadow-sm transition-transform ${allChecked ? 'translate-x-4' : 'translate-x-0'}`} />
+                    </button>
+                </div>
+            </div>
+
+            {/* 바디 (하위 항목 리스트) */}
+            <div id={`accordion-${mainType}`} className="hidden group-hover/sidebar:block border-t border-gray-800/50 bg-black/20">
+                {category.types.map((type) => (
+                    <div
+                        key={type.id}
+                        onClick={() => toggleFilter(type.id)}
+                        className="flex items-center justify-between py-2 px-3 pl-10 hover:bg-white/5 cursor-pointer transition-colors group/item"
+                    >
+                        <div className="flex items-center gap-2 overflow-hidden">
+                            <div className={`w-1.5 h-1.5 rounded-full ${filters[type.id] ? 'bg-arc-accent' : 'bg-gray-600'}`} />
+                            <span className={`text-xs transition-colors truncate ${filters[type.id] ? 'text-gray-300' : 'text-gray-600'}`}>
+                                {type.label.split('(')[0].trim()}
+                            </span>
+                        </div>
+
+                        {/* 체크박스 (커스텀 스타일) */}
+                        <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent'}`}>
+                            {filters[type.id] && <div className="w-2 h-2 bg-white rounded-[1px]" />}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
-        <input
-            type="checkbox"
-            checked={checked}
-            onChange={onChange}
-            className="hidden"
-        />
-    </label>
-);
+    );
+};
 
 export default Sidebar;

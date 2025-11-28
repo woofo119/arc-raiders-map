@@ -223,7 +223,26 @@ const MapContainer = () => {
     };
 
     // 필터링된 마커 목록
-    const filteredMarkers = markers.filter(m => filters[m.type] || (m.isOfficial && filters.location)); // 임시 필터 로직
+    const filteredMarkers = markers.filter(m => {
+        // 1. 카테고리(sub-type) 필터 확인
+        if (filters[m.category]) return true;
+
+        // 2. 하위 호환성: category가 없거나 'general'인 경우 type으로 확인 (기존 데이터)
+        // 하지만 이제 filters는 sub-type ID만 키로 가짐.
+        // 따라서 기존 데이터(category='general')는 필터링에서 제외되거나, 별도 처리가 필요함.
+        // 현재 스크립트로 생성된 마커는 모두 category가 있음.
+        // 예전 마커를 위해 type 기반 필터링을 유지하려면, filters에 type 키도 있어야 하는데,
+        // useStore 리팩토링에서 type 키는 제거됨.
+        // 해결책: 마커의 category가 없으면 보여주거나(true), type에 해당하는 첫 번째 sub-type의 상태를 따르거나...
+        // 여기서는 안전하게 category가 있으면 그것을 따르고, 없으면 true(보임)로 처리하거나 숨김.
+        // 일단 category가 있는 것만 필터링 적용.
+        if (m.category && m.category !== 'general') {
+            return filters[m.category];
+        }
+
+        // category가 없는 경우 (기존 마커): 일단 보여줌 (또는 숨김)
+        return true;
+    });
 
     return (
         <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-hidden">

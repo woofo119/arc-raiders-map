@@ -69,14 +69,14 @@ const useStore = create((set, get) => ({
     // --------------------------------------------------------------------------
     currentMap: MAPS[0], // 현재 선택된 맵 (기본값: 댐 전장)
     markers: [],
-    filters: {
-        location: true,
-        nature: true,
-        container: true,
-        resource: true,
-        weapon: true,
-        quest: true,
-    },
+
+    // 초기 필터 상태: 모든 하위 카테고리(sub-type)를 true로 설정
+    filters: Object.values(MARKER_CATEGORIES).reduce((acc, category) => {
+        category.types.forEach(type => {
+            acc[type.id] = true;
+        });
+        return acc;
+    }, {}),
 
     // 맵 변경 액션
     setMap: (mapId) => {
@@ -159,10 +159,32 @@ const useStore = create((set, get) => ({
         }
     },
 
-    toggleFilter: (type) => {
+    // 개별 필터 토글 (Sub-type ID 기준)
+    toggleFilter: (typeId) => {
         set((state) => ({
-            filters: { ...state.filters, [type]: !state.filters[type] },
+            filters: { ...state.filters, [typeId]: !state.filters[typeId] },
         }));
+    },
+
+    // 카테고리 전체 토글
+    toggleCategory: (mainType, forceState = null) => {
+        set((state) => {
+            const category = MARKER_CATEGORIES[mainType];
+            if (!category) return state;
+
+            const typeIds = category.types.map(t => t.id);
+
+            // forceState가 없으면: 현재 모두 켜져있으면 끄기, 하나라도 꺼져있으면 켜기
+            const allActive = typeIds.every(id => state.filters[id]);
+            const newState = forceState !== null ? forceState : !allActive;
+
+            const newFilters = { ...state.filters };
+            typeIds.forEach(id => {
+                newFilters[id] = newState;
+            });
+
+            return { filters: newFilters };
+        });
     },
 
     // --------------------------------------------------------------------------
