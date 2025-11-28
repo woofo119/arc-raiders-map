@@ -67,14 +67,23 @@ const useStore = create((set, get) => ({
     // --------------------------------------------------------------------------
     // 🗺️ 지도 및 마커 상태 (Map & Marker State)
     // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+    // 🗺️ 지도 및 마커 상태 (Map & Marker State)
+    // --------------------------------------------------------------------------
     currentMap: MAPS[0], // 현재 선택된 맵 (기본값: 댐 전장)
     markers: [],
-    filters: {
-        location: true,
-        nature: true,
-        container: true,
-        quest: true,
-    },
+
+    // 필터 초기 상태 동적 생성
+    filters: (() => {
+        const initial = {};
+        Object.keys(MARKER_CATEGORIES).forEach(cat => {
+            initial[cat] = true; // 카테고리 전체 (예: nature)
+            MARKER_CATEGORIES[cat].types.forEach(type => {
+                initial[type.id] = true; // 개별 아이템 (예: mushroom)
+            });
+        });
+        return initial;
+    })(),
 
     // 맵 변경 액션
     setMap: (mapId) => {
@@ -153,10 +162,43 @@ const useStore = create((set, get) => ({
         }
     },
 
-    toggleFilter: (type) => {
-        set((state) => ({
-            filters: { ...state.filters, [type]: !state.filters[type] },
-        }));
+    toggleFilter: (id) => {
+        set((state) => {
+            const newFilters = { ...state.filters };
+
+            // 1. 메인 카테고리를 토글한 경우
+            if (MARKER_CATEGORIES[id]) {
+                const newValue = !newFilters[id];
+                newFilters[id] = newValue;
+                // 해당 카테고리의 모든 하위 아이템도 동일하게 설정
+                MARKER_CATEGORIES[id].types.forEach(t => {
+                    newFilters[t.id] = newValue;
+                });
+            }
+            // 2. 하위 아이템을 토글한 경우
+            else {
+                newFilters[id] = !newFilters[id];
+
+                // 부모 카테고리 찾기
+                let parentCat = null;
+                for (const cat in MARKER_CATEGORIES) {
+                    if (MARKER_CATEGORIES[cat].types.find(t => t.id === id)) {
+                        parentCat = cat;
+                        break;
+                    }
+                }
+
+                // 부모 카테고리 상태 업데이트 (모든 자식이 켜져있으면 켜짐, 하나라도 꺼지면 꺼짐)
+                // 또는 UX에 따라 "하나라도 켜져있으면 켜짐"으로 할 수도 있지만, 보통은 전체 선택/해제 로직을 따름
+                // 여기서는 "모두 선택되었을 때만 부모 체크" 로직 사용
+                if (parentCat) {
+                    const allChildren = MARKER_CATEGORIES[parentCat].types;
+                    const allChecked = allChildren.every(t => newFilters[t.id]);
+                    newFilters[parentCat] = allChecked;
+                }
+            }
+            return { filters: newFilters };
+        });
     },
 
     // --------------------------------------------------------------------------

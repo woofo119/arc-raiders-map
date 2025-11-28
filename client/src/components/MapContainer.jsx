@@ -269,7 +269,18 @@ const MapContainer = () => {
     };
 
     // 필터링된 마커 목록
-    const filteredMarkers = markers.filter(m => filters[m.type] || (m.isOfficial && filters.location)); // 임시 필터 로직
+    const filteredMarkers = markers.filter(m => {
+        // 1. 구체적인 카테고리(예: mushroom) 필터가 있으면 그것을 따름
+        if (filters[m.category] !== undefined) {
+            return filters[m.category];
+        }
+        // 2. 카테고리가 없거나 필터에 없으면 상위 타입(예: nature) 필터를 따름
+        if (filters[m.type] !== undefined) {
+            return filters[m.type];
+        }
+        // 3. 그 외는 기본적으로 표시
+        return true;
+    });
 
     return (
         <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-hidden">

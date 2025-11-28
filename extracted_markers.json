@@ -1,0 +1,1255 @@
+[
+  {
+    "type": "extraction",
+    "x": 657.7086280056576,
+    "y": 270.15558698727017,
+    "originalX": 525,
+    "originalY": 473
+  },
+  {
+    "type": "mushroom",
+    "x": 500.70721357850067,
+    "y": 700.1414427157001,
+    "originalX": 414,
+    "originalY": 777
+  },
+  {
+    "type": "extraction",
+    "x": 379.06647807637904,
+    "y": 435.64356435643566,
+    "originalX": 328,
+    "originalY": 590
+  },
+  {
+    "type": "raiderhatch",
+    "x": 806.2234794908062,
+    "y": 405.94059405940595,
+    "originalX": 630,
+    "originalY": 569
+  },
+  {
+    "type": "raiderhatch",
+    "x": 710.04243281471,
+    "y": 555.8698727015559,
+    "originalX": 562,
+    "originalY": 675
+  },
+  {
+    "type": "raiderhatch",
+    "x": 309.7595473833097,
+    "y": 626.5912305516266,
+    "originalX": 279,
+    "originalY": 725
+  },
+  {
+    "type": "raiderhatch",
+    "x": 350.7779349363508,
+    "y": 318.2461103253182,
+    "originalX": 308,
+    "originalY": 507
+  },
+  {
+    "type": "extraction",
+    "x": 445.54455445544556,
+    "y": 553.0410183875531,
+    "originalX": 375,
+    "originalY": 673
+  },
+  {
+    "type": "extraction",
+    "x": 697.3125884016973,
+    "y": 642.1499292786422,
+    "originalX": 553,
+    "originalY": 736
+  },
+  {
+    "type": "mushroom",
+    "x": 561.5275813295615,
+    "y": 722.7722772277227,
+    "originalX": 457,
+    "originalY": 793
+  },
+  {
+    "type": "mushroom",
+    "x": 541.7256011315418,
+    "y": 660.5374823196606,
+    "originalX": 443,
+    "originalY": 749
+  },
+  {
+    "type": "mushroom",
+    "x": 384.72418670438475,
+    "y": 513.4370579915134,
+    "originalX": 332,
+    "originalY": 645
+  },
+  {
+    "type": "mushroom",
+    "x": 418.6704384724187,
+    "y": 506.36492220650644,
+    "originalX": 356,
+    "originalY": 640
+  },
+  {
+    "type": "mushroom",
+    "x": 428.57142857142856,
+    "y": 507.7793493635078,
+    "originalX": 363,
+    "originalY": 641
+  },
+  {
+    "type": "mushroom",
+    "x": 570.01414427157,
+    "y": 541.7256011315418,
+    "originalX": 463,
+    "originalY": 665
+  },
+  {
+    "type": "mushroom",
+    "x": 527.5813295615276,
+    "y": 428.57142857142856,
+    "originalX": 433,
+    "originalY": 585
+  },
+  {
+    "type": "mushroom",
+    "x": 514.8514851485148,
+    "y": 462.5176803394625,
+    "originalX": 424,
+    "originalY": 609
+  },
+  {
+    "type": "mushroom",
+    "x": 465.34653465346537,
+    "y": 437.05799151343706,
+    "originalX": 389,
+    "originalY": 591
+  },
+  {
+    "type": "mushroom",
+    "x": 435.64356435643566,
+    "y": 428.57142857142856,
+    "originalX": 368,
+    "originalY": 585
+  },
+  {
+    "type": "mushroom",
+    "x": 472.4186704384724,
+    "y": 400.2828854314003,
+    "originalX": 394,
+    "originalY": 565
+  },
+  {
+    "type": "mushroom",
+    "x": 528.9957567185289,
+    "y": 339.4625176803395,
+    "originalX": 434,
+    "originalY": 522
+  },
+  {
+    "type": "mushroom",
+    "x": 285.7142857142857,
+    "y": 461.1032531824611,
+    "originalX": 262,
+    "originalY": 608
+  },
+  {
+    "type": "mushroom",
+    "x": 329.5615275813296,
+    "y": 463.9321074964639,
+    "originalX": 293,
+    "originalY": 610
+  },
+  {
+    "type": "mushroom",
+    "x": 366.33663366336634,
+    "y": 445.54455445544556,
+    "originalX": 319,
+    "originalY": 597
+  },
+  {
+    "type": "mushroom",
+    "x": 390.3818953323904,
+    "y": 438.47241867043846,
+    "originalX": 336,
+    "originalY": 592
+  },
+  {
+    "type": "mushroom",
+    "x": 388.96746817538894,
+    "y": 420.0848656294201,
+    "originalX": 335,
+    "originalY": 579
+  },
+  {
+    "type": "mushroom",
+    "x": 309.7595473833097,
+    "y": 390.3818953323904,
+    "originalX": 279,
+    "originalY": 558
+  },
+  {
+    "type": "mushroom",
+    "x": 770.8628005657708,
+    "y": 356.43564356435644,
+    "originalX": 605,
+    "originalY": 534
+  },
+  {
+    "type": "prickly_pear",
+    "x": 708.6280056577086,
+    "y": 544.5544554455446,
+    "originalX": 561,
+    "originalY": 667
+  },
+  {
+    "type": "prickly_pear",
+    "x": 777.9349363507779,
+    "y": 312.58840169731263,
+    "originalX": 610,
+    "originalY": 503
+  },
+  {
+    "type": "prickly_pear",
+    "x": 745.4031117397453,
+    "y": 292.78642149929277,
+    "originalX": 587,
+    "originalY": 489
+  },
+  {
+    "type": "prickly_pear",
+    "x": 650.6364922206507,
+    "y": 284.29985855728427,
+    "originalX": 520,
+    "originalY": 483
+  },
+  {
+    "type": "prickly_pear",
+    "x": 669.024045261669,
+    "y": 250.35360678925034,
+    "originalX": 533,
+    "originalY": 459
+  },
+  {
+    "type": "prickly_pear",
+    "x": 632.2489391796322,
+    "y": 229.13719943422913,
+    "originalX": 507,
+    "originalY": 444
+  },
+  {
+    "type": "prickly_pear",
+    "x": 504.950495049505,
+    "y": 248.93917963224894,
+    "originalX": 417,
+    "originalY": 458
+  },
+  {
+    "type": "prickly_pear",
+    "x": 475.2475247524752,
+    "y": 244.6958981612447,
+    "originalX": 396,
+    "originalY": 455
+  },
+  {
+    "type": "prickly_pear",
+    "x": 475.2475247524752,
+    "y": 222.06506364922208,
+    "originalX": 396,
+    "originalY": 439
+  },
+  {
+    "type": "prickly_pear",
+    "x": 401.6973125884017,
+    "y": 287.1287128712871,
+    "originalX": 344,
+    "originalY": 485
+  },
+  {
+    "type": "prickly_pear",
+    "x": 301.2729844413013,
+    "y": 312.58840169731263,
+    "originalX": 273,
+    "originalY": 503
+  },
+  {
+    "type": "prickly_pear",
+    "x": 455.44554455445547,
+    "y": 540.3111739745403,
+    "originalX": 382,
+    "originalY": 664
+  },
+  {
+    "type": "prickly_pear",
+    "x": 489.3917963224894,
+    "y": 561.5275813295615,
+    "originalX": 406,
+    "originalY": 679
+  },
+  {
+    "type": "prickly_pear",
+    "x": 530.4101838755304,
+    "y": 594.059405940594,
+    "originalX": 435,
+    "originalY": 702
+  },
+  {
+    "type": "prickly_pear",
+    "x": 509.19377652050923,
+    "y": 635.077793493635,
+    "originalX": 420,
+    "originalY": 731
+  },
+  {
+    "type": "agave",
+    "x": 495.049504950495,
+    "y": 223.47949080622348,
+    "originalX": 410,
+    "originalY": 440
+  },
+  {
+    "type": "agave",
+    "x": 408.7694483734088,
+    "y": 274.39886845827436,
+    "originalX": 349,
+    "originalY": 476
+  },
+  {
+    "type": "agave",
+    "x": 640.7355021216408,
+    "y": 243.28147100424326,
+    "originalX": 513,
+    "originalY": 454
+  },
+  {
+    "type": "great_mullein",
+    "x": 527.5813295615276,
+    "y": 369.16548797736914,
+    "originalX": 433,
+    "originalY": 543
+  },
+  {
+    "type": "great_mullein",
+    "x": 418.6704384724187,
+    "y": 294.2008486562942,
+    "originalX": 356,
+    "originalY": 490
+  },
+  {
+    "type": "great_mullein",
+    "x": 311.1739745403111,
+    "y": 347.949080622348,
+    "originalX": 280,
+    "originalY": 528
+  },
+  {
+    "type": "great_mullein",
+    "x": 285.7142857142857,
+    "y": 417.25601131541725,
+    "originalX": 262,
+    "originalY": 577
+  },
+  {
+    "type": "great_mullein",
+    "x": 309.7595473833097,
+    "y": 487.97736916548797,
+    "originalX": 279,
+    "originalY": 627
+  },
+  {
+    "type": "great_mullein",
+    "x": 308.3451202263083,
+    "y": 523.3380480905233,
+    "originalX": 278,
+    "originalY": 652
+  },
+  {
+    "type": "great_mullein",
+    "x": 639.3210749646393,
+    "y": 561.5275813295615,
+    "originalX": 512,
+    "originalY": 679
+  },
+  {
+    "type": "great_mullein",
+    "x": 749.6463932107497,
+    "y": 480.9052333804809,
+    "originalX": 590,
+    "originalY": 622
+  },
+  {
+    "type": "locked",
+    "x": 413.012729844413,
+    "y": 534.6534653465346,
+    "originalX": 352,
+    "originalY": 660
+  },
+  {
+    "type": "locked",
+    "x": 544.5544554455446,
+    "y": 550.2121640735502,
+    "originalX": 445,
+    "originalY": 671
+  },
+  {
+    "type": "locked",
+    "x": 562.9420084865629,
+    "y": 564.3564356435643,
+    "originalX": 458,
+    "originalY": 681
+  },
+  {
+    "type": "locked",
+    "x": 589.8161244695899,
+    "y": 553.0410183875531,
+    "originalX": 477,
+    "originalY": 673
+  },
+  {
+    "type": "locked",
+    "x": 678.925035360679,
+    "y": 693.0693069306931,
+    "originalX": 540,
+    "originalY": 772
+  },
+  {
+    "type": "locked",
+    "x": 705.7991513437057,
+    "y": 335.2192362093352,
+    "originalX": 559,
+    "originalY": 519
+  },
+  {
+    "type": "supply_station",
+    "x": 396.03960396039605,
+    "y": 538.8967468175389,
+    "originalX": 340,
+    "originalY": 663
+  },
+  {
+    "type": "supply_station",
+    "x": 338.0480905233381,
+    "y": 408.7694483734088,
+    "originalX": 299,
+    "originalY": 571
+  },
+  {
+    "type": "supply_station",
+    "x": 458.27439886845826,
+    "y": 379.06647807637904,
+    "originalX": 384,
+    "originalY": 550
+  },
+  {
+    "type": "supply_station",
+    "x": 479.4908062234795,
+    "y": 371.994342291372,
+    "originalX": 399,
+    "originalY": 545
+  },
+  {
+    "type": "supply_station",
+    "x": 487.97736916548797,
+    "y": 582.7439886845827,
+    "originalX": 405,
+    "originalY": 694
+  },
+  {
+    "type": "supply_station",
+    "x": 502.1216407355021,
+    "y": 568.5997171145685,
+    "originalX": 415,
+    "originalY": 684
+  },
+  {
+    "type": "supply_station",
+    "x": 591.2305516265913,
+    "y": 676.0961810466762,
+    "originalX": 478,
+    "originalY": 760
+  },
+  {
+    "type": "supply_station",
+    "x": 602.5459688826026,
+    "y": 568.5997171145685,
+    "originalX": 486,
+    "originalY": 684
+  },
+  {
+    "type": "supply_station",
+    "x": 704.3847241867044,
+    "y": 459.68882602545966,
+    "originalX": 558,
+    "originalY": 607
+  },
+  {
+    "type": "supply_station",
+    "x": 718.5289957567186,
+    "y": 346.53465346534654,
+    "originalX": 568,
+    "originalY": 527
+  },
+  {
+    "type": "supply_station",
+    "x": 629.4200848656294,
+    "y": 356.43564356435644,
+    "originalX": 505,
+    "originalY": 534
+  },
+  {
+    "type": "field_depot",
+    "x": 366.33663366336634,
+    "y": 659.1230551626592,
+    "originalX": 319,
+    "originalY": 748
+  },
+  {
+    "type": "field_depot",
+    "x": 323.90381895332393,
+    "y": 502.1216407355021,
+    "originalX": 289,
+    "originalY": 637
+  },
+  {
+    "type": "field_depot",
+    "x": 497.8783592644979,
+    "y": 557.2842998585573,
+    "originalX": 412,
+    "originalY": 676
+  },
+  {
+    "type": "field_depot",
+    "x": 643.5643564356436,
+    "y": 612.4469589816125,
+    "originalX": 515,
+    "originalY": 715
+  },
+  {
+    "type": "field_depot",
+    "x": 763.7906647807638,
+    "y": 333.8048090523338,
+    "originalX": 600,
+    "originalY": 518
+  },
+  {
+    "type": "field_depot",
+    "x": 479.4908062234795,
+    "y": 357.85007072135784,
+    "originalX": 399,
+    "originalY": 535
+  },
+  {
+    "type": "player_spawn",
+    "x": 231.96605374823196,
+    "y": 528.9957567185289,
+    "originalX": 224,
+    "originalY": 656
+  },
+  {
+    "type": "player_spawn",
+    "x": 220.65063649222066,
+    "y": 405.94059405940595,
+    "originalX": 216,
+    "originalY": 569
+  },
+  {
+    "type": "player_spawn",
+    "x": 287.1287128712871,
+    "y": 623.7623762376238,
+    "originalX": 263,
+    "originalY": 723
+  },
+  {
+    "type": "player_spawn",
+    "x": 338.0480905233381,
+    "y": 694.4837340876945,
+    "originalX": 299,
+    "originalY": 773
+  },
+  {
+    "type": "player_spawn",
+    "x": 400.2828854314003,
+    "y": 749.6463932107497,
+    "originalX": 343,
+    "originalY": 812
+  },
+  {
+    "type": "player_spawn",
+    "x": 471.004243281471,
+    "y": 642.1499292786422,
+    "originalX": 393,
+    "originalY": 736
+  },
+  {
+    "type": "player_spawn",
+    "x": 471.004243281471,
+    "y": 776.5205091937765,
+    "originalX": 393,
+    "originalY": 831
+  },
+  {
+    "type": "player_spawn",
+    "x": 628.0056577086281,
+    "y": 779.3493635077793,
+    "originalX": 504,
+    "originalY": 833
+  },
+  {
+    "type": "player_spawn",
+    "x": 729.8444130127299,
+    "y": 762.3762376237623,
+    "originalX": 576,
+    "originalY": 821
+  },
+  {
+    "type": "player_spawn",
+    "x": 765.2050919377652,
+    "y": 671.8528995756718,
+    "originalX": 601,
+    "originalY": 757
+  },
+  {
+    "type": "player_spawn",
+    "x": 575.6718528995757,
+    "y": 537.4823196605375,
+    "originalX": 467,
+    "originalY": 662
+  },
+  {
+    "type": "player_spawn",
+    "x": 564.3564356435643,
+    "y": 527.5813295615276,
+    "originalX": 459,
+    "originalY": 655
+  },
+  {
+    "type": "player_spawn",
+    "x": 806.2234794908062,
+    "y": 414.4271570014144,
+    "originalX": 630,
+    "originalY": 575
+  },
+  {
+    "type": "player_spawn",
+    "x": 783.5926449787836,
+    "y": 295.6152758132956,
+    "originalX": 614,
+    "originalY": 491
+  },
+  {
+    "type": "player_spawn",
+    "x": 673.2673267326733,
+    "y": 370.57991513437054,
+    "originalX": 536,
+    "originalY": 544
+  },
+  {
+    "type": "player_spawn",
+    "x": 712.8712871287129,
+    "y": 258.84016973125887,
+    "originalX": 564,
+    "originalY": 465
+  },
+  {
+    "type": "player_spawn",
+    "x": 657.7086280056576,
+    "y": 206.5063649222065,
+    "originalX": 525,
+    "originalY": 428
+  },
+  {
+    "type": "player_spawn",
+    "x": 568.5997171145685,
+    "y": 181.04667609618105,
+    "originalX": 462,
+    "originalY": 410
+  },
+  {
+    "type": "player_spawn",
+    "x": 487.97736916548797,
+    "y": 229.13719943422913,
+    "originalX": 405,
+    "originalY": 444
+  },
+  {
+    "type": "player_spawn",
+    "x": 376.23762376237624,
+    "y": 224.89391796322488,
+    "originalX": 326,
+    "originalY": 441
+  },
+  {
+    "type": "player_spawn",
+    "x": 289.95756718529,
+    "y": 287.1287128712871,
+    "originalX": 265,
+    "originalY": 485
+  },
+  {
+    "type": "weapon_case",
+    "x": 319.6605374823196,
+    "y": 295.6152758132956,
+    "originalX": 286,
+    "originalY": 491
+  },
+  {
+    "type": "weapon_case",
+    "x": 352.1923620933522,
+    "y": 407.35502121640735,
+    "originalX": 309,
+    "originalY": 570
+  },
+  {
+    "type": "weapon_case",
+    "x": 267.3267326732673,
+    "y": 537.4823196605375,
+    "originalX": 249,
+    "originalY": 662
+  },
+  {
+    "type": "weapon_case",
+    "x": 455.44554455445547,
+    "y": 377.65205091937764,
+    "originalX": 382,
+    "originalY": 549
+  },
+  {
+    "type": "weapon_case",
+    "x": 520.5091937765205,
+    "y": 373.40876944837345,
+    "originalX": 428,
+    "originalY": 546
+  },
+  {
+    "type": "weapon_case",
+    "x": 530.4101838755304,
+    "y": 371.994342291372,
+    "originalX": 435,
+    "originalY": 545
+  },
+  {
+    "type": "weapon_case",
+    "x": 537.4823196605375,
+    "y": 367.75106082036774,
+    "originalX": 440,
+    "originalY": 542
+  },
+  {
+    "type": "weapon_case",
+    "x": 471.004243281471,
+    "y": 451.20226308345116,
+    "originalX": 393,
+    "originalY": 601
+  },
+  {
+    "type": "weapon_case",
+    "x": 456.85997171145686,
+    "y": 475.2475247524752,
+    "originalX": 383,
+    "originalY": 618
+  },
+  {
+    "type": "weapon_case",
+    "x": 411.5983026874116,
+    "y": 530.4101838755304,
+    "originalX": 351,
+    "originalY": 657
+  },
+  {
+    "type": "weapon_case",
+    "x": 428.57142857142856,
+    "y": 545.9688826025459,
+    "originalX": 363,
+    "originalY": 668
+  },
+  {
+    "type": "weapon_case",
+    "x": 321.0749646393211,
+    "y": 669.024045261669,
+    "originalX": 287,
+    "originalY": 755
+  },
+  {
+    "type": "weapon_case",
+    "x": 408.7694483734088,
+    "y": 731.2588401697313,
+    "originalX": 349,
+    "originalY": 799
+  },
+  {
+    "type": "weapon_case",
+    "x": 441.3012729844413,
+    "y": 785.007072135785,
+    "originalX": 372,
+    "originalY": 837
+  },
+  {
+    "type": "weapon_case",
+    "x": 524.7524752475248,
+    "y": 807.6379066478077,
+    "originalX": 431,
+    "originalY": 853
+  },
+  {
+    "type": "weapon_case",
+    "x": 528.9957567185289,
+    "y": 806.2234794908062,
+    "originalX": 434,
+    "originalY": 852
+  },
+  {
+    "type": "weapon_case",
+    "x": 700.1414427157001,
+    "y": 314.00282885431403,
+    "originalX": 555,
+    "originalY": 504
+  },
+  {
+    "type": "weapon_case",
+    "x": 745.4031117397453,
+    "y": 316.83168316831683,
+    "originalX": 587,
+    "originalY": 506
+  },
+  {
+    "type": "weapon_case",
+    "x": 809.052333804809,
+    "y": 332.3903818953324,
+    "originalX": 632,
+    "originalY": 517
+  },
+  {
+    "type": "weapon_case",
+    "x": 695.898161244696,
+    "y": 461.1032531824611,
+    "originalX": 552,
+    "originalY": 608
+  },
+  {
+    "type": "weapon_case",
+    "x": 629.4200848656294,
+    "y": 376.23762376237624,
+    "originalX": 505,
+    "originalY": 548
+  },
+  {
+    "type": "weapon_case",
+    "x": 603.9603960396039,
+    "y": 451.20226308345116,
+    "originalX": 487,
+    "originalY": 601
+  },
+  {
+    "type": "weapon_case",
+    "x": 601.1315417256011,
+    "y": 476.66195190947667,
+    "originalX": 485,
+    "originalY": 619
+  },
+  {
+    "type": "weapon_case",
+    "x": 579.91513437058,
+    "y": 519.0947666195192,
+    "originalX": 470,
+    "originalY": 649
+  },
+  {
+    "type": "weapon_case",
+    "x": 591.2305516265913,
+    "y": 547.3833097595474,
+    "originalX": 478,
+    "originalY": 669
+  },
+  {
+    "type": "weapon_case",
+    "x": 595.4738330975955,
+    "y": 553.0410183875531,
+    "originalX": 481,
+    "originalY": 673
+  },
+  {
+    "type": "weapon_case",
+    "x": 599.7171145685996,
+    "y": 551.6265912305515,
+    "originalX": 484,
+    "originalY": 672
+  },
+  {
+    "type": "weapon_case",
+    "x": 581.3295615275813,
+    "y": 554.4554455445545,
+    "originalX": 471,
+    "originalY": 674
+  },
+  {
+    "type": "weapon_case",
+    "x": 601.1315417256011,
+    "y": 592.6449787835927,
+    "originalX": 485,
+    "originalY": 701
+  },
+  {
+    "type": "weapon_case",
+    "x": 759.5473833097595,
+    "y": 731.2588401697313,
+    "originalX": 597,
+    "originalY": 799
+  },
+  {
+    "type": "supply_station",
+    "x": 514.8514851485148,
+    "y": 530.4101838755304,
+    "originalX": 424,
+    "originalY": 657
+  },
+  {
+    "type": "security_locker",
+    "x": 465.34653465346537,
+    "y": 383.30975954738335,
+    "originalX": 389,
+    "originalY": 553
+  },
+  {
+    "type": "security_locker",
+    "x": 520.5091937765205,
+    "y": 376.23762376237624,
+    "originalX": 428,
+    "originalY": 548
+  },
+  {
+    "type": "security_locker",
+    "x": 536.0678925035361,
+    "y": 369.16548797736914,
+    "originalX": 439,
+    "originalY": 543
+  },
+  {
+    "type": "security_locker",
+    "x": 698.7270155586988,
+    "y": 332.3903818953324,
+    "originalX": 554,
+    "originalY": 517
+  },
+  {
+    "type": "security_locker",
+    "x": 578.5007072135785,
+    "y": 519.0947666195192,
+    "originalX": 469,
+    "originalY": 649
+  },
+  {
+    "type": "security_locker",
+    "x": 598.3026874115983,
+    "y": 553.0410183875531,
+    "originalX": 483,
+    "originalY": 673
+  },
+  {
+    "type": "security_locker",
+    "x": 589.8161244695899,
+    "y": 551.6265912305515,
+    "originalX": 477,
+    "originalY": 672
+  },
+  {
+    "type": "security_locker",
+    "x": 565.7708628005657,
+    "y": 560.1131541725601,
+    "originalX": 460,
+    "originalY": 678
+  },
+  {
+    "type": "security_locker",
+    "x": 685.997171145686,
+    "y": 663.3663366336634,
+    "originalX": 545,
+    "originalY": 751
+  },
+  {
+    "type": "apricot",
+    "x": 765.2050919377652,
+    "y": 496.4639321074965,
+    "originalX": 601,
+    "originalY": 633
+  },
+  {
+    "type": "apricot",
+    "x": 776.5205091937765,
+    "y": 504.950495049505,
+    "originalX": 609,
+    "originalY": 639
+  },
+  {
+    "type": "apricot",
+    "x": 768.033946251768,
+    "y": 514.8514851485148,
+    "originalX": 603,
+    "originalY": 646
+  },
+  {
+    "type": "great_mullein",
+    "x": 673.2673267326733,
+    "y": 677.5106082036775,
+    "originalX": 536,
+    "originalY": 761
+  },
+  {
+    "type": "great_mullein",
+    "x": 404.5261669024045,
+    "y": 493.6350777934936,
+    "originalX": 346,
+    "originalY": 631
+  },
+  {
+    "type": "field_crate",
+    "x": 294.2008486562942,
+    "y": 319.6605374823196,
+    "originalX": 268,
+    "originalY": 508
+  },
+  {
+    "type": "field_crate",
+    "x": 268.74115983026877,
+    "y": 538.8967468175389,
+    "originalX": 250,
+    "originalY": 663
+  },
+  {
+    "type": "field_crate",
+    "x": 275.81329561527576,
+    "y": 530.4101838755304,
+    "originalX": 255,
+    "originalY": 657
+  },
+  {
+    "type": "field_crate",
+    "x": 270.15558698727017,
+    "y": 520.5091937765205,
+    "originalX": 251,
+    "originalY": 650
+  },
+  {
+    "type": "field_crate",
+    "x": 291.3719943422914,
+    "y": 527.5813295615276,
+    "originalX": 266,
+    "originalY": 655
+  },
+  {
+    "type": "field_crate",
+    "x": 301.2729844413013,
+    "y": 528.9957567185289,
+    "originalX": 273,
+    "originalY": 656
+  },
+  {
+    "type": "field_crate",
+    "x": 295.6152758132956,
+    "y": 544.5544554455446,
+    "originalX": 269,
+    "originalY": 667
+  },
+  {
+    "type": "field_crate",
+    "x": 338.0480905233381,
+    "y": 667.6096181046676,
+    "originalX": 299,
+    "originalY": 754
+  },
+  {
+    "type": "field_crate",
+    "x": 339.4625176803395,
+    "y": 663.3663366336634,
+    "originalX": 300,
+    "originalY": 751
+  },
+  {
+    "type": "field_crate",
+    "x": 349.3635077793494,
+    "y": 687.4115983026874,
+    "originalX": 307,
+    "originalY": 768
+  },
+  {
+    "type": "field_crate",
+    "x": 396.03960396039605,
+    "y": 636.4922206506365,
+    "originalX": 340,
+    "originalY": 732
+  },
+  {
+    "type": "field_crate",
+    "x": 401.6973125884017,
+    "y": 639.3210749646393,
+    "originalX": 344,
+    "originalY": 734
+  },
+  {
+    "type": "field_crate",
+    "x": 408.7694483734088,
+    "y": 611.032531824611,
+    "originalX": 349,
+    "originalY": 714
+  },
+  {
+    "type": "field_crate",
+    "x": 404.5261669024045,
+    "y": 537.4823196605375,
+    "originalX": 346,
+    "originalY": 662
+  },
+  {
+    "type": "field_crate",
+    "x": 448.37340876944836,
+    "y": 538.8967468175389,
+    "originalX": 377,
+    "originalY": 663
+  },
+  {
+    "type": "field_crate",
+    "x": 476.66195190947667,
+    "y": 530.4101838755304,
+    "originalX": 397,
+    "originalY": 657
+  },
+  {
+    "type": "field_crate",
+    "x": 500.70721357850067,
+    "y": 534.6534653465346,
+    "originalX": 414,
+    "originalY": 660
+  },
+  {
+    "type": "field_crate",
+    "x": 520.5091937765205,
+    "y": 551.6265912305515,
+    "originalX": 428,
+    "originalY": 672
+  },
+  {
+    "type": "field_crate",
+    "x": 534.6534653465346,
+    "y": 514.8514851485148,
+    "originalX": 438,
+    "originalY": 646
+  },
+  {
+    "type": "field_crate",
+    "x": 606.7892503536068,
+    "y": 574.2574257425742,
+    "originalX": 489,
+    "originalY": 688
+  },
+  {
+    "type": "field_crate",
+    "x": 615.2758132956153,
+    "y": 568.5997171145685,
+    "originalX": 495,
+    "originalY": 684
+  },
+  {
+    "type": "field_crate",
+    "x": 616.6902404526166,
+    "y": 561.5275813295615,
+    "originalX": 496,
+    "originalY": 679
+  },
+  {
+    "type": "field_crate",
+    "x": 306.9306930693069,
+    "y": 456.85997171145686,
+    "originalX": 277,
+    "originalY": 605
+  },
+  {
+    "type": "field_crate",
+    "x": 272.98444130127297,
+    "y": 479.4908062234795,
+    "originalX": 253,
+    "originalY": 621
+  },
+  {
+    "type": "field_crate",
+    "x": 468.17538896746817,
+    "y": 397.45403111739745,
+    "originalX": 391,
+    "originalY": 563
+  },
+  {
+    "type": "field_crate",
+    "x": 536.0678925035361,
+    "y": 369.16548797736914,
+    "originalX": 439,
+    "originalY": 543
+  },
+  {
+    "type": "field_crate",
+    "x": 493.6350777934936,
+    "y": 333.8048090523338,
+    "originalX": 409,
+    "originalY": 518
+  },
+  {
+    "type": "field_crate",
+    "x": 521.923620933522,
+    "y": 329.5615275813296,
+    "originalX": 429,
+    "originalY": 515
+  },
+  {
+    "type": "field_crate",
+    "x": 544.5544554455446,
+    "y": 227.72277227722773,
+    "originalX": 445,
+    "originalY": 443
+  },
+  {
+    "type": "field_crate",
+    "x": 605.3748231966053,
+    "y": 223.47949080622348,
+    "originalX": 488,
+    "originalY": 440
+  },
+  {
+    "type": "field_crate",
+    "x": 741.1598302687411,
+    "y": 336.63366336633663,
+    "originalX": 584,
+    "originalY": 520
+  },
+  {
+    "type": "field_crate",
+    "x": 759.5473833097595,
+    "y": 352.1923620933522,
+    "originalX": 597,
+    "originalY": 531
+  },
+  {
+    "type": "field_crate",
+    "x": 766.6195190947667,
+    "y": 356.43564356435644,
+    "originalX": 602,
+    "originalY": 534
+  },
+  {
+    "type": "field_crate",
+    "x": 763.7906647807638,
+    "y": 314.00282885431403,
+    "originalX": 600,
+    "originalY": 504
+  },
+  {
+    "type": "field_crate",
+    "x": 671.8528995756718,
+    "y": 661.951909476662,
+    "originalX": 535,
+    "originalY": 750
+  },
+  {
+    "type": "field_crate",
+    "x": 687.4115983026874,
+    "y": 639.3210749646393,
+    "originalX": 546,
+    "originalY": 734
+  }
+]
