@@ -6,25 +6,25 @@ export const SKILL_DATA = {
         border: "border-green-500",
         skills: [
             // Tier 0 (No Requirement) - Bottom Rows
-            { id: "c1", name: "거뜬한 무게", maxLevel: 5, description: "실드 착용 시 이동속도 페널티 감소", reqPoints: 0, x: 25, y: 75, icon: "/sk/imgi_30_used_to_the_weight.png" },
-            { id: "c2", name: "부드러운 압박", maxLevel: 5, description: "강제 개방 소음 감소", reqPoints: 0, x: 30, y: 65, icon: "/sk/imgi_32_gentle_pressure.png" },
-            { id: "c3", name: "능숙한 탐구자", maxLevel: 5, description: "강제 개방 속도 증가", reqPoints: 0, x: 30, y: 55, icon: "/sk/imgi_34_proficient_pryer.png" },
-            { id: "c5", name: "폭발 내성", maxLevel: 5, description: "폭발 청력 영향 감소", reqPoints: 0, x: 20, y: 65, icon: "/sk/imgi_31_blast_born.png" },
-            { id: "c6", name: "싸우거나 도망가거나", maxLevel: 5, description: "피격 시 기력 회복", reqPoints: 0, x: 20, y: 55, icon: "/sk/imgi_33_fight_or_flight.png" },
-            { id: "c8", name: "거뜬한 스윙", maxLevel: 5, description: "근접 공격 기력 소모 감소", reqPoints: 0, x: 30, y: 35, icon: "/sk/imgi_39_effortless_swing.png" },
-            { id: "c9", name: "스카이 클리어링", maxLevel: 5, description: "드론 근접 대미지 증가", reqPoints: 0, x: 30, y: 25, icon: "/sk/imgi_42_sky_clearing_swing.png" },
-            { id: "c10", name: "쏠쏠한 부수입", maxLevel: 1, description: "강제 개방 시 자원 생성", reqPoints: 0, x: 25, y: 35, icon: "/sk/imgi_37_a_little_extra.png" },
-            { id: "c11", name: "무기 장착 완료", maxLevel: 1, description: "무기 무게 영향 감소", reqPoints: 0, x: 25, y: 25, icon: "/sk/imgi_40_loaded_arms.png" },
-            { id: "c12", name: "쓰러져도 지지 않아", maxLevel: 5, description: "사망 대기 시간 증가", reqPoints: 0, x: 20, y: 35, icon: "/sk/imgi_38_downed_but_determined.png" },
-            { id: "c13", name: "엉금엉금 거북이", maxLevel: 5, description: "쓰러짐 상태 대미지 감소", reqPoints: 0, x: 20, y: 25, icon: "/sk/imgi_41_turtle_crawl.png" },
+            { id: "c1", name: "거뜬한 무게", maxLevel: 5, description: "실드를 착용해도 이동속도가 크게 느려지지 않습니다. 실드 착용 시 이동속도 페널티(준중량 5%, 중량 15%)가 최대 20% 감소한다.", reqPoints: 0, x: 25, y: 75, icon: "/sk/imgi_30_used_to_the_weight.png" },
+            { id: "c2", name: "부드러운 압박", maxLevel: 5, description: "강제 개방시 내는 소음이 줄어듭니다.", reqPoints: 0, x: 30, y: 65, icon: "/sk/imgi_32_gentle_pressure.png" },
+            { id: "c3", name: "능숙한 탐구자", maxLevel: 5, description: "문과 컨테이너를 강제 개방하는 데 걸리는 시간이 줄어듭니다. 최대 30% 더 빨리 개방할 수 있다.", reqPoints: 0, x: 30, y: 55, icon: "/sk/imgi_34_proficient_pryer.png" },
+            { id: "c5", name: "폭발 내성", maxLevel: 5, description: "근처 폭발이 청력에 미치는 영향이 줄어듭니다.", reqPoints: 0, x: 20, y: 65, icon: "/sk/imgi_31_blast_born.png" },
+            { id: "c6", name: "싸우거나 도망가거나", maxLevel: 5, description: "전투에서 다치면 일정량의 기력을 되돌려받습니다. 다음 사용까지 쿨다운이 적용됩니다. 사용 쿨은 15초이다.", reqPoints: 0, x: 20, y: 55, icon: "/sk/imgi_33_fight_or_flight.png" },
+            { id: "c8", name: "거뜬한 스윙", maxLevel: 5, description: "근접 공격으로 소모하는 기력이 줄어듭니다.", reqPoints: 0, x: 30, y: 35, icon: "/sk/imgi_39_effortless_swing.png" },
+            { id: "c9", name: "스카이 클리어링 스윙", maxLevel: 5, description: "드론에 주는 근접 대미지가 증가합니다.", reqPoints: 0, x: 30, y: 25, icon: "/sk/imgi_42_sky_clearing_swing.png" },
+            { id: "c10", name: "쏠쏠한 부수입", maxLevel: 1, description: "물체를 강제 개방하면 자원이 생성됩니다. 개방한 컨테이너의 유형에 따라 지상 재료를 생성한다.", reqPoints: 0, x: 25, y: 35, icon: "/sk/imgi_37_a_little_extra.png" },
+            { id: "c11", name: "무기 장착 완료", maxLevel: 1, description: "장착한 무기가 과중 상태에 미치는 영향이 줄어듭니다. 장비중인 무기 및 장착된 모드의 무게가 절반으로 감소한다. 인벤토리에 있는 무기에는 영향이 없다.", reqPoints: 0, x: 25, y: 25, icon: "/sk/imgi_40_loaded_arms.png" },
+            { id: "c12", name: "쓰러져도 지지 않아", maxLevel: 5, description: "쓰러진 상태에서 사망할 때까지 걸리는 시간이 길어집니다.", reqPoints: 0, x: 20, y: 35, icon: "/sk/imgi_38_downed_but_determined.png" },
+            { id: "c13", name: "엉금엉금 거북이", maxLevel: 5, description: "쓰러졌을 때 받는 대미지가 줄어듭니다.", reqPoints: 0, x: 20, y: 25, icon: "/sk/imgi_41_turtle_crawl.png" },
 
             // Tier 1 (Req 15)
-            { id: "c4", name: "깃털 같은 구르기", maxLevel: 1, description: "실드 파괴 후 첫 구르기 기력 소모 0", reqPoints: 15, x: 30, y: 45, icon: "/sk/imgi_36_unburdened_roll.png" },
-            { id: "c7", name: "생존자의 기력", maxLevel: 1, description: "치명상 시 기력 자동 회복", reqPoints: 15, x: 20, y: 45, icon: "/sk/imgi_35_survivors_stamina.png" },
+            { id: "c4", name: "깃털 같은 구르기", maxLevel: 1, description: "쉴드가 부서지고 몇 초 내에 처음 시전하는 회피 구르기가 기력을 소모하지 않습니다.", reqPoints: 15, x: 30, y: 45, icon: "/sk/imgi_36_unburdened_roll.png" },
+            { id: "c7", name: "생존자의 기력", maxLevel: 1, description: "치명상 상태 시, 기력을 특정 수치까지 자동으로 회복합니다.", reqPoints: 15, x: 20, y: 45, icon: "/sk/imgi_35_survivors_stamina.png" },
 
             // Tier 2 (Req 36)
-            { id: "c14", name: "파리채", maxLevel: 1, description: "근접 공격으로 와스프/포탑 파괴", reqPoints: 36, x: 30, y: 15, icon: "/sk/imgi_44_flyswatter.png" },
-            { id: "c15", name: "위기 극복", maxLevel: 1, description: "치명상 회복 시 이속 증가/댐감", reqPoints: 36, x: 20, y: 15, icon: "/sk/imgi_43_back_on_your_feet.png" }
+            { id: "c14", name: "파리채", maxLevel: 1, description: "이제 근접 공격 한 번으로 와스프와 포탑을 파괴할 수 있습니다.", reqPoints: 36, x: 30, y: 15, icon: "/sk/imgi_44_flyswatter.png" },
+            { id: "c15", name: "위기 극복", maxLevel: 1, description: "치명상 상태 시, 체력을 특정 한도까지 자동으로 회복합니다.", reqPoints: 36, x: 20, y: 15, icon: "/sk/imgi_43_back_on_your_feet.png" }
         ]
     },
     mobility: {
@@ -33,25 +33,25 @@ export const SKILL_DATA = {
         bg: "bg-yellow-500",
         border: "border-yellow-500",
         skills: [
-            { id: "m1", name: "가벼운 발걸음", maxLevel: 5, description: "이동 소음 감소", reqPoints: 0, x: 55, y: 45, icon: "/sk/imgi_51_calming_stroll.png" },
-            { id: "m2", name: "기력 회복", maxLevel: 5, description: "기력 회복 속도 증가", reqPoints: 0, x: 45, y: 55, icon: "/sk/imgi_48_youthful_lungs.png" },
-            { id: "m3", name: "날렵한 움직임", maxLevel: 5, description: "장애물 넘기 속도 증가", reqPoints: 0, x: 50, y: 25, icon: "/sk/imgi_55_vigorous_vaulter.png" },
-            { id: "m5", name: "등반 전문가", maxLevel: 5, description: "등반 기력 소모 감소", reqPoints: 0, x: 50, y: 75, icon: "/sk/imgi_45_nimble_climber.png" },
+            { id: "m1", name: "차분한 산보", maxLevel: 1, description: "걸을 때도 가만히 서 있을 때처럼 기력이 회복됩니다. 기본 이동이 아니라 V를 누르고 걸을 때의 회복량이 늘어난다.", reqPoints: 0, x: 55, y: 45, icon: "/sk/imgi_51_calming_stroll.png" },
+            { id: "m2", name: "젊음의 폐", maxLevel: 5, description: "최대 기력이 증가합니다. 기력이 최대 25% 증가한다.", reqPoints: 0, x: 45, y: 55, icon: "/sk/imgi_48_youthful_lungs.png" },
+            { id: "m3", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 25, icon: "/sk/imgi_55_vigorous_vaulter.png" },
+            { id: "m5", name: "미친 듯 벽 타기", maxLevel: 5, description: "더 멀리 벽 도약을 시전할 수 있습니다. 도약 거리가 약 10% 증가한다.", reqPoints: 0, x: 50, y: 75, icon: "/sk/imgi_45_nimble_climber.png" },
             { id: "m6", name: "빠른 손놀림", maxLevel: 5, description: "무기 교체 속도 증가", reqPoints: 0, x: 55, y: 25, icon: "/sk/imgi_57_ready_to_roll.png" },
             { id: "m9", name: "재빠른 재장전", maxLevel: 5, description: "재장전 속도 증가", reqPoints: 0, x: 45, y: 45, icon: "/sk/imgi_50_carry_the_momentum.png" },
-            { id: "m10", name: "도약", maxLevel: 1, description: "점프 높이 증가", reqPoints: 0, x: 45, y: 25, icon: "/sk/imgi_56_heroic_leap.png" },
-            { id: "m11", name: "곡예사", maxLevel: 1, description: "낙하 대미지 감소", reqPoints: 0, x: 55, y: 55, icon: "/sk/imgi_49_sturdy_ankles.png" },
+            { id: "m10", name: "영웅적 도약", maxLevel: 5, description: "전력 질주 회피 구르기를 더 멀리까지 시전할 수 있습니다. 구르기 거리가 약 5~10% 증가한다.", reqPoints: 0, x: 45, y: 25, icon: "/sk/imgi_56_heroic_leap.png" },
+            { id: "m11", name: "튼튼한 발목", maxLevel: 5, description: "치명적이지 않은 높이에서 떨어질 때 받는 낙상 피해가 줄어듭니다.", reqPoints: 0, x: 55, y: 55, icon: "/sk/imgi_49_sturdy_ankles.png" },
             { id: "m12", name: "숙련된 조준", maxLevel: 5, description: "조준 시 이속 감소 완화", reqPoints: 0, x: 55, y: 35, icon: "/sk/imgi_54_off_the_wall.png" },
-            { id: "m13", name: "안전 착지", maxLevel: 5, description: "낙하 시 구르기로 대미지 무효", reqPoints: 0, x: 55, y: 65, icon: "/sk/imgi_47_slip_and_slide.png" },
+            { id: "m13", name: "멀리멀리 슬라이드", maxLevel: 5, description: "더 멀리 더 빠르게 슬라이드할 수 있습니다.", reqPoints: 0, x: 55, y: 65, icon: "/sk/imgi_47_slip_and_slide.png" },
 
             // Tier 1
-            { id: "m4", name: "전력 질주", maxLevel: 1, description: "전력 질주 속도 증가", reqPoints: 15, x: 45, y: 65, icon: "/sk/imgi_46_marathon_runner.png" },
-            { id: "m7", name: "구르기", maxLevel: 1, description: "구르기 거리 증가", reqPoints: 15, x: 45, y: 35, icon: "/sk/imgi_53_effortless_roll.png" },
+            { id: "m4", name: "마라톤 선수", maxLevel: 5, description: "이동으로 소모하는 기력이 줄어듭니다. 기력 소모가 최대 25% 감소한다.", reqPoints: 15, x: 45, y: 65, icon: "/sk/imgi_46_marathon_runner.png" },
+            { id: "m7", name: "힘들이지 않고 구르기", maxLevel: 5, description: "회피 구르기로 소모하는 기력이 줄어듭니다. 3레벨에서 기력 감소가 최소가 되며, 구르기 횟수가 추가된다.", reqPoints: 15, x: 45, y: 35, icon: "/sk/imgi_53_effortless_roll.png" },
 
             // Tier 2
-            { id: "m14", name: "그림자", maxLevel: 1, description: "앉아 이동 시 발각 확률 감소", reqPoints: 36, x: 50, y: 35, icon: "/sk/imgi_52_crawl_before_you_walk.png" },
-            { id: "m15", name: "유령", maxLevel: 1, description: "전력 질주 시 발각 확률 감소", reqPoints: 36, x: 55, y: 15, icon: "/sk/imgi_59_vault_spring.png" },
-            { id: "m16", name: "곡예", maxLevel: 1, description: "추가", reqPoints: 0, x: 45, y: 15, icon: "/sk/imgi_58_vaults_on_vaults_on_vaults.png" }
+            { id: "m14", name: "걷기 전에 기기", maxLevel: 5, description: "쓰러졌을 때 기어가는 속도가 빨라집니다. 기어가는 속도가 최대 35% 증가한다.", reqPoints: 36, x: 50, y: 35, icon: "/sk/imgi_52_crawl_before_you_walk.png" },
+            { id: "m15", name: "추진력을 얻기 위함", maxLevel: 1, description: "전력 질주 회피 구르기 후, 잠깐 전력 질주가 기력을 소모하지 않습니다. 쿨다운 시간이 적용됩니다. 약 2초간 기력을 소모하지 않는다. 쿨은 약 15초.", reqPoints: 36, x: 55, y: 15, icon: "/sk/imgi_59_vault_spring.png" },
+            { id: "m16", name: "넘고 넘고 뛰어넘고", maxLevel: 1, description: "뛰어넘기가 더는 기력을 소모하지 않습니다.", reqPoints: 0, x: 45, y: 15, icon: "/sk/imgi_58_vaults_on_vaults_on_vaults.png" }
         ]
     },
     survival: {
@@ -60,27 +60,27 @@ export const SKILL_DATA = {
         bg: "bg-red-500",
         border: "border-red-500",
         skills: [
-            { id: "s1", name: "응급 처치", maxLevel: 5, description: "치료 속도 증가", reqPoints: 0, x: 80, y: 45, icon: "/sk/imgi_66_good_as_new.png" },
-            { id: "s2", name: "추가 탄약", maxLevel: 5, description: "탄약 소지량 증가", reqPoints: 0, x: 80, y: 35, icon: "/sk/imgi_69_stubborn_mule.png" },
-            { id: "s3", name: "자원 탐색", maxLevel: 5, description: "자원 컨테이너 감지", reqPoints: 0, x: 70, y: 65, icon: "/sk/imgi_61_looters_instincts.png" },
-            { id: "s5", name: "배낭 확장", maxLevel: 5, description: "인벤토리 공간 증가", reqPoints: 0, x: 70, y: 45, icon: "/sk/imgi_65_suffer_in_silence.png" },
-            { id: "s6", name: "갈증 해소", maxLevel: 5, description: "물 갈증 해소량 증가", reqPoints: 0, x: 80, y: 65, icon: "/sk/imgi_62_revitalizing_squat.png" },
-            { id: "s8", name: "탄약 제작", maxLevel: 5, description: "필드 탄약 제작", reqPoints: 0, x: 80, y: 55, icon: "/sk/imgi_64_in_round_crafting.png" },
-            { id: "s9", name: "영양 보충", maxLevel: 5, description: "음식 허기 해소량 증가", reqPoints: 0, x: 80, y: 25, icon: "/sk/imgi_72_three_deep_breaths.png" },
-            { id: "s10", name: "야전 제작", maxLevel: 1, description: "필드 제작 아이템 추가", reqPoints: 0, x: 75, y: 35, icon: "/sk/imgi_67_traveling_tinkerer.png" },
-            { id: "s11", name: "어느 레이더의 폐품", maxLevel: 5, description: "노획 시 제작템 획득", reqPoints: 0, x: 75, y: 25, icon: "/sk/imgi_70_one_raiders_scraps.png" },
-            { id: "s12", name: "태평양 어깨", maxLevel: 5, description: "최대 무게 증가", reqPoints: 0, x: 70, y: 35, icon: "/sk/imgi_68_broad_shoulders.png" },
-            { id: "s13", name: "노획자의 행운", maxLevel: 5, description: "동시 감정 (2배 파밍)", reqPoints: 0, x: 70, y: 25, icon: "/sk/imgi_71_looters_luck.png" },
+            { id: "s1", name: "새것처럼 쌩쌩", maxLevel: 1, description: "치유 효과를 받고 있으면 기력 회복이 증가합니다.", reqPoints: 0, x: 80, y: 45, icon: "/sk/imgi_66_good_as_new.png" },
+            { id: "s2", name: "튼튼한 노새", maxLevel: 5, description: "과중 상태가 기력 회복에 미치는 영향이 줄어듭니다.", reqPoints: 0, x: 80, y: 35, icon: "/sk/imgi_69_stubborn_mule.png" },
+            { id: "s3", name: "노획 본능", maxLevel: 5, description: "컨테이너 수색 시, 전리품이 더 빨리 드러납니다. 수색 속도는 최대 20% 증가한다.", reqPoints: 0, x: 70, y: 65, icon: "/sk/imgi_61_looters_instincts.png" },
+            { id: "s5", name: "침묵 속의 고통", maxLevel: 1, description: "치명상 상태 시, 움직일 때 내는 소음이 줄어듭니다.", reqPoints: 0, x: 70, y: 45, icon: "/sk/imgi_65_suffer_in_silence.png" },
+            { id: "s6", name: "쪼그려서 원기회복", maxLevel: 5, description: "웅크린 상태에서 기력 회복량이 증가합니다. 기력 회복량은 최대 30% 증가한다.", reqPoints: 0, x: 80, y: 65, icon: "/sk/imgi_62_revitalizing_squat.png" },
+            { id: "s8", name: "라운드 중 제작", maxLevel: 1, description: "지상의 필드에서 아이템을 제작할 수 있는 능력이 잠금 해제됩니다.", reqPoints: 0, x: 80, y: 55, icon: "/sk/imgi_64_in_round_crafting.png" },
+            { id: "s9", name: "심호흡 세 번", maxLevel: 5, description: "능력 사용으로 소모한 기력을 더 빨리 회복합니다. 기존 5초인 기력 회복 시간을 약 2.5초 줄여준다.", reqPoints: 0, x: 80, y: 25, icon: "/sk/imgi_72_three_deep_breaths.png" },
+            { id: "s10", name: "여행자 땜장이", maxLevel: 1, description: "필드 제작할 수 있는 아이템을 추가로 잠금 해제합니다. 잠금 해제되는 아이템 중에서 레이더 해치 열쇠가 핵심이며 그 외에 여러 설치형 가젯을 수급할 수 있다.", reqPoints: 0, x: 75, y: 35, icon: "/sk/imgi_67_traveling_tinkerer.png" },
+            { id: "s11", name: "어느 레이더의 폐품", maxLevel: 5, description: "레이더 컨테이너 노획 시, 낮은 확률로 필드 제작 아이템을 추가로 획득할 수 있습니다.", reqPoints: 0, x: 75, y: 25, icon: "/sk/imgi_70_one_raiders_scraps.png" },
+            { id: "s12", name: "태평양 어깨", maxLevel: 5, description: "휴대할 수 있는 최대 무게가 증가합니다. 스킬 포인트당 최대 무게가 2 증가한다.", reqPoints: 0, x: 70, y: 35, icon: "/sk/imgi_68_broad_shoulders.png" },
+            { id: "s13", name: "노획자의 행운", maxLevel: 5, description: "노획 시, 아이템을 두 배로 발견할 확률이 생깁니다. 아이템을 두 배 획득하는 것이 아니고, 아이템 감정을 동시에 2개를 할 수 있는 스킬이다.", reqPoints: 0, x: 70, y: 25, icon: "/sk/imgi_71_looters_luck.png" },
 
             // Tier 1
-            { id: "s4", name: "야전 의무병", maxLevel: 1, description: "소생 속도 증가", reqPoints: 15, x: 70, y: 55, icon: "/sk/imgi_63_silent_scavenger.png" },
+            { id: "s4", name: "침묵의 청소부", maxLevel: 5, description: "노획할 때 내는 소음이 줄어듭니다.", reqPoints: 15, x: 70, y: 55, icon: "/sk/imgi_63_silent_scavenger.png" },
 
             // Tier 2
-            { id: "s14", name: "지뢰 해체", maxLevel: 1, description: "폭발물 해체 가능", reqPoints: 36, x: 80, y: 15, icon: "/sk/imgi_74_minesweeper.png" },
-            { id: "s15", name: "보안 침해", maxLevel: 1, description: "보안 사물함 강제 개방", reqPoints: 36, x: 70, y: 15, icon: "/sk/imgi_73_security_breach.png" },
+            { id: "s14", name: "지뢰 해체", maxLevel: 1, description: "인접한 지뢰와 배치형 폭발물을 해체할 수 있습니다.", reqPoints: 36, x: 80, y: 15, icon: "/sk/imgi_74_minesweeper.png" },
+            { id: "s15", name: "보안 침해", maxLevel: 1, description: "보안 사물함을 강제로 열 수 있습니다.", reqPoints: 36, x: 70, y: 15, icon: "/sk/imgi_73_security_breach.png" },
 
             // Added based on coordinates
-            { id: "s16", name: "은밀한 접근", maxLevel: 5, description: "앉아 이동 소음 감소", reqPoints: 0, x: 75, y: 75, icon: "/sk/imgi_60_agile_croucher.png" }
+            { id: "s16", name: "날렵한 웅크리기", maxLevel: 5, description: "웅크린 상태에서 이동하는 속도가 증가합니다. 속도는 최대 10% 증가한다.", reqPoints: 0, x: 75, y: 75, icon: "/sk/imgi_60_agile_croucher.png" }
         ]
     }
 };
