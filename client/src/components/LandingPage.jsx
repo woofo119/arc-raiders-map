@@ -15,24 +15,34 @@ const LandingPage = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Scroll animation calculation
-    const getLineHeight = (index) => {
-        const baseHeight = 100; // Initial height
-        const speed = 1 + index * 0.2; // Different speeds for each line
-        return Math.min(baseHeight + scrollY * speed, window.innerHeight);
-    };
+    // Parallax effect for the laser beam
+    const beamOffset = scrollY * 0.5; // Adjust speed as needed
 
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
-            {/* Scroll Animation Lines */}
-            <div className="fixed top-0 left-10 z-0 flex gap-2 h-full pointer-events-none opacity-50">
-                {['bg-red-500', 'bg-yellow-500', 'bg-green-500', 'bg-cyan-500'].map((color, index) => (
-                    <div
-                        key={index}
-                        className={`w-2 rounded-b-full ${color} transition-all duration-100 ease-linear`}
-                        style={{ height: `${getLineHeight(index)}px` }}
-                    />
-                ))}
+            {/* Diagonal Laser Animation */}
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex justify-center items-center">
+                <div
+                    className="flex gap-1 opacity-40 transform origin-center"
+                    style={{
+                        transform: `rotate(-45deg) translateY(-${beamOffset}px)`,
+                        width: '200vw', // Ensure it covers the screen
+                        height: '200vh'
+                    }}
+                >
+                    {['bg-cyan-500', 'bg-green-500', 'bg-yellow-500', 'bg-red-500'].map((color, index) => (
+                        <div key={index} className={`flex-1 ${color} relative`}>
+                            {/* Dot Pattern Overlay */}
+                            <div
+                                className="absolute inset-0"
+                                style={{
+                                    backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.5) 1px, transparent 1px)',
+                                    backgroundSize: '4px 4px'
+                                }}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Header / Nav */}
