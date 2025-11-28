@@ -6,7 +6,7 @@ const LandingPage = () => {
     const navigate = useNavigate();
 
     // Shared background style for all cards to create the "masked" effect
-    const cardBackgroundStyle = "bg-[url('/banners/dashboard_bg.png')] bg-fixed bg-cover bg-center border border-white/20 hover:border-yellow-500/50 transition-all group cursor-pointer relative overflow-hidden";
+    const cardBackgroundStyle = "bg-[url('/banners/dashboard_bg.png')] bg-fixed bg-cover bg-center bg-no-repeat border border-white/20 hover:border-yellow-500/50 transition-all group cursor-pointer relative overflow-hidden rounded-2xl";
     const cardOverlayStyle = "absolute inset-0 bg-black/60 hover:bg-black/50 transition-colors z-0";
     const cardContentStyle = "relative z-10 h-full flex flex-col justify-center p-6";
 
