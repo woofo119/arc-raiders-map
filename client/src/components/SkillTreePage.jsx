@@ -1,135 +1,166 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { SKILL_DATA } from '../data/skills';
-import { Shield, Zap, Heart, Lock, Info } from 'lucide-react';
+import { Shield, Zap, Heart, Lock, Info, Check } from 'lucide-react';
 
-const SkillTreePage = () => {
-    const [activeTab, setActiveTab] = useState('conditioning');
-    const [selectedSkill, setSelectedSkill] = useState(null);
-
-    const tabs = [
-        { id: 'conditioning', label: '단련', icon: Shield, color: 'text-red-500', border: 'border-red-500/50' },
-        { id: 'mobility', label: '이동성', icon: Zap, color: 'text-blue-500', border: 'border-blue-500/50' },
-        { id: 'survival', label: '생존', icon: Heart, color: 'text-green-500', border: 'border-green-500/50' }
-    ];
+const SkillNode = ({ skill, currentLevel, isLocked, onAdd, onRemove, color }) => {
+    const isMaxed = currentLevel >= skill.maxLevel;
+    const isActive = currentLevel > 0;
 
     return (
-        <div className="flex-1 relative h-full bg-[#0a0a0a] flex flex-col overflow-hidden">
-            {/* 헤더 */}
-            <div className="h-16 border-b border-gray-800 bg-[#121212] flex items-center justify-between px-6 shrink-0">
-                <h2 className="text-white font-bold text-xl flex items-center gap-2">
-                    <span className="text-arc-accent">SKILL TREE</span> DATABASE
-                </h2>
-                <div className="flex gap-2">
-                    {tabs.map((tab) => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 transition-all ${activeTab === tab.id
-                                    ? 'bg-gray-800 text-white border border-gray-600'
-                                    : 'text-gray-500 hover:text-gray-300 hover:bg-gray-900'
-                                }`}
-                        >
-                            <tab.icon size={16} className={activeTab === tab.id ? tab.color : ''} />
-                            {tab.label}
-                        </button>
-                    ))}
+        <div className="relative flex flex-col items-center group z-10">
+            {/* Skill Icon Circle */}
+            <div
+                className={`w-14 h-14 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer
+                    ${isLocked
+                        ? 'border-gray-700 bg-gray-900/50 text-gray-700'
+                        : isActive
+                            ? `border-${color} bg-gray-800 text-${color} shadow-[0_0_15px_rgba(0,0,0,0.5)]`
+                            : 'border-gray-600 bg-gray-800 text-gray-400 hover:border-gray-400'
+                    }
+                    ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
+                `}
+                onClick={(e) => {
+                    e.preventDefault();
+                    if (!isLocked) onAdd(skill.id);
+                }}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    onRemove(skill.id);
+                }}
+            >
+                {/* Icon Placeholder (Using generic icons based on category if specific not available) */}
+                <div className="transform group-hover:scale-110 transition-transform">
+                    {/* We can map specific icons here if we had them, for now using text/generic */}
+                    {skill.maxLevel === 1 ? <Check size={24} /> : <div className="text-xs font-bold">{skill.name.slice(0, 1)}</div>}
                 </div>
+
+                {/* Lock Overlay */}
+                {isLocked && (
+                    <div className="absolute -top-1 -right-1 bg-gray-900 rounded-full p-1 border border-gray-700">
+                        <Lock size={12} className="text-red-500" />
+                    </div>
+                )}
             </div>
 
-            {/* 메인 컨텐츠 */}
-            <div className="flex-1 flex overflow-hidden">
-                {/* 스킬 목록 (왼쪽) */}
-                <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-800">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {SKILL_DATA[activeTab].skills.map((skill) => (
-                            <div
-                                key={skill.id}
-                                onClick={() => setSelectedSkill(skill)}
-                                className={`bg-[#1a1a1a] border border-gray-800 rounded-xl p-4 cursor-pointer transition-all hover:border-gray-600 hover:bg-[#222] group ${selectedSkill?.id === skill.id ? 'ring-1 ring-arc-accent border-arc-accent' : ''
-                                    }`}
-                            >
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-bold text-gray-200 group-hover:text-white transition-colors">
-                                        {skill.name}
-                                    </h3>
-                                    {skill.requirement && (
-                                        <Lock size={14} className="text-gray-600" />
-                                    )}
-                                </div>
-                                <p className="text-xs text-gray-500 line-clamp-2 mb-3 h-8">
-                                    {skill.description}
-                                </p>
-                                <div className="flex justify-between items-center text-xs">
-                                    <span className="bg-gray-900 text-gray-400 px-2 py-1 rounded border border-gray-800">
-                                        Cost: {skill.cost}
-                                    </span>
-                                    {skill.requirement && (
-                                        <span className="text-orange-400 font-bold text-[10px]">
-                                            조건부
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
+            {/* Counter Pill */}
+            <div className={`mt-2 px-2 py-0.5 rounded-full text-[10px] font-bold border transition-colors
+                ${isLocked
+                    ? 'bg-gray-900 border-gray-800 text-gray-700'
+                    : isMaxed
+                        ? `bg-${color} border-${color} text-black`
+                        : `bg-gray-900 border-gray-600 text-${color}`
+                }
+            `}>
+                {currentLevel}/{skill.maxLevel}
+            </div>
+
+            {/* Tooltip */}
+            <div className="absolute bottom-full mb-2 hidden group-hover:block w-48 bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-xl z-50 pointer-events-none">
+                <h4 className={`font-bold text-sm mb-1 text-${color}`}>{skill.name}</h4>
+                <p className="text-xs text-gray-400 mb-2">{skill.description}</p>
+                <div className="flex justify-between text-[10px] text-gray-500">
+                    <span>Max Level: {skill.maxLevel}</span>
+                    {skill.reqPoints > 0 && <span>Req: {skill.reqPoints} pts</span>}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const SkillTreeColumn = ({ categoryKey, data, skillsState, onSkillChange }) => {
+    const totalPoints = useMemo(() => {
+        return data.skills.reduce((sum, skill) => sum + (skillsState[skill.id] || 0), 0);
+    }, [data, skillsState]);
+
+    // Group skills by row for rendering
+    const rows = useMemo(() => {
+        const grouped = {};
+        data.skills.forEach(skill => {
+            if (!grouped[skill.row]) grouped[skill.row] = [];
+            grouped[skill.row].push(skill);
+        });
+        return grouped;
+    }, [data]);
+
+    const maxRow = Math.max(...Object.keys(rows).map(Number));
+
+    return (
+        <div className="flex-1 flex flex-col items-center min-w-[250px]">
+            {/* Header */}
+            <div className="mb-8 text-center">
+                <h2 className={`text-2xl font-bold mb-1 ${data.color.replace('text-', 'text-')}`}>{data.label}</h2>
+                <p className={`text-sm font-bold ${data.color}`}>{totalPoints} 포인트</p>
+            </div>
+
+            {/* Tree Container */}
+            <div className="relative flex flex-col-reverse gap-8 p-4">
+                {/* SVG Lines Background - Simplified for vertical flow */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30">
+                    {/* Add lines here if needed, complex to calculate exactly without fixed positions */}
+                    <line x1="50%" y1="5%" x2="50%" y2="95%" stroke="currentColor" strokeWidth="2" className="text-gray-700" />
+                </svg>
+
+                {Array.from({ length: maxRow + 1 }).map((_, rowIndex) => (
+                    <div key={rowIndex} className="flex justify-center gap-8 relative z-10 w-full">
+                        {rows[rowIndex]?.map(skill => {
+                            const isLocked = skill.reqPoints > totalPoints;
+                            return (
+                                <SkillNode
+                                    key={skill.id}
+                                    skill={skill}
+                                    currentLevel={skillsState[skill.id] || 0}
+                                    isLocked={isLocked}
+                                    color={categoryKey === 'conditioning' ? 'green-500' : categoryKey === 'mobility' ? 'yellow-500' : 'red-500'}
+                                    onAdd={(id) => {
+                                        if (skillsState[id] >= skill.maxLevel) return;
+                                        onSkillChange(id, (skillsState[id] || 0) + 1);
+                                    }}
+                                    onRemove={(id) => {
+                                        if (!skillsState[id] || skillsState[id] <= 0) return;
+                                        onSkillChange(id, skillsState[id] - 1);
+                                    }}
+                                />
+                            );
+                        })}
                     </div>
-                </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
-                {/* 스킬 상세 정보 (오른쪽 패널) */}
-                <div className="w-80 bg-[#121212] border-l border-gray-800 p-6 flex flex-col shrink-0">
-                    {selectedSkill ? (
-                        <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-                            <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-gray-900 border border-gray-700 ${activeTab === 'conditioning' ? 'text-red-500' :
-                                    activeTab === 'mobility' ? 'text-blue-500' : 'text-green-500'
-                                }`}>
-                                {activeTab === 'conditioning' && <Shield size={24} />}
-                                {activeTab === 'mobility' && <Zap size={24} />}
-                                {activeTab === 'survival' && <Heart size={24} />}
-                            </div>
+const SkillTreePage = () => {
+    // State to track skill levels: { [skillId]: level }
+    const [skillsState, setSkillsState] = useState({});
 
-                            <h3 className="text-2xl font-bold text-white mb-2">{selectedSkill.name}</h3>
+    const handleSkillChange = (skillId, newLevel) => {
+        setSkillsState(prev => ({
+            ...prev,
+            [skillId]: newLevel
+        }));
+    };
 
-                            <div className="flex items-center gap-2 mb-6">
-                                <span className="bg-gray-800 text-gray-300 px-3 py-1 rounded text-xs font-bold border border-gray-700">
-                                    Cost: {selectedSkill.cost}
-                                </span>
-                                {selectedSkill.requirement && (
-                                    <span className="bg-orange-900/30 text-orange-400 px-3 py-1 rounded text-xs font-bold border border-orange-900/50 flex items-center gap-1">
-                                        <Lock size={12} />
-                                        Locked
-                                    </span>
-                                )}
-                            </div>
-
-                            <div className="space-y-6">
-                                <div>
-                                    <h4 className="text-gray-500 text-xs font-bold uppercase mb-2">Description</h4>
-                                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
-                                        {selectedSkill.description}
-                                    </p>
-                                </div>
-
-                                {selectedSkill.requirement && (
-                                    <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-800">
-                                        <h4 className="text-orange-400 text-xs font-bold uppercase mb-2 flex items-center gap-1">
-                                            <Info size={12} />
-                                            Requirement
-                                        </h4>
-                                        <p className="text-gray-400 text-xs">
-                                            {selectedSkill.requirement}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-center justify-center h-full text-gray-600 text-center">
-                            <div className="w-16 h-16 rounded-full bg-gray-900/50 flex items-center justify-center mb-4">
-                                <Info size={32} className="opacity-50" />
-                            </div>
-                            <p className="text-sm">Select a skill to view details</p>
-                        </div>
-                    )}
-                </div>
+    return (
+        <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-y-auto overflow-x-hidden">
+            <div className="min-h-full flex justify-center p-10 gap-4">
+                <SkillTreeColumn
+                    categoryKey="conditioning"
+                    data={SKILL_DATA.conditioning}
+                    skillsState={skillsState}
+                    onSkillChange={handleSkillChange}
+                />
+                <SkillTreeColumn
+                    categoryKey="mobility"
+                    data={SKILL_DATA.mobility}
+                    skillsState={skillsState}
+                    onSkillChange={handleSkillChange}
+                />
+                <SkillTreeColumn
+                    categoryKey="survival"
+                    data={SKILL_DATA.survival}
+                    skillsState={skillsState}
+                    onSkillChange={handleSkillChange}
+                />
             </div>
         </div>
     );
