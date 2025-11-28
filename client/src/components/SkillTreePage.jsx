@@ -7,6 +7,9 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
 
+    // Position tooltip below for top-row skills (y < 30), otherwise above
+    const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
+
     return (
         <div
             className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-200 hover:z-[100]"
@@ -73,7 +76,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Tooltip */}
-            <div className="absolute bottom-full mb-3 hidden group-hover:block w-72 bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-50 pointer-events-none">
+            <div className={`absolute ${tooltipPosition} hidden group-hover:block w-72 bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-50 pointer-events-none`}>
                 <h4 className={`font-bold text-base mb-2 text-${color}`}>{skill.name}</h4>
                 <p className="text-sm text-gray-300 mb-3 leading-relaxed whitespace-pre-wrap">{skill.description}</p>
                 <div className="flex flex-col gap-1 text-xs text-gray-500 border-t border-gray-800 pt-2">
@@ -264,15 +267,15 @@ const SkillTreePage = () => {
             {/* Header / Points Display (Floating) */}
             <div className="absolute top-20 left-0 right-0 h-20 z-20 pointer-events-none">
                 <div className="absolute left-[25%] -translate-x-1/2 text-center">
-                    <h2 className="text-green-500 font-bold text-xl md:text-2xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
+                    <h2 className="text-green-500 font-bold text-3xl md:text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
                     <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
                 </div>
                 <div className="absolute left-[50%] -translate-x-1/2 text-center">
-                    <h2 className="text-yellow-500 font-bold text-xl md:text-2xl drop-shadow-lg">{SKILL_DATA.mobility.label}</h2>
+                    <h2 className="text-yellow-500 font-bold text-3xl md:text-4xl drop-shadow-lg">{SKILL_DATA.mobility.label}</h2>
                     <p className="text-yellow-400/80 text-sm font-mono">{points.mobility} 포인트</p>
                 </div>
                 <div className="absolute left-[75%] -translate-x-1/2 text-center">
-                    <h2 className="text-red-500 font-bold text-xl md:text-2xl drop-shadow-lg">{SKILL_DATA.survival.label}</h2>
+                    <h2 className="text-red-500 font-bold text-3xl md:text-4xl drop-shadow-lg">{SKILL_DATA.survival.label}</h2>
                     <p className="text-red-400/80 text-sm font-mono">{points.survival} 포인트</p>
                 </div>
             </div>
