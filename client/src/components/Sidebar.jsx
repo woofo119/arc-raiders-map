@@ -7,15 +7,15 @@ const Sidebar = () => {
     const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
 
     return (
-        <div className="w-20 hover:w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000] transition-all duration-300 ease-in-out group/sidebar overflow-hidden">
+        <div className="w-72 bg-[#121212] border-r border-gray-800 flex flex-col h-full shadow-2xl z-[1000] transition-all duration-300 ease-in-out overflow-hidden">
             {/* 헤더 영역 */}
-            <div className="py-6 px-2 group-hover:px-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center overflow-hidden whitespace-nowrap transition-all duration-300">
+            <div className="py-6 px-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center overflow-hidden whitespace-nowrap">
                 <div className="mb-6 flex justify-center w-full h-12 items-center">
-                    <img src="/logo.png" alt="ARC Raiders" className="h-8 object-contain transition-all duration-300 group-hover/sidebar:h-12" />
+                    <img src="/logo.png" alt="ARC Raiders" className="h-12 object-contain" />
                 </div>
 
-                {/* 맵 선택 드롭다운 (확장 시 표시) */}
-                <div className="relative w-full hidden group-hover/sidebar:block animate-in fade-in duration-300">
+                {/* 맵 선택 드롭다운 */}
+                <div className="relative w-full block animate-in fade-in duration-300">
                     <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
                         <ChevronDown size={16} />
                     </div>
@@ -31,23 +31,18 @@ const Sidebar = () => {
                         ))}
                     </select>
                 </div>
-
-                {/* 맵 아이콘 (축소 시 표시) */}
-                <div className="block group-hover/sidebar:hidden text-gray-400 mt-2">
-                    <MapIcon size={24} />
-                </div>
             </div>
 
             {/* 필터 영역 */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-2 group-hover:px-4 transition-all duration-300 scrollbar-hide">
-                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-center group-hover/sidebar:justify-start gap-2 whitespace-nowrap h-6">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-4 scrollbar-hide">
+                <h3 className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center justify-start gap-2 whitespace-nowrap h-6">
                     <FilterIcon size={16} className="min-w-[16px]" />
-                    <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-100 hidden group-hover/sidebar:inline">
+                    <span className="opacity-100 inline">
                         FILTER CATEGORIES
                     </span>
                 </h3>
 
-                <div className="space-y-2 flex flex-col items-center group-hover/sidebar:items-stretch">
+                <div className="space-y-2 flex flex-col items-stretch">
                     {Object.entries(MARKER_CATEGORIES).map(([key, category]) => (
                         <AccordionFilter
                             key={key}
@@ -58,7 +53,7 @@ const Sidebar = () => {
                 </div>
 
                 {/* 안내 메시지 */}
-                <div className="mt-8 p-4 bg-gray-900/50 rounded-xl border border-gray-800 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-200 whitespace-nowrap hidden group-hover/sidebar:block">
+                <div className="mt-8 p-4 bg-gray-900/50 rounded-xl border border-gray-800 opacity-100 block">
                     <h4 className="text-white text-sm font-bold mb-2">💡 사용 팁</h4>
                     <p className="text-xs text-gray-400 leading-relaxed">
                         지도에서 원하는 위치를 <span className="text-arc-accent font-bold">우클릭</span>하여<br />
@@ -68,14 +63,14 @@ const Sidebar = () => {
             </div>
 
             {/* 사용자 프로필 영역 */}
-            <div className="py-4 px-2 group-hover:px-4 border-t border-gray-800 bg-[#0f0f0f] overflow-hidden whitespace-nowrap transition-all duration-300">
+            <div className="py-4 px-4 border-t border-gray-800 bg-[#0f0f0f] overflow-hidden whitespace-nowrap">
                 {isAuthenticated ? (
-                    <div className="bg-gray-900 rounded-xl p-2 group-hover/sidebar:p-3 border border-gray-800 flex items-center justify-center group-hover/sidebar:justify-between group hover:border-gray-700 transition-colors w-full">
+                    <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 min-w-[2.5rem] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-gray-700">
                                 <User size={20} className="text-gray-300" />
                             </div>
-                            <div className="flex flex-col opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75 hidden group-hover/sidebar:flex">
+                            <div className="flex flex-col opacity-100 flex">
                                 <span className="text-xs text-gray-500 font-bold uppercase">Operator</span>
                                 <button
                                     onClick={openMyPageModal}
@@ -87,7 +82,7 @@ const Sidebar = () => {
                         </div>
                         <button
                             onClick={logout}
-                            className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all opacity-0 group-hover/sidebar:opacity-100 hidden group-hover/sidebar:block"
+                            className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all opacity-100 block"
                             title="로그아웃"
                         >
                             <LogOut size={18} />
@@ -102,7 +97,7 @@ const Sidebar = () => {
                         className="w-full bg-gradient-to-r from-arc-accent to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 rounded-xl transition-all shadow-lg shadow-orange-900/20 font-bold text-sm flex items-center justify-center gap-2 group overflow-hidden"
                     >
                         <User size={20} className="min-w-[20px] group-hover:scale-110 transition-transform" />
-                        <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 delay-75 whitespace-nowrap hidden group-hover/sidebar:inline">
+                        <span className="opacity-100 inline">
                             로그인 / 회원가입
                         </span>
                     </button>
@@ -143,20 +138,18 @@ const AccordionFilter = ({ mainType, category }) => {
                 <div
                     className="flex-1 flex items-center gap-3 overflow-hidden"
                     onClick={() => {
-                        // 사이드바가 확장된 상태에서만 아코디언 토글 (구현 단순화를 위해 항상 토글되게 하거나, 사이드바 상태를 확인해야 함)
-                        // 여기서는 그냥 토글
                         const el = document.getElementById(`accordion-${mainType}`);
                         if (el) el.classList.toggle('hidden');
                     }}
                 >
                     {getCategoryIcon(mainType)}
-                    <span className="font-bold text-sm text-gray-300 opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    <span className="font-bold text-sm text-gray-300 opacity-100 whitespace-nowrap">
                         {category.label.split('(')[0].trim()}
                     </span>
                 </div>
 
-                {/* 전체 토글 스위치 (사이드바 확장 시에만 표시) */}
-                <div className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+                {/* 전체 토글 스위치 */}
+                <div className="opacity-100 flex items-center gap-2">
                     <span className="text-[10px] text-gray-500 font-mono">{activeCount} items</span>
                     <button
                         onClick={(e) => {
@@ -171,7 +164,7 @@ const AccordionFilter = ({ mainType, category }) => {
             </div>
 
             {/* 바디 (하위 항목 리스트) */}
-            <div id={`accordion-${mainType}`} className="hidden group-hover/sidebar:block border-t border-gray-800/50 bg-black/20">
+            <div id={`accordion-${mainType}`} className="block border-t border-gray-800/50 bg-black/20">
                 {category.types.map((type) => (
                     <div
                         key={type.id}
