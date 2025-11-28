@@ -28,26 +28,17 @@ const getIcon = (type, category, isOfficial) => {
     }
 
     // 2. 테두리 및 배경 색상 결정
-    let borderColor = 'border-white'; // 기본값
+    const borderColor = 'border-white'; // 모든 마커 흰색 테두리
     let bgColor = 'bg-gray-700'; // 기본 배경
 
-    // 카테고리별 기본 색상 설정
-    // 카테고리별 기본 색상 설정
+    // 카테고리별 배경 색상 설정
     if (type === 'container') {
-        borderColor = 'border-orange-500'; // 컨테이너: 주황색 테두리
         bgColor = 'bg-orange-500'; // 컨테이너: 주황색 배경
     } else if (type === 'nature') {
-        borderColor = 'border-white'; // 자연: 흰색 테두리
         bgColor = 'bg-green-500'; // 자연: 초록색 배경
     } else if (type === 'location') {
-        borderColor = 'border-yellow-500'; // 위치: 노란색 테두리
         bgColor = 'bg-white'; // 위치: 흰색 배경
     }
-
-    // 관리자(Official) 마커인 경우 테두리만 노란색으로 덮어쓰기 (제거됨)
-    // if (isOfficial) {
-    //     borderColor = 'border-yellow-500';
-    // }
 
     // 3. 아이콘 HTML 생성
     let iconHtml = '';
