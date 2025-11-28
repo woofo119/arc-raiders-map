@@ -19,23 +19,7 @@ const Sidebar = () => {
                     <img src="/logo.png" alt="ARC Raiders" className="h-12 object-contain" />
                 </div>
 
-                {/* 홈 버튼 */}
-                <button
-                    onClick={() => navigate('/')}
-                    className="w-full mb-4 bg-gray-800 hover:bg-gray-700 text-white py-2 rounded-lg border border-gray-700 transition-colors flex items-center justify-center gap-2 text-sm font-bold"
-                >
-                    <Home size={16} />
-                    Back to Home
-                </button>
 
-                {/* Skill Tree 버튼 */}
-                <button
-                    onClick={() => navigate('/skills')}
-                    className="w-full mb-4 bg-gray-800 hover:bg-gray-700 text-white py-2 rounded-lg border border-gray-700 transition-colors flex items-center justify-center gap-2 text-sm font-bold"
-                >
-                    <Zap size={16} className="text-yellow-400" />
-                    Skill Tree
-                </button>
 
                 {/* 맵 선택 드롭다운 */}
                 <div className="relative w-full block animate-in fade-in duration-300">
