@@ -13,20 +13,61 @@ const LandingPage = () => {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const beam Offset = scrollY * 2.5;
+
+    return (
+        <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
+            {/* Curved Vertical Laser Animation */}
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                {[
+                    { color: 'bg-cyan-500', delay: 0, left: '8%' },
+                    { color: 'bg-green-500', delay: 0.15, left: '14%' },
+                    { color: 'bg-yellow-500', delay: 0.3, left: '20%' },
+                    { color: 'bg-red-500', delay: 0.45, left: '26%' }
+                ].map((laser, index) => (
+                    <div
+                        key={index}
+                        className={`absolute bottom-0 w-12 md:w-16 h-[200vh] ${laser.color} opacity-70`}
+                        style={{
+                            left: laser.left,
+                            transform: `translateY(-${beamOffset + (index * 60)}px) skewY(-3deg)`,
+                            clipPath: 'polygon(35% 0%, 65% 0%, 95% 100%, 5% 100%)',
+                            boxShadow: `0 0 30px rgba(255, 255, 255, 0.5)`,
+                            filter: 'blur(0.5px)',
+                            transition: 'transform 0.05s linear',
+                            borderRadius: '50% 50% 0 0'
+                        }}
+                    >
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.7) 1.5px, transparent 1.5px)',
+                                backgroundSize: '5px 5px'
+                            }}
+                        />
+                    </div>
+                ))}
+            </div>
+
+            {/* Header */}
+            <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[2px]">
+                <div className="flex items-center gap-4">
                     <img src="/logo.png" alt="ARC Raiders" className="h-10 object-contain drop-shadow-lg" />
                     <span className="font-bold text-xl tracking-wider drop-shadow-md">ARC Raiders KR</span>
-                </div >
-    <button
-        onClick={() => navigate('/map')}
-        className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg"
-    >
-        <MapIcon size={18} />
-        Launch Map
-    </button>
-            </header >
+                </div>
+                <button
+                    onClick={() => navigate('/map')}
+                    className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg"
+                >
+                    <MapIcon size={18} />
+                    Launch Map
+                </button>
+            </header>
 
-    {/* Hero Section */ }
-    < section className = "relative z-10 h-screen flex flex-col items-center justify-center text-center px-8" >
+            {/* Hero Section */}
+            <section className="relative z-10 h-screen flex flex-col items-center justify-center text-center px-8">
                 <div
                     className="absolute inset-0 z-[-1] bg-cover bg-center bg-no-repeat"
                     style={{
@@ -54,10 +95,10 @@ const LandingPage = () => {
                         <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>
-            </section >
+            </section>
 
-    {/* Feature Cards Grid */ }
-    < section className = "relative z-10 py-20 px-8 max-w-7xl mx-auto" >
+            {/* Feature Cards Grid */}
+            <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto">
                 <h2 className="text-3xl font-bold mb-12 text-center">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -121,10 +162,10 @@ const LandingPage = () => {
                         <p className="text-gray-400 text-sm">상황별 추천 장비 세팅.</p>
                     </div>
                 </div>
-            </section >
+            </section>
 
-    {/* News Section */ }
-    < section className = "relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5" >
+            {/* News Section */}
+            <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5">
                 <h2 className="text-2xl font-bold mb-8">아크레이더스 소식</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
@@ -174,14 +215,14 @@ const LandingPage = () => {
                         </div>
                     ))}
                 </div>
-            </section >
+            </section>
 
-    {/* Footer */ }
-    < footer className = "relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm" >
+            {/* Footer */}
+            <footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm">
                 <p>&copy; 2025 ARC Raiders KR. All rights reserved.</p>
                 <p className="mt-2">This is a fan-made site and is not affiliated with Embark Studios.</p>
-            </footer >
-        </div >
+            </footer>
+        </div>
     );
 };
 
