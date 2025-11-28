@@ -103,6 +103,11 @@ if (type === 'container') {  // Changed to check TYPE instead of CATEGORY
 
 ## 3. Recent Changes (지난 1시간)
 
+### 20:15 - Feature Implementation: Draggable Markers
+- **Backend:** Updated `updateMarker` to accept `x` and `y` coordinates.
+- **Frontend:** Added `draggable` prop to Markers for Admins/Creators.
+- **Logic:** Implemented `dragend` handler to auto-save new position.
+
 ### 19:15 - Feature Implementation: Marker Editing
 - **Backend:** Added `PUT /api/markers/:id` and `updateMarker` controller.
 - **Frontend:** Added `updateMarker` action to Store.
