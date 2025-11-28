@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useStore from '../store/useStore';
 import { MAPS } from '../constants';
 import { Map, Filter, LogOut, User, Layers, Shield, Crosshair, ChevronDown } from 'lucide-react';
@@ -114,9 +115,7 @@ const Sidebar = () => {
 // 아코디언 필터 컴포넌트
 const AccordionFilter = ({ mainType, category }) => {
     const { filters, toggleFilter, toggleCategory } = useStore();
-    const [isOpen, setIsOpen] = import('react').then(r => r.useState(true)); // Lazy import workaround or just use useState from top level
-    // Wait, I cannot use import inside component. I need to import useState at top.
-    // Let's assume useState is imported.
+    const [isOpen, setIsOpen] = useState(true); // Default open
 
     // Check if all items in this category are checked
     const typeIds = category.types.map(t => t.id);
