@@ -120,6 +120,17 @@ const Sidebar = () => {
                         </span>
                     </button>
                 )}
+
+                {/* 스킬 트리 버튼 */}
+                <button
+                    onClick={() => navigate('/skills')}
+                    className="w-full mt-3 bg-gray-800 hover:bg-gray-700 text-white py-3 rounded-xl transition-all border border-gray-700 font-bold text-sm flex items-center justify-center gap-2 group"
+                >
+                    <Zap size={20} className="text-yellow-400 group-hover:scale-110 transition-transform" />
+                    <span className="opacity-100 inline">
+                        스킬 트리 (Skill Tree)
+                    </span>
+                </button>
             </div>
         </div>
     );
