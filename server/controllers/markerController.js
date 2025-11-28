@@ -63,3 +63,31 @@ export const deleteMarker = async (req, res) => {
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 };
+
+// @desc    마커 수정
+// @route   PUT /api/markers/:id
+// @access  Private (작성자 본인 또는 관리자만 가능)
+export const updateMarker = async (req, res) => {
+    const { title, description } = req.body;
+
+    try {
+        const marker = await Marker.findById(req.params.id);
+
+        if (marker) {
+            // 작성자 본인 또는 관리자만 수정 가능
+            if (marker.createdBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+                return res.status(401).json({ message: '수정 권한이 없습니다.' });
+            }
+
+            marker.title = title || marker.title;
+            marker.description = description || marker.description;
+
+            const updatedMarker = await marker.save();
+            res.json(updatedMarker);
+        } else {
+            res.status(404).json({ message: '마커를 찾을 수 없습니다.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+};

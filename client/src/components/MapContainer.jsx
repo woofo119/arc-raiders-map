@@ -80,6 +80,105 @@ const getIcon = (type, category, isOfficial) => {
 
 
 
+// 마커 팝업 내용 컴포넌트 (수정 기능 포함)
+const MarkerPopupContent = ({ marker }) => {
+    const { user, deleteMarker, updateMarker } = useStore();
+    const [isEditing, setIsEditing] = useState(false);
+    const [editTitle, setEditTitle] = useState(marker.title);
+    const [editDescription, setEditDescription] = useState(marker.description);
+
+    // 마커가 변경되면 에디팅 상태 초기화
+    useEffect(() => {
+        setEditTitle(marker.title);
+        setEditDescription(marker.description);
+        setIsEditing(false);
+    }, [marker]);
+
+    const handleSave = async () => {
+        const result = await updateMarker(marker._id, editTitle, editDescription);
+        if (result.success) {
+            setIsEditing(false);
+        } else {
+            alert(result.message);
+        }
+    };
+
+    const canEdit = user && (user._id === marker.createdBy?._id || user.role === 'admin');
+
+    if (isEditing) {
+        return (
+            <div className="p-1 min-w-[200px]">
+                <div className="mb-2">
+                    <input
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        className="w-full bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm mb-2"
+                        placeholder="제목"
+                    />
+                    <textarea
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        className="w-full bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm h-20 resize-none"
+                        placeholder="설명"
+                    />
+                </div>
+                <div className="flex justify-end gap-2">
+                    <button
+                        onClick={() => setIsEditing(false)}
+                        className="px-2 py-1 text-xs bg-gray-600 hover:bg-gray-500 text-white rounded"
+                    >
+                        취소
+                    </button>
+                    <button
+                        onClick={handleSave}
+                        className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-500 text-white rounded"
+                    >
+                        저장
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="p-1 min-w-[200px]">
+            <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
+                {marker.isOfficial && <span className="text-yellow-500 text-xs font-bold">[OFFICIAL]</span>}
+                <h3 className="font-bold text-lg text-white">{marker.title}</h3>
+            </div>
+            <p className="text-gray-300 text-sm mb-3 break-words whitespace-pre-wrap">{marker.description}</p>
+
+            {marker.image && (
+                <div className="mb-3 rounded-lg overflow-hidden border border-gray-700">
+                    <img src={marker.image} alt={marker.title} className="w-full h-auto object-cover" />
+                </div>
+            )}
+
+            <div className="flex justify-between items-center text-xs text-gray-500">
+                <span>By {marker.isOfficial ? 'Admin' : (marker.createdBy?.nickname || marker.createdBy?.username || 'Unknown')}</span>
+
+                {canEdit && (
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setIsEditing(true)}
+                            className="text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-900/20 px-2 py-1 rounded transition-colors"
+                        >
+                            수정
+                        </button>
+                        <button
+                            onClick={() => deleteMarker(marker._id)}
+                            className="text-red-400 hover:text-red-300 flex items-center gap-1 bg-red-900/20 px-2 py-1 rounded transition-colors"
+                        >
+                            삭제
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
 // 지도 이벤트 처리 및 자동 줌/이동 제어 컴포넌트
 const MapController = ({ onRightClick, bounds }) => {
     const map = useMapEvents({
@@ -154,32 +253,7 @@ const MapContainer = () => {
                         icon={getIcon(marker.type, marker.category, marker.isOfficial)}
                     >
                         <Popup className="custom-popup-dark">
-                            <div className="p-1 min-w-[200px]">
-                                <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
-                                    {marker.isOfficial && <span className="text-yellow-500 text-xs font-bold">[OFFICIAL]</span>}
-                                    <h3 className="font-bold text-lg text-white">{marker.title}</h3>
-                                </div>
-                                <p className="text-gray-300 text-sm mb-3 break-words">{marker.description}</p>
-
-                                {marker.image && (
-                                    <div className="mb-3 rounded-lg overflow-hidden border border-gray-700">
-                                        <img src={marker.image} alt={marker.title} className="w-full h-auto object-cover" />
-                                    </div>
-                                )}
-
-                                <div className="flex justify-between items-center text-xs text-gray-500">
-                                    <span>By {marker.isOfficial ? 'Admin' : (marker.createdBy?.nickname || marker.createdBy?.username || 'Unknown')}</span>
-                                    {/* 작성자 본인 또는 관리자만 삭제 가능 */}
-                                    {(user && (user._id === marker.createdBy?._id || user.role === 'admin')) && (
-                                        <button
-                                            onClick={() => deleteMarker(marker._id)}
-                                            className="text-red-400 hover:text-red-300 flex items-center gap-1 bg-red-900/20 px-2 py-1 rounded transition-colors"
-                                        >
-                                            삭제
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
+                            <MarkerPopupContent marker={marker} />
                         </Popup>
                     </Marker>
                 ))}

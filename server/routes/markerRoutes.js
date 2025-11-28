@@ -1,5 +1,5 @@
 import express from 'express';
-import { getMarkers, createMarker, deleteMarker } from '../controllers/markerController.js';
+import { getMarkers, createMarker, deleteMarker, updateMarker } from '../controllers/markerController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -11,6 +11,7 @@ router.route('/')
 
 // ID 경로 ('/:id')
 router.route('/:id')
-    .delete(protect, deleteMarker); // 마커 삭제 (작성자 본인만)
+    .delete(protect, deleteMarker) // 마커 삭제 (작성자 본인만)
+    .put(protect, updateMarker); // 마커 수정 (작성자 본인만)
 
 export default router;

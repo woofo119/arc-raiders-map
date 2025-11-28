@@ -134,6 +134,27 @@ const useStore = create((set, get) => ({
         }
     },
 
+    updateMarker: async (id, title, description) => {
+        const { user } = get();
+        if (!user) return;
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.put(`${API_URL}/markers/${id}`, { title, description }, config);
+            const updatedMarker = response.data;
+
+            set((state) => ({
+                markers: state.markers.map((m) => (m._id === id ? updatedMarker : m)),
+            }));
+            return { success: true };
+        } catch (error) {
+            console.error('마커 수정 실패:', error);
+            return { success: false, message: error.response?.data?.message || '마커 수정 실패' };
+        }
+    },
+
     toggleFilter: (type) => {
         set((state) => ({
             filters: { ...state.filters, [type]: !state.filters[type] },
