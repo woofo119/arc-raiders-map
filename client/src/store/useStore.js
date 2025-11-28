@@ -134,7 +134,7 @@ const useStore = create((set, get) => ({
         }
     },
 
-    updateMarker: async (id, title, description) => {
+    updateMarker: async (id, title, description, image) => {
         const { user } = get();
         if (!user) return;
 
@@ -142,7 +142,7 @@ const useStore = create((set, get) => ({
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const response = await axios.put(`${API_URL}/markers/${id}`, { title, description }, config);
+            const response = await axios.put(`${API_URL}/markers/${id}`, { title, description, image }, config);
             const updatedMarker = response.data;
 
             set((state) => ({
