@@ -63,20 +63,7 @@ if (type === 'container') {  // Changed to check TYPE instead of CATEGORY
 
 ## 2. Immediate Next Step (바로 다음 작업)
 
-### A. Feature Request: Marker Editing (New)
-**Requirement:**
-- Admins can edit ANY marker.
-- Users can edit THEIR OWN markers.
-- Editable fields: Title, Description (Memo).
-
-**Implementation Plan:**
-1. **Backend:** Add `PUT /api/markers/:id` endpoint.
-2. **Frontend:**
-   - Add "Edit" button in Popup (next to Delete).
-   - Reuse `MarkerForm` or create `EditMarkerModal`.
-   - Update Store to handle update action.
-
-### B. Task: Generate 5 Missing Icons
+### Task: Generate 5 Missing Icons
 **Trigger:** Image generation quota resets at **4:45 AM KST**
 
 **Exact Steps:**
@@ -115,6 +102,12 @@ if (type === 'container') {  // Changed to check TYPE instead of CATEGORY
 ---
 
 ## 3. Recent Changes (지난 1시간)
+
+### 19:15 - Feature Implementation: Marker Editing
+- **Backend:** Added `PUT /api/markers/:id` and `updateMarker` controller.
+- **Frontend:** Added `updateMarker` action to Store.
+- **UI:** Implemented `MarkerPopupContent` with Edit/Save/Cancel buttons.
+- **Permissions:** Only Admin or Creator can edit.
 
 ### 00:52 - Documentation
 - Created `handover_context.md` (this file)
