@@ -29,7 +29,7 @@ export const MARKER_CATEGORIES = {
             { id: 'field_depot', label: '필드 창고 (Field Depot)', icon: '/icons/icon_field_depot.png' },
             { id: 'player_spawn', label: '플레이어 스폰 (Player Spawn)', icon: '/icons/icon_player_spawn.png' },
             { id: 'field_crate', label: '필드 상자 (Field Crate)', icon: '/icons/icon_field_crate.png' },
-            { id: 'vent_extraction', label: '환풍구 탈출구 (Vent Extraction)', icon: 'Wind' },
+            { id: 'vent_extraction', label: '환풍구 탈출구 (Vent Extraction)', icon: '/icons/icon_vent_extraction.png' },
             { id: 'train_extraction', label: '기차 탈출구 (Train Extraction)', icon: 'Train' },
             { id: 'stairs_down', label: '지하 계단 (Stairs Down)', icon: 'ArrowDownCircle' },
         ]
@@ -43,7 +43,7 @@ export const MARKER_CATEGORIES = {
             { id: 'great_mullein', label: '우단담배풀 (Great Mullein)', icon: '/icons/icon_great_mullein.png' },
             { id: 'apricot', label: '살구 (Apricot)', icon: '/icons/icon_apricot.png' },
             { id: 'olives', label: '올리브 (Olives)', icon: '/icons/olives.png' }, // Large icon used as fallback
-            { id: 'lemon', label: '레몬 (Lemon)', icon: 'Sprout' },
+            { id: 'lemon', label: '레몬 (Lemon)', icon: '/icons/icon_lemon.jpg' },
         ]
     },
     quest: {
