@@ -31,7 +31,7 @@ export const MARKER_CATEGORIES = {
             { id: 'field_crate', label: '필드 상자 (Field Crate)', icon: '/icons/icon_field_crate.png' },
             { id: 'vent_extraction', label: '환풍구 탈출구 (Vent Extraction)', icon: '/icons/icon_vent_extraction.png' },
             { id: 'train_extraction', label: '기차 탈출구 (Train Extraction)', icon: '/icons/icon_train_extraction.jpg' },
-            { id: 'stairs_down', label: '지하 계단 (Stairs Down)', icon: 'ArrowDownCircle' },
+            { id: 'stairs_down', label: '지하 계단 (Stairs Down)', icon: '/icons/icon_stairs_down.jpg' },
         ]
     },
     nature: {
