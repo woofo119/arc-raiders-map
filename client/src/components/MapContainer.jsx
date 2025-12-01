@@ -46,7 +46,9 @@ const getIcon = (type, category, isOfficial) => {
     // 이미지 아이콘인 경우 (경로가 /로 시작)
     if (iconDef && iconDef.icon.startsWith('/')) {
         // mix-blend-multiply를 사용하여 이미지의 흰색 배경을 투명하게 처리하고 뒤의 배경색이 보이게 함
-        iconHtml = `<img src="${iconDef.icon}" class="w-full h-full object-contain p-1 mix-blend-multiply" alt="${category}" />`;
+        // noBlend 옵션이 있으면 mix-blend-multiply 제거 (투명 PNG 등)
+        const blendClass = iconDef.noBlend ? '' : 'mix-blend-multiply';
+        iconHtml = `<img src="${iconDef.icon}" class="w-full h-full object-contain p-1 ${blendClass}" alt="${category}" />`;
     } else {
         // 기본 색상 점 (이미지가 없는 경우)
         const colors = {
