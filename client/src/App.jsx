@@ -13,10 +13,10 @@ import useStore from './store/useStore';
 import { useEffect } from 'react';
 
 const App = () => {
-    const { checkAuth, isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
+    const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
 
     useEffect(() => {
-        checkAuth();
+        // 초기 로드 시 필요한 작업이 있다면 여기에 추가
     }, []);
 
     return (
