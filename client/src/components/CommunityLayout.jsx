@@ -30,9 +30,7 @@ const CommunityLayout = () => {
                 />
             )}
 
-            <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-300`}>
-                <CommunitySidebar />
-            </div>
+            <CommunitySidebar isOpen={isSidebarOpen} />
             <div className="flex-1 relative flex flex-col h-full overflow-hidden lg:ml-64">
                 <Outlet />
             </div>

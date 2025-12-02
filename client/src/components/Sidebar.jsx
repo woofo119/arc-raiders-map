@@ -4,12 +4,12 @@ import useStore from '../store/useStore';
 import { MAPS, MARKER_CATEGORIES } from '../constants';
 import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap, Users } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
     const { user, isAuthenticated, logout, filters, toggleFilter, currentMap, setMap, openLoginModal, openMyPageModal } = useStore();
 
     return (
-        <div className="fixed left-0 top-0 h-full w-72 bg-[#121212] border-r border-gray-800 flex flex-col shadow-2xl z-[1000] transition-transform duration-300 ease-in-out overflow-hidden -translate-x-full lg:translate-x-0">
+        <div className={`fixed left-0 top-0 h-full w-72 bg-[#121212] border-r border-gray-800 flex flex-col shadow-2xl z-[1000] transition-transform duration-300 ease-in-out overflow-hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
             {/* 헤더 영역 */}
             <div className="py-6 px-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center overflow-hidden whitespace-nowrap">
                 <div

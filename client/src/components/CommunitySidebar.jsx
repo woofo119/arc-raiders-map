@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { MessageSquare, PenTool, HelpCircle, Zap, Shield, Activity, User, LogOut, ChevronRight, Map as MapIcon } from 'lucide-react';
 
-const CommunitySidebar = () => {
+const CommunitySidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user, isAuthenticated, logout, openLoginModal, openMyPageModal } = useStore();
@@ -14,7 +14,7 @@ const CommunitySidebar = () => {
     ];
 
     return (
-        <div className="fixed left-0 top-0 h-full w-64 bg-[#121212] border-r border-gray-800 flex flex-col shadow-2xl z-[1000] transition-transform duration-300 ease-in-out overflow-hidden -translate-x-full lg:translate-x-0">
+        <div className={`fixed left-0 top-0 h-full w-64 bg-[#121212] border-r border-gray-800 flex flex-col shadow-2xl z-[1000] transition-transform duration-300 ease-in-out overflow-hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
             {/* Header */}
             <div className="py-6 px-6 border-b border-gray-800 bg-gradient-to-b from-gray-900 to-[#121212] flex flex-col items-center">
                 <div
