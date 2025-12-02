@@ -8,13 +8,21 @@ import 'react-quill/dist/quill.snow.css';
 const PostDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { fetchPost, currentPost, user, deletePost, addComment, deleteComment, clearCurrentPost } = useStore();
+    const fetchPost = useStore(state => state.fetchPost);
+    const currentPost = useStore(state => state.currentPost);
+    const user = useStore(state => state.user);
+    const deletePost = useStore(state => state.deletePost);
+    const addComment = useStore(state => state.addComment);
+    const deleteComment = useStore(state => state.deleteComment);
+    const clearCurrentPost = useStore(state => state.clearCurrentPost);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!id) return;
+
         const loadPost = async () => {
             try {
-                setLoading(true);
                 await fetchPost(id);
             } catch (error) {
                 console.error("Failed to load post:", error);
@@ -25,7 +33,7 @@ const PostDetailPage = () => {
         loadPost();
 
         return () => {
-            if (clearCurrentPost) clearCurrentPost();
+            clearCurrentPost();
         };
     }, [id, fetchPost, clearCurrentPost]);
 
