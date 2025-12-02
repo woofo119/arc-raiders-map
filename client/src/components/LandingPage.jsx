@@ -136,10 +136,10 @@ const LandingPage = () => {
                 <h2 className="text-3xl font-bold mb-12 text-center text-white drop-shadow-lg">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Skill Tree - Priority 1 (Long) */}
+                    {/* Skill Tree - Priority 1 (Full Width) */}
                     <div
                         onClick={() => navigate('/skills')}
-                        className={`col-span-1 md:col-span-2 lg:col-span-2 ${cardBackgroundStyle}`}
+                        className={`col-span-1 md:col-span-2 lg:col-span-3 ${cardBackgroundStyle}`}
                     >
                         <div className={cardOverlayStyle} />
                         <div className={cardContentStyle}>
