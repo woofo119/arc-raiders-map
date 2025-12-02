@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { ArrowLeft, RotateCcw, Share2, Lock, Check } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { SKILL_DATA } from '../data/skills';
+import useStore from '../store/useStore';
 
 // Base36 encoding helpers
 const BASE36_CHARS = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -154,6 +155,7 @@ const SkillTreePage = () => {
     const [skillsState, setSkillsState] = useState({});
     const [searchParams, setSearchParams] = useSearchParams();
     const [isCopied, setIsCopied] = useState(false);
+    const { user, openLoginModal } = useStore();
 
     // Load state from URL on mount
     useEffect(() => {
@@ -195,6 +197,12 @@ const SkillTreePage = () => {
     };
 
     const handleShare = () => {
+        // 로그인 체크
+        if (!user) {
+            openLoginModal();
+            return;
+        }
+
         const code = encodeSkills(skillsState);
         const url = `${window.location.origin}${window.location.pathname}?code=${code}`;
 
