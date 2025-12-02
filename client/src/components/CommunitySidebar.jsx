@@ -1,25 +1,16 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import useStore from '../store/useStore';
-import { MessageSquare, PenTool, HelpCircle, Zap, Shield, Activity, User, LogOut, ChevronRight } from 'lucide-react';
+import { MessageSquare, PenTool, HelpCircle, Zap, Shield, Activity, User, LogOut, ChevronRight, Map as MapIcon } from 'lucide-react';
 
 const CommunitySidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user, isAuthenticated, logout, openLoginModal, openMyPageModal } = useStore();
 
-    const isCommunity = location.pathname.startsWith('/community');
-    const isSkillTree = location.pathname.startsWith('/skills');
-
     const communityCategories = [
         { id: 'free', label: '자유게시판', icon: <MessageSquare size={18} /> },
         { id: 'tips', label: '공략 / 팁', icon: <PenTool size={18} /> },
         { id: 'qna', label: '질문게시판', icon: <HelpCircle size={18} /> },
-    ];
-
-    const skillCategories = [
-        { id: 'conditioning', label: '컨디셔닝', icon: <Activity size={18} />, color: 'text-green-500' },
-        { id: 'mobility', label: '모빌리티', icon: <Zap size={18} />, color: 'text-yellow-500' },
-        { id: 'survival', label: '생존', icon: <Shield size={18} />, color: 'text-red-500' },
     ];
 
     return (
@@ -32,99 +23,97 @@ const CommunitySidebar = () => {
                 >
                     <img src="/logo_white.png" alt="ARC Raiders" className="h-12 object-contain" />
                 </div>
-                <div className="text-xs font-bold text-gray-500 tracking-widest uppercase">
-                    {isCommunity ? 'COMMUNITY' : 'SKILL TREE'}
-                </div>
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto py-6 px-4">
-                {isCommunity && (
-                    <div className="space-y-2">
-                        <div className="text-xs font-bold text-gray-500 mb-2 px-2">게시판 목록</div>
+            <div className="flex-1 overflow-y-auto py-6 px-4 space-y-6">
+                {/* Community Section */}
+                <div>
+                    <div className="text-xs font-bold text-gray-500 mb-2 px-2 uppercase tracking-wider">게시판</div>
+                    <div className="space-y-1">
                         {communityCategories.map((cat) => (
                             <button
                                 key={cat.id}
                                 onClick={() => navigate(`/community?category=${cat.id}`)}
-                                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${location.search.includes(`category=${cat.id}`)
-                                        ? 'bg-arc-accent text-white font-bold'
-                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${location.pathname === '/community' && location.search.includes(`category=${cat.id}`)
+                                    ? 'bg-arc-accent text-white font-bold'
+                                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                                     }`}
                             >
                                 {cat.icon}
                                 <span>{cat.label}</span>
                             </button>
                         ))}
-
-                        <div className="my-4 border-t border-gray-800" />
-
-                        <button
-                            onClick={() => navigate('/skills')}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
-                        >
-                            <Zap size={18} />
-                            <span>스킬 트리로 이동</span>
-                            <ChevronRight size={14} className="ml-auto opacity-50" />
-                        </button>
                     </div>
-                )}
+                </div>
 
-                {isSkillTree && (
-                    <div className="space-y-2">
-                        <div className="text-xs font-bold text-gray-500 mb-2 px-2">스킬 분류</div>
-                        {skillCategories.map((cat) => (
-                            <button
-                                key={cat.id}
-                                onClick={() => {
-                                    // Scroll to section logic could go here, or just filter
-                                    // For now, maybe just highlight or do nothing special
-                                }}
-                                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors cursor-default"
-                            >
-                                <span className={cat.color}>{cat.icon}</span>
-                                <span>{cat.label}</span>
-                            </button>
-                        ))}
+                {/* Map Info Section */}
+                <div>
+                    <div className="text-xs font-bold text-gray-500 mb-2 px-2 uppercase tracking-wider">맵 정보</div>
+                    <button
+                        onClick={() => navigate('/map')}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${location.pathname === '/map'
+                            ? 'bg-arc-accent text-white font-bold'
+                            : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                            }`}
+                    >
+                        <MapIcon size={18} />
+                        <span>지도 보기</span>
+                    </button>
+                </div>
 
-                        <div className="my-4 border-t border-gray-800" />
-
-                        <button
-                            onClick={() => navigate('/community')}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
-                        >
-                            <MessageSquare size={18} />
-                            <span>커뮤니티로 이동</span>
-                            <ChevronRight size={14} className="ml-auto opacity-50" />
-                        </button>
-                    </div>
-                )}
+                {/* Skill Tree Section */}
+                <div>
+                    <div className="text-xs font-bold text-gray-500 mb-2 px-2 uppercase tracking-wider">스킬 트리</div>
+                    <button
+                        onClick={() => navigate('/skills')}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${location.pathname === '/skills'
+                            ? 'bg-arc-accent text-white font-bold'
+                            : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                            }`}
+                    >
+                        <Zap size={18} />
+                        <span>스킬 시뮬레이터</span>
+                    </button>
+                </div>
             </div>
 
             {/* User Profile */}
             <div className="py-4 px-4 border-t border-gray-800 bg-[#0f0f0f]">
                 {isAuthenticated ? (
-                    <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 min-w-[2.5rem] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-gray-700">
-                                <User size={20} className="text-gray-300" />
+                    <div className="flex flex-col gap-2">
+                        {user.role === 'admin' && (
+                            <button
+                                onClick={() => navigate('/admin')}
+                                className="w-full bg-red-900/20 hover:bg-red-900/40 text-red-400 border border-red-900/50 py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-2 mb-2"
+                            >
+                                <Shield size={14} />
+                                ADMIN DASHBOARD
+                            </button>
+                        )}
+                        <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 min-w-[2.5rem] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-gray-700">
+                                    <User size={20} className="text-gray-300" />
+                                </div>
+                                <div className="flex flex-col overflow-hidden">
+                                    <span className="text-xs text-gray-500 font-bold uppercase">{user.role === 'admin' ? 'Administrator' : 'Operator'}</span>
+                                    <button
+                                        onClick={openMyPageModal}
+                                        className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors truncate"
+                                    >
+                                        {user.nickname || user.username}
+                                    </button>
+                                </div>
                             </div>
-                            <div className="flex flex-col overflow-hidden">
-                                <span className="text-xs text-gray-500 font-bold uppercase">Operator</span>
-                                <button
-                                    onClick={openMyPageModal}
-                                    className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors truncate"
-                                >
-                                    {user.nickname || user.username}
-                                </button>
-                            </div>
+                            <button
+                                onClick={logout}
+                                className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all"
+                                title="로그아웃"
+                            >
+                                <LogOut size={18} />
+                            </button>
                         </div>
-                        <button
-                            onClick={logout}
-                            className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all"
-                            title="로그아웃"
-                        >
-                            <LogOut size={18} />
-                        </button>
                     </div>
                 ) : (
                     <button

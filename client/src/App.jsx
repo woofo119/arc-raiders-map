@@ -10,8 +10,8 @@ import MainLayout from './components/MainLayout';
 import CommunityLayout from './components/CommunityLayout';
 import LoginModal from './components/LoginModal';
 import MyPageModal from './components/MyPageModal';
+import AdminPage from './pages/AdminPage';
 import useStore from './store/useStore';
-import { useEffect } from 'react';
 
 const App = () => {
     const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
@@ -36,6 +36,9 @@ const App = () => {
                             <Route path="/community/edit/:id" element={<PostWritePage />} />
                             <Route path="/community/:id" element={<PostDetailPage />} />
                         </Route>
+
+                        {/* 관리자 페이지 */}
+                        <Route path="/admin" element={<AdminPage />} />
 
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>

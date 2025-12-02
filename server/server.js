@@ -41,22 +41,6 @@ app.use((req, res, next) => {
     }
     next();
 });
-
-// MongoDB 연결
-mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://woofo:da868133@cluster0.iienqyl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-    .then(() => console.log("✅ MongoDB Connected Successfully!"))
-    .catch(err => console.log("❌ DB Connection Error:", err));
-
-// 라우트 연결
-app.use('/api/auth', authRoutes);
-app.use('/api/markers', markerRoutes);
-app.use('/api/posts', postRoutes);
-
-// 기본 라우트
-app.get('/', (req, res) => {
-    res.send('ARC Raiders Map API Server Running');
-});
-
 // Socket.IO 설정
 const io = new Server(httpServer, {
     cors: {
