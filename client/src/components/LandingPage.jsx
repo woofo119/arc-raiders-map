@@ -20,7 +20,7 @@ const LandingPage = () => {
     // Let's remove the heavy overlay and just use a subtle gradient for depth if needed.
     const cardOverlayStyle = "absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none";
 
-    const cardContentStyle = "relative z-10 h-full flex flex-col justify-between p-8";
+    const cardContentStyle = "relative z-10 h-full flex flex-col justify-between p-6";
 
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
@@ -143,13 +143,13 @@ const LandingPage = () => {
                     >
                         <div className={cardOverlayStyle} />
                         <div className={cardContentStyle}>
-                            <div className="flex flex-col h-full justify-center items-start">
-                                <div className="flex items-center gap-3 mb-4 relative z-10">
+                            <div className="flex flex-col justify-center items-start">
+                                <div className="flex items-center gap-3 mb-3 relative z-10">
                                     <Zap className="text-yellow-500" size={32} />
                                     <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold border border-blue-500/30">NEW</div>
                                 </div>
                                 <h3 className="text-3xl font-bold mb-2 group-hover:text-yellow-400 relative z-10">스킬 트리 (Skill Tree)</h3>
-                                <p className="text-gray-300 text-lg mb-6 relative z-10 max-w-xl">나만의 최적화된 스킬 트리를 구성하고 공유하세요. 생존을 위한 전략의 시작입니다.</p>
+                                <p className="text-gray-300 text-lg mb-4 relative z-10 max-w-xl">나만의 최적화된 스킬 트리를 구성하고 공유하세요. 생존을 위한 전략의 시작입니다.</p>
                                 <button className="bg-yellow-500 text-black px-6 py-3 rounded-xl text-base font-bold hover:bg-yellow-400 transition-colors relative z-10 flex items-center gap-2">
                                     <span>구성하기</span>
                                     <ArrowRight size={18} />
