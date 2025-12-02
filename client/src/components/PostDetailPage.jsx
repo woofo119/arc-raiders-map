@@ -8,7 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 const PostDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { fetchPost, currentPost, user, deletePost } = useStore();
+    const { fetchPost, currentPost, user, deletePost, addComment, deleteComment } = useStore();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -40,6 +40,29 @@ const PostDetailPage = () => {
         return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
     };
 
+    const [commentContent, setCommentContent] = useState('');
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+        if (!commentContent.trim()) return;
+
+        const result = await addComment(currentPost._id, commentContent);
+        if (result.success) {
+            setCommentContent('');
+        } else {
+            alert(result.message);
+        }
+    };
+
+    const handleCommentDelete = async (commentId) => {
+        if (confirm('댓글을 삭제하시겠습니까?')) {
+            const result = await deleteComment(currentPost._id, commentId);
+            if (!result.success) {
+                alert(result.message);
+            }
+        }
+    };
+
     return (
         <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-8">
             <div className="max-w-4xl mx-auto">
@@ -51,7 +74,7 @@ const PostDetailPage = () => {
                     목록으로
                 </button>
 
-                <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden">
+                <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden mb-8">
                     {/* 게시글 헤더 */}
                     <div className="p-6 border-b border-gray-800">
                         <h1 className="text-2xl font-bold mb-4">{currentPost.title}</h1>
@@ -73,7 +96,7 @@ const PostDetailPage = () => {
                             {isAuthor && (
                                 <div className="flex gap-2">
                                     <button
-                                        onClick={() => alert('수정 기능은 준비 중입니다.')}
+                                        onClick={() => navigate(`/community/edit/${id}`)}
                                         className="text-gray-400 hover:text-blue-400 p-1 transition-colors"
                                         title="수정"
                                     >
@@ -108,6 +131,67 @@ const PostDetailPage = () => {
                                         <img key={idx} src={img} alt={`Image ${idx}`} className="max-w-full rounded-lg border border-gray-800" />
                                     ))}
                                 </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* 댓글 섹션 */}
+                <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden p-6">
+                    <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                        댓글 <span className="text-arc-accent">{currentPost.comments?.length || 0}</span>
+                    </h3>
+
+                    {/* 댓글 작성 폼 */}
+                    <form onSubmit={handleCommentSubmit} className="mb-8 flex gap-4">
+                        <input
+                            type="text"
+                            value={commentContent}
+                            onChange={(e) => setCommentContent(e.target.value)}
+                            placeholder={user ? "댓글을 입력하세요..." : "로그인이 필요합니다."}
+                            disabled={!user}
+                            className="flex-1 bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-arc-accent focus:outline-none transition-colors disabled:opacity-50"
+                        />
+                        <button
+                            type="submit"
+                            disabled={!user || !commentContent.trim()}
+                            className="bg-arc-accent hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            등록
+                        </button>
+                    </form>
+
+                    {/* 댓글 목록 */}
+                    <div className="space-y-6">
+                        {currentPost.comments && currentPost.comments.length > 0 ? (
+                            currentPost.comments.map((comment) => (
+                                <div key={comment._id} className="border-b border-gray-800 pb-6 last:border-0 last:pb-0">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-bold text-gray-300">
+                                                {comment.author?.nickname || comment.author?.username || '익명'}
+                                            </span>
+                                            <span className="text-xs text-gray-500">
+                                                {formatDate(comment.createdAt)}
+                                            </span>
+                                        </div>
+                                        {(user && (user._id === comment.author?._id || user.role === 'admin')) && (
+                                            <button
+                                                onClick={() => handleCommentDelete(comment._id)}
+                                                className="text-gray-500 hover:text-red-400 transition-colors"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        )}
+                                    </div>
+                                    <p className="text-gray-300 text-sm leading-relaxed">
+                                        {comment.content}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-center text-gray-500 py-4">
+                                첫 번째 댓글을 남겨보세요!
                             </div>
                         )}
                     </div>

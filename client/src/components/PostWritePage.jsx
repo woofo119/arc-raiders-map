@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { ArrowLeft, Image as ImageIcon, X } from 'lucide-react';
 
@@ -7,12 +7,39 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const PostWritePage = () => {
+    const { id } = useParams(); // Get ID for edit mode
     const navigate = useNavigate();
-    const { createPost } = useStore();
+    const { createPost, updatePost, fetchPost, currentPost } = useStore();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const isEditMode = !!id;
+
+    useEffect(() => {
+        if (isEditMode) {
+            const loadPost = async () => {
+                // If currentPost is already loaded and matches ID, use it. Otherwise fetch.
+                if (currentPost && currentPost._id === id) {
+                    setTitle(currentPost.title);
+                    setContent(currentPost.content);
+                    setImages(currentPost.images || []);
+                } else {
+                    const result = await fetchPost(id);
+                    if (result.success) {
+                        setTitle(result.data.title);
+                        setContent(result.data.content);
+                        setImages(result.data.images || []);
+                    } else {
+                        alert('게시글을 불러올 수 없습니다.');
+                        navigate('/community');
+                    }
+                }
+            };
+            loadPost();
+        }
+    }, [id, isEditMode, fetchPost, currentPost, navigate]);
 
     const modules = {
         toolbar: [
@@ -71,11 +98,18 @@ const PostWritePage = () => {
         }
 
         setIsSubmitting(true);
-        const result = await createPost(title, content, images);
+
+        let result;
+        if (isEditMode) {
+            result = await updatePost(id, title, content, images);
+        } else {
+            result = await createPost(title, content, images);
+        }
+
         setIsSubmitting(false);
 
         if (result.success) {
-            navigate('/community');
+            navigate(isEditMode ? `/community/${id}` : '/community');
         } else {
             alert(result.message);
         }
@@ -92,7 +126,7 @@ const PostWritePage = () => {
                     돌아가기
                 </button>
 
-                <h1 className="text-2xl font-bold mb-6">글쓰기</h1>
+                <h1 className="text-2xl font-bold mb-6">{isEditMode ? '글 수정' : '글쓰기'}</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
@@ -165,7 +199,7 @@ const PostWritePage = () => {
                             disabled={isSubmitting}
                             className="bg-arc-accent hover:bg-orange-600 text-white px-8 py-2 rounded-lg font-bold transition-all shadow-lg shadow-orange-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isSubmitting ? '등록 중...' : '등록하기'}
+                            {isSubmitting ? '처리 중...' : (isEditMode ? '수정하기' : '등록하기')}
                         </button>
                     </div>
                 </form>

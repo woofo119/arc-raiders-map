@@ -35,6 +35,7 @@ const App = () => {
                         {/* 커뮤니티는 별도 레이아웃 (전체 화면) */}
                         <Route path="/community" element={<CommunityPage />} />
                         <Route path="/community/write" element={<PostWritePage />} />
+                        <Route path="/community/edit/:id" element={<PostWritePage />} />
                         <Route path="/community/:id" element={<PostDetailPage />} />
 
                         <Route path="*" element={<NotFoundPage />} />

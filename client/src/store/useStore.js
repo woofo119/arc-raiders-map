@@ -349,6 +349,38 @@ const useStore = create((set, get) => ({
         }
     },
 
+    addComment: async (postId, content) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.post(`${API_URL}/posts/${postId}/comments`, { content }, config);
+            set({ currentPost: response.data });
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '댓글 작성 실패' };
+        }
+    },
+
+    deleteComment: async (postId, commentId) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.delete(`${API_URL}/posts/${postId}/comments/${commentId}`, config);
+            set({ currentPost: response.data });
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '댓글 삭제 실패' };
+        }
+    },
+
     // --------------------------------------------------------------------------
     // 💾 UI 상태 (Persisted UI State) - 마커 생성 폼 설정 기억
     // --------------------------------------------------------------------------

@@ -20,7 +20,8 @@ export const getPosts = async (req, res) => {
 export const getPostById = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id)
-            .populate('author', 'nickname username');
+            .populate('author', 'nickname username')
+            .populate('comments.author', 'nickname username'); // 댓글 작성자 정보도 함께 조회
 
         if (post) {
             // 조회수 증가
@@ -103,5 +104,72 @@ export const updatePost = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: '게시글 수정 실패' });
+    }
+};
+
+// @desc    댓글 작성
+// @route   POST /api/posts/:id/comments
+// @access  Private
+export const addComment = async (req, res) => {
+    const { content } = req.body;
+
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (post) {
+            const comment = {
+                content,
+                author: req.user._id
+            };
+
+            post.comments.push(comment);
+            await post.save();
+
+            // Populate author info for the new comment
+            const updatedPost = await Post.findById(req.params.id)
+                .populate('author', 'nickname username')
+                .populate('comments.author', 'nickname username');
+
+            res.status(201).json(updatedPost);
+        } else {
+            res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: '댓글 작성 실패' });
+    }
+};
+
+// @desc    댓글 삭제
+// @route   DELETE /api/posts/:id/comments/:commentId
+// @access  Private
+export const deleteComment = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (post) {
+            const comment = post.comments.find(c => c._id.toString() === req.params.commentId);
+
+            if (!comment) {
+                return res.status(404).json({ message: '댓글을 찾을 수 없습니다.' });
+            }
+
+            // 작성자 또는 관리자만 삭제 가능
+            if (comment.author.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+                return res.status(401).json({ message: '삭제 권한이 없습니다.' });
+            }
+
+            post.comments = post.comments.filter(c => c._id.toString() !== req.params.commentId);
+            await post.save();
+
+            const updatedPost = await Post.findById(req.params.id)
+                .populate('author', 'nickname username')
+                .populate('comments.author', 'nickname username');
+
+            res.json(updatedPost);
+        } else {
+            res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: '댓글 삭제 실패' });
     }
 };
