@@ -14,7 +14,7 @@ import useStore from './store/useStore';
 import { useEffect } from 'react';
 
 const App = () => {
-    // ...
+    const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
 
     return (
         <Router>
