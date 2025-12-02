@@ -40,6 +40,14 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now // 생성 시 현재 시간 자동 저장
+    },
+    level: {
+        type: Number,
+        default: 1
+    },
+    experience: {
+        type: Number,
+        default: 0
     }
 });
 

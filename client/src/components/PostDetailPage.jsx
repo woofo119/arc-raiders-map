@@ -94,6 +94,11 @@ const PostDetailPage = () => {
                             <div className="flex items-center gap-4">
                                 <span className="flex items-center gap-1 text-gray-300 font-bold">
                                     <User size={14} />
+                                    <img
+                                        src={`/levels/level_${currentPost.author?.level || 1}.png`}
+                                        alt={`Lv.${currentPost.author?.level || 1}`}
+                                        className="w-4 h-4 object-contain mx-1"
+                                    />
                                     {currentPost.author?.nickname || currentPost.author?.username || '익명'}
                                 </span>
                                 <span className="flex items-center gap-1">
@@ -169,7 +174,12 @@ const PostDetailPage = () => {
                                 <div key={comment._id} className="border-b border-gray-800 pb-6 last:border-0 last:pb-0">
                                     <div className="flex justify-between items-start mb-2">
                                         <div className="flex items-center gap-2">
-                                            <span className="font-bold text-gray-300">
+                                            <span className="font-bold text-gray-300 flex items-center gap-1">
+                                                <img
+                                                    src={`/levels/level_${comment.author?.level || 1}.png`}
+                                                    alt={`Lv.${comment.author?.level || 1}`}
+                                                    className="w-3 h-3 object-contain"
+                                                />
                                                 {comment.author?.nickname || comment.author?.username || '익명'}
                                             </span>
                                             <span className="text-xs text-gray-500">

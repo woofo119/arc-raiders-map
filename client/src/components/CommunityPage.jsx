@@ -125,7 +125,14 @@ const CommunityPage = () => {
                                             </div>
                                         </td>
                                         <td className="p-4 text-center text-gray-400 text-sm">
-                                            {post.author?.nickname || post.author?.username || '익명'}
+                                            <div className="flex items-center justify-center gap-1">
+                                                <img
+                                                    src={`/levels/level_${post.author?.level || 1}.png`}
+                                                    alt={`Lv.${post.author?.level || 1}`}
+                                                    className="w-4 h-4 object-contain"
+                                                />
+                                                {post.author?.nickname || post.author?.username || '익명'}
+                                            </div>
                                         </td>
                                         <td className="p-4 text-center text-gray-500 text-sm">
                                             {formatDate(post.createdAt)}

@@ -6,7 +6,7 @@ import Post from '../models/Post.js';
 export const getPosts = async (req, res) => {
     try {
         const posts = await Post.find({})
-            .populate('author', 'nickname username')
+            .populate('author', 'nickname username level')
             .sort({ createdAt: -1 }); // 최신순 정렬
         res.json(posts);
     } catch (error) {
@@ -20,8 +20,8 @@ export const getPosts = async (req, res) => {
 export const getPostById = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id)
-            .populate('author', 'nickname username')
-            .populate('comments.author', 'nickname username'); // 댓글 작성자 정보도 함께 조회
+            .populate('author', 'nickname username level')
+            .populate('comments.author', 'nickname username level'); // 댓글 작성자 정보도 함께 조회
 
         if (post) {
             // 조회수 증가
@@ -127,8 +127,8 @@ export const addComment = async (req, res) => {
 
             // Populate author info for the new comment
             const updatedPost = await Post.findById(req.params.id)
-                .populate('author', 'nickname username')
-                .populate('comments.author', 'nickname username');
+                .populate('author', 'nickname username level')
+                .populate('comments.author', 'nickname username level');
 
             res.status(201).json(updatedPost);
         } else {
@@ -162,8 +162,8 @@ export const deleteComment = async (req, res) => {
             await post.save();
 
             const updatedPost = await Post.findById(req.params.id)
-                .populate('author', 'nickname username')
-                .populate('comments.author', 'nickname username');
+                .populate('author', 'nickname username level')
+                .populate('comments.author', 'nickname username level');
 
             res.json(updatedPost);
         } else {
