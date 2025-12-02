@@ -8,6 +8,8 @@ import 'react-quill/dist/quill.snow.css';
 const PostDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+
+    // Use selectors to prevent unnecessary re-renders
     const fetchPost = useStore(state => state.fetchPost);
     const currentPost = useStore(state => state.currentPost);
     const user = useStore(state => state.user);
@@ -16,26 +18,15 @@ const PostDetailPage = () => {
     const deleteComment = useStore(state => state.deleteComment);
     const clearCurrentPost = useStore(state => state.clearCurrentPost);
 
-    const [loading, setLoading] = useState(true);
+    // Local state for comments
+    const [commentContent, setCommentContent] = useState('');
 
     useEffect(() => {
-        if (!id) return;
-
-        const loadPost = async () => {
-            try {
-                await fetchPost(id);
-            } catch (error) {
-                console.error("Failed to load post:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadPost();
-
-        return () => {
+        if (id) {
             clearCurrentPost();
-        };
-    }, [id, fetchPost, clearCurrentPost]);
+            fetchPost(id);
+        }
+    }, [id]); // Only re-run if ID changes. fetchPost and clearCurrentPost are stable from Zustand.
 
     const handleDelete = async () => {
         if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
@@ -47,26 +38,6 @@ const PostDetailPage = () => {
             }
         }
     };
-
-    if (loading) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">로딩 중...</div>;
-    if (!currentPost) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">게시글을 찾을 수 없습니다.</div>;
-
-    const isAuthor = user && currentPost.author && (user._id === currentPost.author._id || user.role === 'admin');
-
-    const formatDate = (dateString) => {
-        if (!dateString) return '';
-        try {
-            const date = new Date(dateString);
-            if (isNaN(date.getTime())) return '';
-            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-        } catch (e) {
-            return '';
-        }
-    };
-
-    console.log('Current Post:', currentPost);
-
-    const [commentContent, setCommentContent] = useState('');
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
@@ -89,6 +60,21 @@ const PostDetailPage = () => {
         }
     };
 
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return '';
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        } catch (e) {
+            return '';
+        }
+    };
+
+    if (!currentPost) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">로딩 중...</div>;
+
+    const isAuthor = user && currentPost.author && (user._id === currentPost.author._id || user.role === 'admin');
+
     return (
         <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-8">
             <div className="max-w-4xl mx-auto">
@@ -101,7 +87,7 @@ const PostDetailPage = () => {
                 </button>
 
                 <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden mb-8">
-                    {/* 게시글 헤더 */}
+                    {/* Header */}
                     <div className="p-6 border-b border-gray-800">
                         <h1 className="text-2xl font-bold mb-4">{currentPost.title}</h1>
                         <div className="flex justify-between items-center text-sm text-gray-400">
@@ -140,7 +126,7 @@ const PostDetailPage = () => {
                         </div>
                     </div>
 
-                    {/* 게시글 본문 */}
+                    {/* Content */}
                     <div className="p-6 min-h-[300px]">
                         <div className="ql-snow">
                             <div
@@ -162,13 +148,13 @@ const PostDetailPage = () => {
                     </div>
                 </div>
 
-                {/* 댓글 섹션 */}
+                {/* Comments */}
                 <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden p-6">
                     <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
                         댓글 <span className="text-arc-accent">{currentPost.comments?.length || 0}</span>
                     </h3>
 
-                    {/* 댓글 작성 폼 */}
+                    {/* Comment Form */}
                     <form onSubmit={handleCommentSubmit} className="mb-8 flex gap-4">
                         <input
                             type="text"
@@ -187,7 +173,7 @@ const PostDetailPage = () => {
                         </button>
                     </form>
 
-                    {/* 댓글 목록 */}
+                    {/* Comment List */}
                     <div className="space-y-6">
                         {currentPost.comments && currentPost.comments.length > 0 ? (
                             currentPost.comments.map((comment) => (
