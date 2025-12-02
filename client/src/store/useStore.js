@@ -67,7 +67,11 @@ const useStore = create((set, get) => ({
     // --------------------------------------------------------------------------
     // 🗺️ 지도 및 마커 상태 (Map & Marker State)
     // --------------------------------------------------------------------------
-    currentMap: MAPS[0], // 현재 선택된 맵 (기본값: 댐 전장)
+    currentMap: (() => {
+        const savedMapId = localStorage.getItem('currentMapId');
+        return MAPS.find(m => m.id === savedMapId) || MAPS[0];
+    })(), // 저장된 맵이 있으면 사용, 없으면 기본값
+
     markers: [],
 
     // 초기 필터 상태: 모든 하위 카테고리(sub-type)를 true로 설정
@@ -82,6 +86,7 @@ const useStore = create((set, get) => ({
     setMap: (mapId) => {
         const map = MAPS.find(m => m.id === mapId);
         if (map) {
+            localStorage.setItem('currentMapId', mapId); // 맵 ID 저장
             set({ currentMap: map });
             get().fetchMarkers(); // 맵 변경 시 마커 다시 불러오기
         }
@@ -108,7 +113,7 @@ const useStore = create((set, get) => ({
                 headers: { Authorization: `Bearer ${user.token}` },
             };
 
-            // 현재 맵 ID를 포함하여 전송
+            // 현재 맵 ID를 포함하여 전송 (layer 정보는 markerData에 포함되어 있음)
             const dataWithMapId = { ...markerData, mapId: currentMap.id };
 
             const response = await axios.post(`${API_URL}/markers`, dataWithMapId, config);

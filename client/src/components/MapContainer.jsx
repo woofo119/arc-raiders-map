@@ -228,12 +228,20 @@ const MapContainer = () => {
         setFormPosition({
             x: e.latlng.lat,
             y: e.latlng.lng,
-            containerPoint: e.containerPoint
+            containerPoint: e.containerPoint,
+            layer: activeLayer ? activeLayer.id : null // 현재 레이어 정보 추가
         });
     };
 
     // 필터링된 마커 목록
     const filteredMarkers = markers.filter(m => {
+        // 0. 레이어 필터 (멀티 레이어 맵인 경우)
+        if (currentMap.layers && activeLayer) {
+            // 마커에 레이어 정보가 없으면 기본적으로 첫 번째 레이어('top')로 간주
+            const markerLayer = m.layer || currentMap.layers[0].id;
+            if (markerLayer !== activeLayer.id) return false;
+        }
+
         // 1. 카테고리(sub-type) 필터 확인
         if (filters[m.category]) return true;
 

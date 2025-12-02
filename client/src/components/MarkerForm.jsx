@@ -20,6 +20,7 @@ const MarkerForm = ({ position, onClose }) => {
         const result = await addMarker({
             x: position.x,
             y: position.y,
+            layer: position.layer, // 레이어 정보 전달
             type: mainType,
             category: subType,
             title: title || getLabel(mainType, subType),

@@ -15,6 +15,10 @@ const markerSchema = new mongoose.Schema({
         required: true, // 맵 ID (dam, bluegate, etc.)
         index: true
     },
+    layer: {
+        type: String, // 층 정보 (top, bottom 등). 없으면 기본값(null 또는 top)으로 처리
+        default: 'top'
+    },
     type: {
         type: String,
         enum: ['resource', 'weapon', 'quest', 'container', 'location', 'nature'], // 허용된 마커 타입
