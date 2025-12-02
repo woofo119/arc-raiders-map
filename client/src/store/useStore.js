@@ -94,16 +94,26 @@ const useStore = create((set, get) => ({
 
     // 마커 목록 불러오기 (현재 맵 기준)
     fetchMarkers: async () => {
-        const { currentMap } = get();
+        const { currentMap, user } = get();
         try {
-            const response = await axios.get(`${API_URL}/markers?mapId=${currentMap.id}`);
+            // 관리자라면 /api/markers/admin 호출 (승인 대기 포함), 아니면 /api/markers (승인된 것만)
+            const endpoint = (user && user.role === 'admin')
+                ? `${API_URL}/markers/admin`
+                : `${API_URL}/markers`;
+
+            // 관리자 API 호출 시에는 토큰 헤더 필요
+            const config = (user && user.role === 'admin')
+                ? { headers: { Authorization: `Bearer ${user.token}` } }
+                : {};
+
+            const response = await axios.get(`${endpoint}?mapId=${currentMap.id}`, config);
             set({ markers: response.data });
         } catch (error) {
             console.error('마커 불러오기 실패:', error);
         }
     },
 
-    // 마커 추가하기
+    // 마커 추가하기 (제안하기)
     addMarker: async (markerData) => {
         const { user, currentMap } = get();
         if (!user) return;
@@ -117,8 +127,17 @@ const useStore = create((set, get) => ({
             const dataWithMapId = { ...markerData, mapId: currentMap.id };
 
             const response = await axios.post(`${API_URL}/markers`, dataWithMapId, config);
-            set((state) => ({ markers: [...state.markers, response.data] }));
-            return { success: true };
+
+            // 관리자가 아니면 제안 상태이므로 바로 리스트에 추가하지 않음 (또는 pending 상태로 추가)
+            // 여기서는 서버 응답의 isApproved를 확인
+            const newMarker = response.data;
+
+            if (newMarker.isApproved) {
+                set((state) => ({ markers: [...state.markers, newMarker] }));
+                return { success: true, message: '마커가 추가되었습니다.' };
+            } else {
+                return { success: true, message: '마커 추가 제안이 접수되었습니다. 관리자 승인 후 표시됩니다.' };
+            }
         } catch (error) {
             return { success: false, message: error.response?.data?.message || '마커 추가 실패' };
         }
@@ -161,6 +180,28 @@ const useStore = create((set, get) => ({
         } catch (error) {
             console.error('마커 수정 실패:', error);
             return { success: false, message: error.response?.data?.message || '마커 수정 실패' };
+        }
+    },
+
+    // 마커 승인하기 (관리자용)
+    approveMarker: async (id) => {
+        const { user } = get();
+        if (!user || user.role !== 'admin') return;
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.put(`${API_URL}/markers/${id}`, { isApproved: true }, config);
+            const updatedMarker = response.data;
+
+            set((state) => ({
+                markers: state.markers.map((m) => (m._id === id ? updatedMarker : m)),
+            }));
+            return { success: true };
+        } catch (error) {
+            console.error('마커 승인 실패:', error);
+            return { success: false, message: '마커 승인 실패' };
         }
     },
 
@@ -225,6 +266,88 @@ const useStore = create((set, get) => ({
 
     openMyPageModal: () => set({ isMyPageModalOpen: true }),
     closeMyPageModal: () => set({ isMyPageModalOpen: false }),
+
+    // --------------------------------------------------------------------------
+    // 📝 게시판 상태 (Community Board State)
+    // --------------------------------------------------------------------------
+    posts: [],
+    currentPost: null,
+
+    fetchPosts: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/posts`);
+            set({ posts: response.data });
+        } catch (error) {
+            console.error('게시글 불러오기 실패:', error);
+        }
+    },
+
+    fetchPost: async (id) => {
+        try {
+            const response = await axios.get(`${API_URL}/posts/${id}`);
+            set({ currentPost: response.data });
+            return { success: true, data: response.data };
+        } catch (error) {
+            console.error('게시글 상세 조회 실패:', error);
+            return { success: false, message: '게시글을 불러올 수 없습니다.' };
+        }
+    },
+
+    createPost: async (title, content, images) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.post(`${API_URL}/posts`, { title, content, images }, config);
+            set((state) => ({ posts: [response.data, ...state.posts] }));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '게시글 작성 실패' };
+        }
+    },
+
+    updatePost: async (id, title, content, images) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.put(`${API_URL}/posts/${id}`, { title, content, images }, config);
+            const updatedPost = response.data;
+
+            set((state) => ({
+                posts: state.posts.map(p => p._id === id ? updatedPost : p),
+                currentPost: state.currentPost?._id === id ? updatedPost : state.currentPost
+            }));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '게시글 수정 실패' };
+        }
+    },
+
+    deletePost: async (id) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            await axios.delete(`${API_URL}/posts/${id}`, config);
+            set((state) => ({
+                posts: state.posts.filter(p => p._id !== id),
+                currentPost: null
+            }));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '게시글 삭제 실패' };
+        }
+    },
 
     // --------------------------------------------------------------------------
     // 💾 UI 상태 (Persisted UI State) - 마커 생성 폼 설정 기억

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield } from 'lucide-react';
+import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield, Users } from 'lucide-react';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -91,6 +91,14 @@ const LandingPage = () => {
                     >
                         맵 정보 확인하기
                         <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+
+                    <button
+                        onClick={() => navigate('/community')}
+                        className="group bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all flex items-center gap-2 shadow-lg border border-gray-700 hover:border-gray-500 hover:scale-105"
+                    >
+                        커뮤니티
+                        <Users size={20} className="group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
             </section >

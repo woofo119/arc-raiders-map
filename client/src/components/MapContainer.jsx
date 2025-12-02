@@ -78,7 +78,7 @@ const getIcon = (type, category, isOfficial) => {
 
 // 마커 팝업 내용 컴포넌트 (수정 기능 포함)
 const MarkerPopupContent = ({ marker }) => {
-    const { user, deleteMarker, updateMarker } = useStore();
+    const { user, deleteMarker, updateMarker, approveMarker } = useStore();
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState(marker.title);
     const [editDescription, setEditDescription] = useState(marker.description);
@@ -99,7 +99,18 @@ const MarkerPopupContent = ({ marker }) => {
         }
     };
 
+    const handleApprove = async () => {
+        if (confirm('이 마커를 승인하시겠습니까?')) {
+            const result = await approveMarker(marker._id);
+            if (!result.success) {
+                alert(result.message);
+            }
+        }
+    };
+
     const canEdit = user && (user._id === marker.createdBy?._id || user.role === 'admin');
+    const isAdmin = user && user.role === 'admin';
+    const isPending = marker.isApproved === false;
 
     if (isEditing) {
         return (
@@ -140,7 +151,11 @@ const MarkerPopupContent = ({ marker }) => {
     return (
         <div className="p-1 min-w-[200px]">
             <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
-                {/* OFFICIAL 태그 제거 */}
+                {isPending && (
+                    <span className="bg-yellow-500 text-black text-[10px] px-1 rounded font-bold">
+                        PENDING
+                    </span>
+                )}
                 <h3 className="font-bold text-lg text-white">{marker.title}</h3>
             </div>
             <p className="text-gray-300 text-sm mb-3 break-words whitespace-pre-wrap">{marker.description}</p>
@@ -152,7 +167,16 @@ const MarkerPopupContent = ({ marker }) => {
             )}
 
             <div className="flex justify-between items-center text-xs text-gray-500">
-                <div />
+                <div className="flex gap-2">
+                    {isAdmin && isPending && (
+                        <button
+                            onClick={handleApprove}
+                            className="text-green-400 hover:text-green-300 flex items-center gap-1 bg-green-900/20 px-2 py-1 rounded transition-colors font-bold"
+                        >
+                            승인
+                        </button>
+                    )}
+                </div>
 
                 {canEdit && (
                     <div className="flex gap-2">
@@ -308,6 +332,7 @@ const MapContainer = () => {
                             key={marker._id}
                             position={[marker.x, marker.y]}
                             icon={getIcon(marker.type, marker.category, marker.isOfficial)}
+                            opacity={marker.isApproved === false ? 0.5 : 1} // 승인 대기 중인 마커는 반투명하게 표시
                             draggable={isDraggable}
                             eventHandlers={{
                                 dragend: async (e) => {

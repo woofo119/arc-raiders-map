@@ -31,6 +31,7 @@ const MarkerForm = ({ position, onClose }) => {
 
         if (result.success) {
             setLastMarkerOptions({ mainType, subType, isOfficial: finalIsOfficial });
+            alert(result.message); // 성공 메시지 표시 (제안 접수 등)
             onClose();
         } else {
             alert(result.message || '마커 추가에 실패했습니다.');
@@ -43,12 +44,14 @@ const MarkerForm = ({ position, onClose }) => {
         return type ? type.label : '';
     };
 
+    const isAdmin = user?.role === 'admin';
+
     return (
         <div className="absolute top-4 right-4 z-[1000] bg-black/90 text-white p-4 rounded-xl border border-gray-700 w-80 shadow-2xl backdrop-blur-md animate-in fade-in slide-in-from-right-10">
             <div className="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
                 <h3 className="font-bold text-lg flex items-center gap-2 text-arc-accent">
                     <MapPin size={18} />
-                    새 마커 추가
+                    {isAdmin ? '새 마커 추가' : '마커 추가 제안'}
                 </h3>
                 <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">
                     <X size={18} />
@@ -170,7 +173,7 @@ const MarkerForm = ({ position, onClose }) => {
                         type="submit"
                         className="flex-1 bg-arc-accent hover:bg-orange-600 text-white py-2 rounded-lg font-bold text-sm transition-all shadow-lg shadow-orange-900/20 active:scale-95"
                     >
-                        추가하기
+                        {isAdmin ? '추가하기' : '제안하기'}
                     </button>
                     <button
                         type="button"
@@ -181,7 +184,7 @@ const MarkerForm = ({ position, onClose }) => {
                     </button>
                 </div>
             </form>
-        </div>
+        </div >
     );
 };
 

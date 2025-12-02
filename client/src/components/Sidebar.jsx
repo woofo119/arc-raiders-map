@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { MAPS, MARKER_CATEGORIES } from '../constants';
-import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap } from 'lucide-react';
+import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap, Users } from 'lucide-react';
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -18,8 +18,6 @@ const Sidebar = () => {
                 >
                     <img src="/logo_white.png" alt="ARC Raiders" className="h-12 object-contain" />
                 </div>
-
-
 
                 {/* 맵 선택 드롭다운 */}
                 <div className="relative w-full block animate-in fade-in duration-300">
@@ -76,8 +74,6 @@ const Sidebar = () => {
                         />
                     ))}
                 </div>
-
-
             </div>
 
             {/* 사용자 프로필 영역 */}
@@ -124,7 +120,7 @@ const Sidebar = () => {
                 {/* 스킬 트리 버튼 */}
                 <button
                     onClick={() => navigate('/skills')}
-                    className="w-full mt-3 bg-gray-800 hover:bg-gray-700 text-white py-3 rounded-xl transition-all border border-gray-700 font-bold text-sm flex items-center justify-center gap-2 group"
+                    className="w-full mt-2 bg-gray-800 hover:bg-gray-700 text-white py-3 rounded-xl transition-all border border-gray-700 font-bold text-sm flex items-center justify-center gap-2 group"
                 >
                     <Zap size={20} className="text-yellow-400 group-hover:scale-110 transition-transform" />
                     <span className="opacity-100 inline">

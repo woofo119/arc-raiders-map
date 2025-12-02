@@ -6,6 +6,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import authRoutes from './routes/authRoutes.js';
 import markerRoutes from './routes/markerRoutes.js';
+import postRoutes from './routes/postRoutes.js';
 import User from './models/User.js';
 
 // .env 파일 설정 로드
@@ -49,6 +50,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://woofo:da868133@cluste
 // 라우트 연결
 app.use('/api/auth', authRoutes);
 app.use('/api/markers', markerRoutes);
+app.use('/api/posts', postRoutes);
 
 // 기본 라우트
 app.get('/', (req, res) => {

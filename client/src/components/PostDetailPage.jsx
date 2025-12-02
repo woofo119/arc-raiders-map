@@ -1,0 +1,107 @@
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import useStore from '../store/useStore';
+import { ArrowLeft, User, Clock, Eye, MoreVertical, Trash2, Edit } from 'lucide-react';
+
+const PostDetailPage = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { fetchPost, currentPost, user, deletePost } = useStore();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadPost = async () => {
+            await fetchPost(id);
+            setLoading(false);
+        };
+        loadPost();
+    }, [id]);
+
+    const handleDelete = async () => {
+        if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+            const result = await deletePost(id);
+            if (result.success) {
+                navigate('/community');
+            } else {
+                alert(result.message);
+            }
+        }
+    };
+
+    if (loading) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">로딩 중...</div>;
+    if (!currentPost) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">게시글을 찾을 수 없습니다.</div>;
+
+    const isAuthor = user && (user._id === currentPost.author?._id || user.role === 'admin');
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+    };
+
+    return (
+        <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-8">
+            <div className="max-w-4xl mx-auto">
+                <button
+                    onClick={() => navigate('/community')}
+                    className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors"
+                >
+                    <ArrowLeft size={20} />
+                    목록으로
+                </button>
+
+                <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden">
+                    {/* 게시글 헤더 */}
+                    <div className="p-6 border-b border-gray-800">
+                        <h1 className="text-2xl font-bold mb-4">{currentPost.title}</h1>
+                        <div className="flex justify-between items-center text-sm text-gray-400">
+                            <div className="flex items-center gap-4">
+                                <span className="flex items-center gap-1 text-gray-300 font-bold">
+                                    <User size={14} />
+                                    {currentPost.author?.nickname || currentPost.author?.username || '익명'}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <Clock size={14} />
+                                    {formatDate(currentPost.createdAt)}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <Eye size={14} />
+                                    {currentPost.views}
+                                </span>
+                            </div>
+                            {isAuthor && (
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => alert('수정 기능은 준비 중입니다.')}
+                                        className="text-gray-400 hover:text-blue-400 p-1 transition-colors"
+                                        title="수정"
+                                    >
+                                        <Edit size={18} />
+                                    </button>
+                                    <button
+                                        onClick={handleDelete}
+                                        className="text-gray-400 hover:text-red-400 p-1 transition-colors"
+                                        title="삭제"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* 게시글 본문 */}
+                    <div className="p-6 min-h-[300px]">
+                        {currentPost.images && currentPost.images.map((img, idx) => (
+                            <img key={idx} src={img} alt={`Image ${idx}`} className="max-w-full rounded-lg mb-6 border border-gray-800" />
+                        ))}
+                        <div className="whitespace-pre-wrap leading-relaxed text-gray-200">
+                            {currentPost.content}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default PostDetailPage;

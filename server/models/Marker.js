@@ -32,6 +32,10 @@ const markerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isApproved: {
+        type: Boolean,
+        default: false // 승인 여부 (기본값: false - 승인 대기)
+    },
     title: {
         type: String,
         required: true,
