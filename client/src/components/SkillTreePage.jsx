@@ -286,11 +286,6 @@ const SkillTreePage = () => {
             {/* Top Navigation Bar */}
             <div className="h-14 border-b border-gray-800 flex items-center justify-between px-6 bg-gray-900/50 backdrop-blur-sm z-30">
                 <div className="flex items-center gap-4">
-                    <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                        <ArrowLeft size={20} />
-                        <span className="font-medium">메인으로</span>
-                    </Link>
-                    <div className="h-4 w-px bg-gray-700 mx-2" />
                     <h1 className="text-lg font-bold text-yellow-500">스킬 트리</h1>
                 </div>
 
@@ -309,8 +304,8 @@ const SkillTreePage = () => {
                     <button
                         onClick={handleShare}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-all font-bold ${isCopied
-                                ? 'bg-green-600 text-white hover:bg-green-500'
-                                : 'bg-yellow-600 text-black hover:bg-yellow-500'
+                            ? 'bg-green-600 text-white hover:bg-green-500'
+                            : 'bg-yellow-600 text-black hover:bg-yellow-500'
                             }`}
                     >
                         {isCopied ? <Check size={14} /> : <Share2 size={14} />}

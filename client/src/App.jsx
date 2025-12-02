@@ -7,17 +7,14 @@ import PostWritePage from './components/PostWritePage';
 import PostDetailPage from './components/PostDetailPage';
 import NotFoundPage from './components/NotFoundPage';
 import MainLayout from './components/MainLayout';
+import CommunityLayout from './components/CommunityLayout';
 import LoginModal from './components/LoginModal';
 import MyPageModal from './components/MyPageModal';
 import useStore from './store/useStore';
 import { useEffect } from 'react';
 
 const App = () => {
-    const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
-
-    useEffect(() => {
-        // 초기 로드 시 필요한 작업이 있다면 여기에 추가
-    }, []);
+    // ...
 
     return (
         <Router>
@@ -26,17 +23,19 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<LandingPage />} />
 
-                        {/* 맵과 스킬 트리는 사이드바가 있는 레이아웃 사용 */}
+                        {/* 맵은 기존 MainLayout (Map Sidebar 포함) 사용 */}
                         <Route element={<MainLayout />}>
                             <Route path="/map" element={<MapContainer />} />
-                            <Route path="/skills" element={<SkillTreePage />} />
                         </Route>
 
-                        {/* 커뮤니티는 별도 레이아웃 (전체 화면) */}
-                        <Route path="/community" element={<CommunityPage />} />
-                        <Route path="/community/write" element={<PostWritePage />} />
-                        <Route path="/community/edit/:id" element={<PostWritePage />} />
-                        <Route path="/community/:id" element={<PostDetailPage />} />
+                        {/* 스킬 트리와 커뮤니티는 CommunityLayout (Community Sidebar 포함) 사용 */}
+                        <Route element={<CommunityLayout />}>
+                            <Route path="/skills" element={<SkillTreePage />} />
+                            <Route path="/community" element={<CommunityPage />} />
+                            <Route path="/community/write" element={<PostWritePage />} />
+                            <Route path="/community/edit/:id" element={<PostWritePage />} />
+                            <Route path="/community/:id" element={<PostDetailPage />} />
+                        </Route>
 
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>

@@ -46,13 +46,6 @@ const CommunityPage = () => {
                 <div className="flex justify-between items-center mb-8">
                     <div>
                         <div className="flex items-center gap-4 mb-2">
-                            <button
-                                onClick={() => navigate('/')}
-                                className="bg-gray-800 hover:bg-gray-700 text-gray-300 p-2 rounded-lg transition-colors"
-                                title="홈으로"
-                            >
-                                <ArrowLeft size={20} />
-                            </button>
                             <h1 className="text-3xl font-bold text-white">게시판</h1>
                         </div>
                         <p className="text-gray-400 pl-14">ARC Raiders 유저들과 정보를 공유하세요.</p>
