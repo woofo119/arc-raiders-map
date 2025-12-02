@@ -5,14 +5,14 @@ import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield, User
 const LandingPage = () => {
     const navigate = useNavigate();
 
-    // Shared background style for all cards to create the "masked" effect
-    // Using skill_tree.png as requested by user
-    const cardBackgroundStyle = "bg-[url('/banners/skill_tree.png')] bg-fixed bg-cover bg-center bg-no-repeat border border-white/20 hover:border-yellow-500/50 transition-all group cursor-pointer relative overflow-hidden rounded-2xl";
+    // Updated card style: No background image, dark theme, clean look
+    const cardBackgroundStyle = "bg-[#121212] border border-gray-800 hover:border-arc-accent/50 transition-all duration-300 group cursor-pointer relative overflow-hidden rounded-2xl hover:bg-[#1a1a1a] hover:shadow-xl hover:shadow-arc-accent/10 hover:-translate-y-1";
 
-    // Reduced opacity to make the background more visible (masking effect)
-    const cardOverlayStyle = "absolute inset-0 bg-black/40 hover:bg-black/30 transition-colors z-0";
+    // Overlay is no longer needed for masking, but we can keep a subtle gradient or remove it.
+    // Let's remove the heavy overlay and just use a subtle gradient for depth if needed.
+    const cardOverlayStyle = "absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none";
 
-    const cardContentStyle = "relative z-10 h-full flex flex-col justify-center p-6";
+    const cardContentStyle = "relative z-10 h-full flex flex-col justify-between p-8";
 
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden relative font-sans">
@@ -91,21 +91,22 @@ const LandingPage = () => {
                 <h2 className="text-3xl font-bold mb-12 text-center text-white drop-shadow-lg">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Skill Tree */}
                     <div
-                        className={`col-span-1 md:col-span-2 lg:col-span-3 h-32 ${cardBackgroundStyle}`}
+                        className={`col-span-1 md:col-span-2 lg:col-span-3 h-48 ${cardBackgroundStyle}`}
                         onClick={() => navigate('/skills')}
                     >
                         <div className={cardOverlayStyle} />
-                        <div className={`${cardContentStyle} px-8`}>
-                            <div className="flex items-center gap-3 mb-1">
-                                <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-[10px] font-bold border border-blue-500/30">NEW FEATURE</div>
+                        <div className={cardContentStyle}>
+                            <div className="flex flex-col h-full justify-center items-start">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold border border-blue-500/30">NEW FEATURE</div>
+                                </div>
+                                <h3 className="text-3xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center gap-3 mb-2">
+                                    실시간 스킬 트리 제작
+                                    <Zap size={24} className="text-yellow-500" />
+                                </h3>
+                                <p className="text-gray-400 text-base max-w-xl">나만의 최적화된 스킬 트리를 구성하고, 다른 레이더들과 공유하여 생존 확률을 높이세요.</p>
                             </div>
-                            <h3 className="text-2xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center gap-2">
-                                실시간 스킬 트리 제작
-                                <Zap size={18} className="text-yellow-500" />
-                            </h3>
-                            <p className="text-gray-300 text-sm mt-1 max-w-md">나만의 최적화된 스킬 트리를 구성하고 공유하세요.</p>
                         </div>
                     </div>
 
