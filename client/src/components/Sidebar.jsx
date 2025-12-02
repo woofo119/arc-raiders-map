@@ -188,42 +188,52 @@ const AccordionFilter = ({ mainType, category }) => {
 
             {/* 바디 (하위 항목 리스트) */}
             <div id={`accordion-${mainType}`} className="block border-t border-gray-800/50 bg-black/20">
-                {category.types.map((type) => {
-                    const count = getTypeCount(type.id);
-                    const isDisabled = count === 0;
+                {category.types
+                    .map(type => ({ ...type, count: getTypeCount(type.id) })) // Add count to object
+                    .sort((a, b) => {
+                        // Sort by active status (count > 0) first
+                        const aActive = a.count > 0;
+                        const bActive = b.count > 0;
+                        if (aActive && !bActive) return -1;
+                        if (!aActive && bActive) return 1;
+                        return 0; // Maintain original order for same status
+                    })
+                    .map((type) => {
+                        const count = type.count;
+                        const isDisabled = count === 0;
 
-                    return (
-                        <div
-                            key={type.id}
-                            onClick={() => !isDisabled && toggleFilter(type.id)}
-                            className={`flex items-center justify-between py-2 px-3 pl-10 transition-colors group/item ${isDisabled
-                                ? 'opacity-30 cursor-not-allowed'
-                                : 'hover:bg-white/5 cursor-pointer'
-                                }`}
-                        >
-                            <div className="flex items-center gap-2 overflow-hidden flex-1">
-                                <div className={`w-1.5 h-1.5 rounded-full ${isDisabled ? 'bg-gray-700' : (filters[type.id] ? 'bg-arc-accent' : 'bg-gray-600')
-                                    }`} />
-                                <span className={`text-xs transition-colors truncate ${isDisabled ? 'text-gray-700' : (filters[type.id] ? 'text-gray-300' : 'text-gray-600')
-                                    }`}>
-                                    {type.label.split('(')[0].trim()}
-                                </span>
-                            </div>
+                        return (
+                            <div
+                                key={type.id}
+                                onClick={() => !isDisabled && toggleFilter(type.id)}
+                                className={`flex items-center justify-between py-2 px-3 pl-10 transition-colors group/item ${isDisabled
+                                    ? 'opacity-30 cursor-not-allowed'
+                                    : 'hover:bg-white/5 cursor-pointer'
+                                    }`}
+                            >
+                                <div className="flex items-center gap-2 overflow-hidden flex-1">
+                                    <div className={`w-1.5 h-1.5 rounded-full ${isDisabled ? 'bg-gray-700' : (filters[type.id] ? 'bg-arc-accent' : 'bg-gray-600')
+                                        }`} />
+                                    <span className={`text-xs transition-colors truncate ${isDisabled ? 'text-gray-700' : (filters[type.id] ? 'text-gray-300' : 'text-gray-600')
+                                        }`}>
+                                        {type.label.split('(')[0].trim()}
+                                    </span>
+                                </div>
 
-                            <div className="flex items-center gap-3">
-                                <span className="text-xs text-gray-500 font-mono">{count}</span>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xs text-gray-500 font-mono">{count}</span>
 
-                                {/* 체크박스 (커스텀 스타일) */}
-                                <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isDisabled
-                                    ? 'border-gray-700 bg-transparent'
-                                    : (filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent')
-                                    }`}>
-                                    {!isDisabled && filters[type.id] && <div className="w-2 h-2 bg-white rounded-[1px]" />}
+                                    {/* 체크박스 (커스텀 스타일) */}
+                                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isDisabled
+                                        ? 'border-gray-700 bg-transparent'
+                                        : (filters[type.id] ? 'bg-arc-accent border-arc-accent' : 'border-gray-600 bg-transparent')
+                                        }`}>
+                                        {!isDisabled && filters[type.id] && <div className="w-2 h-2 bg-white rounded-[1px]" />}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
             </div>
         </div>
     );

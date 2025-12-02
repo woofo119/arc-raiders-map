@@ -22,9 +22,6 @@ export const MARKER_CATEGORIES = {
         types: [
             { id: 'weapon_case', label: '무기 상자 (Weapon Case)', icon: '/icons/weapon_case.png' }, // Large icon used as fallback
             { id: 'security_locker', label: '보안 라커 (Security Locker)', icon: '/icons/icon_security_locker_v2.png', noBlend: true },
-            { id: 'armor_crate', label: '방어구 상자 (Armor Crate)', icon: '/icons/armor_crate.png' }, // Large icon used as fallback
-            { id: 'medical_box', label: '의료 상자 (Medical Box)', icon: '/icons/medical_box.png' }, // Large icon used as fallback
-            { id: 'grenade_box', label: '수류탄 상자 (Grenade Box)', icon: '/icons/grenade_box.png' }, // Large icon used as fallback
         ]
     },
     location: {
@@ -54,11 +51,5 @@ export const MARKER_CATEGORIES = {
             { id: 'lemon', label: '레몬 (Lemon)', icon: '/icons/icon_lemon.jpg' },
         ]
     },
-    quest: {
-        label: '퀘스트 (Quest)',
-        types: [
-            { id: 'quest_item', label: '퀘스트 아이템 (Quest Item)', icon: 'Scroll' },
-            { id: 'npc', label: 'NPC', icon: 'User' },
-        ]
-    }
+    // Quest category removed as requested
 };
