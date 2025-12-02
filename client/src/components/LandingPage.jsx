@@ -52,7 +52,7 @@ const LandingPage = () => {
             {/* Header */}
             <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[2px]">
                 <div className="flex items-center gap-4">
-                    <img src="/logo.png" alt="ARC Raiders" className="h-10 object-contain drop-shadow-lg" />
+                    <img src="/logo_white.png" alt="ARC Raiders" className="h-10 object-contain drop-shadow-lg" />
                     <span className="font-bold text-xl tracking-wider drop-shadow-md">ARCR MAP</span>
                 </div>
                 <button

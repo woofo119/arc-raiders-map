@@ -16,7 +16,7 @@ const Sidebar = () => {
                     className="mb-6 flex justify-center w-full h-12 items-center cursor-pointer hover:opacity-80 transition-opacity"
                     onClick={() => navigate('/')}
                 >
-                    <img src="/logo.png" alt="ARC Raiders" className="h-12 object-contain" />
+                    <img src="/logo_white.png" alt="ARC Raiders" className="h-12 object-contain" />
                 </div>
 
 
