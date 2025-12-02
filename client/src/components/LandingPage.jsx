@@ -59,19 +59,19 @@ const LandingPage = () => {
 
             {/* Header */}
             <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 pointer-events-none">
-                <div className="flex items-center justify-between px-8 py-4 bg-[#121212]/90 backdrop-blur-md border border-gray-800 rounded-full shadow-2xl pointer-events-auto min-w-[600px] max-w-4xl w-full mx-4">
-                    <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate('/')}>
-                        <img src="/logo_white.png" alt="ARC Raiders" className="h-8 object-contain drop-shadow-lg" />
-                        <span className="font-bold text-lg tracking-wider drop-shadow-md">ARCR MAP</span>
+                <div className="flex items-center justify-between px-4 md:px-8 py-3 md:py-4 bg-[#121212]/90 backdrop-blur-md border border-gray-800 rounded-full shadow-2xl pointer-events-auto md:min-w-[600px] max-w-4xl w-full mx-2 md:mx-4">
+                    <div className="flex items-center gap-2 md:gap-4 cursor-pointer" onClick={() => navigate('/')}>
+                        <img src="/logo_white.png" alt="ARC Raiders" className="h-6 md:h-8 object-contain drop-shadow-lg" />
+                        <span className="font-bold text-sm md:text-lg tracking-wider drop-shadow-md">ARCR MAP</span>
                     </div>
-                    <div className="flex items-center gap-6 text-sm font-medium text-gray-300">
+                    <div className="flex items-center gap-2 md:gap-6 text-xs md:text-sm font-medium text-gray-300">
                         <button
                             onClick={() => navigate('/community')}
                             className="hover:text-arc-accent transition-colors"
                         >
                             커뮤니티
                         </button>
-                        <span className="text-gray-700">|</span>
+                        <span className="text-gray-700 hidden md:inline">|</span>
 
                         {user ? (
                             <>
@@ -80,16 +80,16 @@ const LandingPage = () => {
                                     className="hover:text-arc-accent transition-colors flex items-center gap-1"
                                 >
                                     <span className="text-white font-bold">{user.nickname || user.username}</span>
-                                    <span>님</span>
+                                    <span className="hidden md:inline">님</span>
                                 </button>
-                                <span className="text-gray-700">|</span>
+                                <span className="text-gray-700 hidden md:inline">|</span>
                                 <button
                                     onClick={openMyPageModal}
-                                    className="hover:text-white transition-colors"
+                                    className="hover:text-white transition-colors hidden md:block"
                                 >
                                     내 정보
                                 </button>
-                                <span className="text-gray-700">|</span>
+                                <span className="text-gray-700 hidden md:inline">|</span>
                                 <button
                                     onClick={handleLogout}
                                     className="hover:text-white transition-colors"
