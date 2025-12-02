@@ -121,7 +121,7 @@ const LandingPage = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
                 </div>
 
-                <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter text-white drop-shadow-2xl">
+                <h1 className="text-4xl md:text-8xl font-black mb-6 tracking-tighter text-white drop-shadow-2xl">
                     레이더스여, 집결하라!
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-lg">
