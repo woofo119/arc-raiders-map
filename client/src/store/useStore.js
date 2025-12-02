@@ -273,6 +273,8 @@ const useStore = create((set, get) => ({
     posts: [],
     currentPost: null,
 
+    clearCurrentPost: () => set({ currentPost: null }),
+
     fetchPosts: async () => {
         try {
             const response = await axios.get(`${API_URL}/posts`);

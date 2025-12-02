@@ -8,16 +8,26 @@ import 'react-quill/dist/quill.snow.css';
 const PostDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { fetchPost, currentPost, user, deletePost, addComment, deleteComment } = useStore();
+    const { fetchPost, currentPost, user, deletePost, addComment, deleteComment, clearCurrentPost } = useStore();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadPost = async () => {
-            await fetchPost(id);
-            setLoading(false);
+            try {
+                setLoading(true);
+                await fetchPost(id);
+            } catch (error) {
+                console.error("Failed to load post:", error);
+            } finally {
+                setLoading(false);
+            }
         };
         loadPost();
-    }, [id]);
+
+        return () => {
+            if (clearCurrentPost) clearCurrentPost();
+        };
+    }, [id, fetchPost, clearCurrentPost]);
 
     const handleDelete = async () => {
         if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
@@ -127,7 +137,7 @@ const PostDetailPage = () => {
                         <div className="ql-snow">
                             <div
                                 className="ql-editor !p-0 !text-gray-200"
-                                dangerouslySetInnerHTML={{ __html: currentPost.content }}
+                                dangerouslySetInnerHTML={{ __html: currentPost.content || '' }}
                             />
                         </div>
 
