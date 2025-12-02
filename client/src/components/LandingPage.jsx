@@ -53,7 +53,7 @@ const LandingPage = () => {
             <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[2px]">
                 <div className="flex items-center gap-4">
                     <img src="/logo.png" alt="ARC Raiders" className="h-10 object-contain drop-shadow-lg" />
-                    <span className="font-bold text-xl tracking-wider drop-shadow-md">ARC Raiders KR</span>
+                    <span className="font-bold text-xl tracking-wider drop-shadow-md">ARCR MAP</span>
                 </div>
                 <button
                     onClick={() => navigate('/map')}
@@ -82,7 +82,7 @@ const LandingPage = () => {
                 <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-lg">
                     아크의 위협에 맞서 생존을 위한 여정이 시작된다.
                     <br />
-                    <span className="text-sm text-gray-300 mt-2 block font-light">ARC Raiders KR에서 당신의 여정을 준비하세요.</span>
+                    <span className="text-sm text-gray-300 mt-2 block font-light">ARCR MAP에서 당신의 여정을 준비하세요.</span>
                 </p>
                 <div className="flex justify-center gap-4">
                     <button
@@ -251,7 +251,7 @@ const LandingPage = () => {
 
             {/* Footer */}
             < footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm" >
-                <p>&copy; 2025 ARC Raiders KR. All rights reserved.</p>
+                <p>&copy; 2025 ARCR MAP. All rights reserved.</p>
                 <p className="mt-2">This is a fan-made site and is not affiliated with Embark Studios.</p>
             </footer >
         </div >
