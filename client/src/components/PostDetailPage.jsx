@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { ArrowLeft, User, Clock, Eye, MoreVertical, Trash2, Edit } from 'lucide-react';
 
+import 'react-quill/dist/quill.snow.css';
+
 const PostDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -91,12 +93,23 @@ const PostDetailPage = () => {
 
                     {/* 게시글 본문 */}
                     <div className="p-6 min-h-[300px]">
-                        {currentPost.images && currentPost.images.map((img, idx) => (
-                            <img key={idx} src={img} alt={`Image ${idx}`} className="max-w-full rounded-lg mb-6 border border-gray-800" />
-                        ))}
-                        <div className="whitespace-pre-wrap leading-relaxed text-gray-200">
-                            {currentPost.content}
+                        <div className="ql-snow">
+                            <div
+                                className="ql-editor !p-0 !text-gray-200"
+                                dangerouslySetInnerHTML={{ __html: currentPost.content }}
+                            />
                         </div>
+
+                        {currentPost.images && currentPost.images.length > 0 && (
+                            <div className="mt-8 pt-6 border-t border-gray-800">
+                                <h3 className="text-sm font-bold text-gray-400 mb-4">첨부 이미지</h3>
+                                <div className="space-y-4">
+                                    {currentPost.images.map((img, idx) => (
+                                        <img key={idx} src={img} alt={`Image ${idx}`} className="max-w-full rounded-lg border border-gray-800" />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

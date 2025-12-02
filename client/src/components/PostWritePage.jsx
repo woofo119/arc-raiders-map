@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { ArrowLeft, Image as ImageIcon, X } from 'lucide-react';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const PostWritePage = () => {
     const navigate = useNavigate();
     const { createPost } = useStore();
@@ -10,6 +13,25 @@ const PostWritePage = () => {
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            [{ 'align': [] }, { 'color': [] }, { 'background': [] }],
+            ['clean']
+        ],
+    };
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image',
+        'align', 'color', 'background'
+    ];
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -29,7 +51,8 @@ const PostWritePage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!title.trim() || !content.trim()) {
+        // Quill content might be just <p><br></p> if empty
+        if (!title.trim() || content.replace(/<(.|\n)*?>/g, '').trim().length === 0) {
             alert('제목과 내용을 입력해주세요.');
             return;
         }
@@ -47,7 +70,7 @@ const PostWritePage = () => {
 
     return (
         <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-8">
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-4xl mx-auto">
                 <button
                     onClick={() => navigate('/community')}
                     className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors"
@@ -69,21 +92,23 @@ const PostWritePage = () => {
                         />
                     </div>
 
-                    <div>
-                        <textarea
-                            placeholder="내용을 입력하세요"
+                    <div className="bg-white rounded-xl overflow-hidden text-black">
+                        <ReactQuill
+                            theme="snow"
                             value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            className="w-full bg-[#1a1a1a] border border-gray-700 rounded-xl p-4 text-base text-white placeholder-gray-500 focus:border-arc-accent focus:outline-none transition-colors h-96 resize-none"
+                            onChange={setContent}
+                            modules={modules}
+                            formats={formats}
+                            className="h-96 mb-12" // mb-12 for toolbar space
                         />
                     </div>
 
-                    {/* 이미지 업로드 */}
+                    {/* 이미지 업로드 (첨부파일) */}
                     <div>
                         <div className="flex items-center gap-2 mb-2">
                             <label className="cursor-pointer bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-2 rounded-lg flex items-center gap-2 transition-colors text-sm">
                                 <ImageIcon size={16} />
-                                이미지 추가
+                                이미지/파일 첨부
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -92,7 +117,7 @@ const PostWritePage = () => {
                                     className="hidden"
                                 />
                             </label>
-                            <span className="text-xs text-gray-500">최대 5장까지 업로드 가능</span>
+                            <span className="text-xs text-gray-500">추가 이미지를 첨부할 수 있습니다.</span>
                         </div>
 
                         {images.length > 0 && (
