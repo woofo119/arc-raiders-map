@@ -134,17 +134,6 @@ const PostDetailPage = () => {
                                 dangerouslySetInnerHTML={{ __html: currentPost.content || '' }}
                             />
                         </div>
-
-                        {currentPost.images && currentPost.images.length > 0 && (
-                            <div className="mt-8 pt-6 border-t border-gray-800">
-                                <h3 className="text-sm font-bold text-gray-400 mb-4">첨부 이미지</h3>
-                                <div className="space-y-4">
-                                    {currentPost.images.map((img, idx) => (
-                                        <img key={idx} src={img} alt={`Image ${idx}`} className="max-w-full rounded-lg border border-gray-800" />
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
 
