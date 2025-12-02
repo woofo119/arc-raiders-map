@@ -136,19 +136,22 @@ const LandingPage = () => {
                 <h2 className="text-3xl font-bold mb-12 text-center text-white drop-shadow-lg">환영합니다, 레이더!</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* Map - Priority 1 */}
+                    {/* Skill Tree - Priority 1 (Long) */}
                     <div
-                        onClick={() => navigate('/map')}
+                        onClick={() => navigate('/skills')}
                         className={`col-span-1 md:col-span-2 lg:col-span-2 ${cardBackgroundStyle}`}
                     >
                         <div className={cardOverlayStyle} />
                         <div className={cardContentStyle}>
                             <div className="flex flex-col h-full justify-center items-start">
-                                <MapIcon className="text-yellow-500 mb-4 relative z-10" size={32} />
-                                <h3 className="text-3xl font-bold mb-2 group-hover:text-yellow-400 relative z-10">맵 (Map)</h3>
-                                <p className="text-gray-300 text-lg mb-6 relative z-10 max-w-xl">자원, 탈출구, 위험 지역을 한눈에 파악하세요. 생존을 위한 필수 지도입니다.</p>
+                                <div className="flex items-center gap-3 mb-4 relative z-10">
+                                    <Zap className="text-yellow-500" size={32} />
+                                    <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold border border-blue-500/30">NEW</div>
+                                </div>
+                                <h3 className="text-3xl font-bold mb-2 group-hover:text-yellow-400 relative z-10">스킬 트리 (Skill Tree)</h3>
+                                <p className="text-gray-300 text-lg mb-6 relative z-10 max-w-xl">나만의 최적화된 스킬 트리를 구성하고 공유하세요. 생존을 위한 전략의 시작입니다.</p>
                                 <button className="bg-yellow-500 text-black px-6 py-3 rounded-xl text-base font-bold hover:bg-yellow-400 transition-colors relative z-10 flex items-center gap-2">
-                                    <span>입장하기</span>
+                                    <span>구성하기</span>
                                     <ArrowRight size={18} />
                                 </button>
                             </div>
@@ -169,21 +172,17 @@ const LandingPage = () => {
                         </div>
                     </div>
 
-                    {/* Skill Tree - Priority 3 */}
+                    {/* Map - Priority 3 (Moved to Guide's spot) */}
                     <div
+                        onClick={() => navigate('/map')}
                         className={cardBackgroundStyle}
-                        onClick={() => navigate('/skills')}
                     >
                         <div className={cardOverlayStyle} />
                         <div className={cardContentStyle}>
-                            <div className="flex items-center gap-3 mb-2">
-                                <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold border border-blue-500/30">NEW</div>
-                            </div>
-                            <h3 className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors flex items-center gap-2 mb-2">
-                                스킬 트리
-                                <Zap size={20} className="text-yellow-500" />
-                            </h3>
-                            <p className="text-gray-400 text-sm">나만의 최적화된 스킬 트리를 구성하세요.</p>
+                            <MapIcon className="text-yellow-500 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-400 relative z-10">맵 (Map)</h3>
+                            <p className="text-gray-300 text-sm mb-4 relative z-10">자원, 탈출구, 위험 지역 확인.</p>
+                            <button className="text-yellow-500 text-sm font-bold hover:underline relative z-10">입장하기</button>
                         </div>
                     </div>
 
