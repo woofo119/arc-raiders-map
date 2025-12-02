@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield, Users } from 'lucide-react';
+import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield, Users, LogIn, LogOut, User } from 'lucide-react';
+import useStore from '../store/useStore';
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const { user, logout, openLoginModal, openMyPageModal } = useStore();
+
+    const handleLogout = () => {
+        if (confirm('로그아웃 하시겠습니까?')) {
+            logout();
+        }
+    };
 
     // Updated card style: No background image, dark theme, clean look
     const cardBackgroundStyle = "bg-[#121212] border border-gray-800 hover:border-arc-accent/50 transition-all duration-300 group cursor-pointer relative overflow-hidden rounded-2xl hover:bg-[#1a1a1a] hover:shadow-xl hover:shadow-arc-accent/10 hover:-translate-y-1";
@@ -51,17 +59,45 @@ const LandingPage = () => {
 
             {/* Header */}
             <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[2px]">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate('/')}>
                     <img src="/logo_white.png" alt="ARC Raiders" className="h-10 object-contain drop-shadow-lg" />
                     <span className="font-bold text-xl tracking-wider drop-shadow-md">ARCR MAP</span>
                 </div>
-                <button
-                    onClick={() => navigate('/map')}
-                    className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg"
-                >
-                    <MapIcon size={18} />
-                    Launch Map
-                </button>
+                <div className="flex items-center gap-4">
+                    {user ? (
+                        <>
+                            <button
+                                onClick={openMyPageModal}
+                                className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium"
+                            >
+                                <User size={18} />
+                                <span className="hidden md:inline">{user.nickname || user.username}</span>
+                            </button>
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 text-gray-300 hover:text-red-400 transition-colors font-medium"
+                            >
+                                <LogOut size={18} />
+                                <span className="hidden md:inline">로그아웃</span>
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={openLoginModal}
+                            className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium"
+                        >
+                            <LogIn size={18} />
+                            로그인
+                        </button>
+                    )}
+                    <button
+                        onClick={() => navigate('/map')}
+                        className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg ml-4"
+                    >
+                        <MapIcon size={18} />
+                        Launch Map
+                    </button>
+                </div>
             </header>
 
             {/* Hero Section */}
