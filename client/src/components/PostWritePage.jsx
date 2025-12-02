@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { ArrowLeft, Image as ImageIcon, X } from 'lucide-react';
@@ -33,13 +33,26 @@ const PostWritePage = () => {
         'align', 'color', 'background'
     ];
 
+    const quillRef = useRef(null);
+
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
 
         files.forEach(file => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImages(prev => [...prev, reader.result]);
+                const base64 = reader.result;
+
+                // 1. Add to attachments list (for thumbnails/gallery)
+                setImages(prev => [...prev, base64]);
+
+                // 2. Insert into Editor content
+                if (quillRef.current) {
+                    const editor = quillRef.current.getEditor();
+                    const range = editor.getSelection(true); // Get current selection or end
+                    editor.insertEmbed(range.index, 'image', base64);
+                    editor.setSelection(range.index + 1); // Move cursor after image
+                }
             };
             reader.readAsDataURL(file);
         });
@@ -94,6 +107,7 @@ const PostWritePage = () => {
 
                     <div className="bg-white rounded-xl overflow-hidden text-black">
                         <ReactQuill
+                            ref={quillRef}
                             theme="snow"
                             value={content}
                             onChange={setContent}
