@@ -207,10 +207,20 @@ const mapCenter = [500, 500];
 const MapContainer = () => {
     const { markers, fetchMarkers, filters, isAuthenticated, deleteMarker, user, currentMap } = useStore();
     const [formPosition, setFormPosition] = useState(null);
+    const [activeLayer, setActiveLayer] = useState(null);
 
     useEffect(() => {
         fetchMarkers();
     }, [fetchMarkers, currentMap]); // 맵이 변경될 때마다 마커 다시 불러오기
+
+    useEffect(() => {
+        // 맵이 변경되면 레이어 초기화 (레이어가 있으면 첫 번째 레이어, 없으면 null)
+        if (currentMap.layers && currentMap.layers.length > 0) {
+            setActiveLayer(currentMap.layers[0]);
+        } else {
+            setActiveLayer(null);
+        }
+    }, [currentMap]);
 
     // 우클릭 핸들러: 마커 생성 폼 표시
     const handleMapRightClick = (e) => {
@@ -236,6 +246,9 @@ const MapContainer = () => {
         return true;
     });
 
+    // 현재 표시할 이미지 URL 결정
+    const mapImageUrl = activeLayer ? activeLayer.image : currentMap.image;
+
     return (
         <div className="flex-1 relative h-full bg-[#0a0a0a] overflow-hidden">
             <LeafletMap
@@ -251,11 +264,32 @@ const MapContainer = () => {
             >
                 {/* 게임 맵 이미지 오버레이 */}
                 <ImageOverlay
-                    url={currentMap.image}
+                    url={mapImageUrl}
                     bounds={bounds}
                 />
 
                 <MapController onRightClick={handleMapRightClick} bounds={bounds} />
+
+                {/* 층수 전환 버튼 (레이어가 있는 경우에만 표시) */}
+                {currentMap.layers && (
+                    <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2 bg-black/80 p-2 rounded-lg border border-gray-700 backdrop-blur-sm">
+                        {currentMap.layers.map(layer => (
+                            <button
+                                key={layer.id}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // 맵 클릭 이벤트 전파 방지
+                                    setActiveLayer(layer);
+                                }}
+                                className={`px-4 py-2 rounded text-sm font-bold transition-colors ${activeLayer?.id === layer.id
+                                    ? 'bg-orange-500 text-black'
+                                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                                    }`}
+                            >
+                                {layer.name}
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 {filteredMarkers.map((marker) => {
                     const isDraggable = user && (user._id === marker.createdBy?._id || user.role === 'admin');

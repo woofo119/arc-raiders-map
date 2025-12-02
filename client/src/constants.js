@@ -4,7 +4,15 @@ export const MAPS = [
     { id: 'bluegate', name: '블루 게이트 (Blue Gate)', image: '/map_bluegate.webp' },
     { id: 'buriedcity', name: '파묻힌 도시 (Buried City)', image: '/map_buriedcity.webp' },
     { id: 'spacebase', name: '우주 기지 (Space Base)', image: '/map_spacebase.webp' },
-    { id: 'stellamontis', name: '스텔라 몬티스 (Stella Montis)', image: '/map_stellamontis.webp' },
+    {
+        id: 'stellamontis',
+        name: '스텔라 몬티스 (Stella Montis)',
+        image: '/map_stellamontis.webp',
+        layers: [
+            { id: 'top', name: '지상 (Top)', image: '/map_stellamontis.webp' },
+            { id: 'bottom', name: '지하 (Bottom)', image: '/map_stellamontis_bottom.webp' }
+        ]
+    },
 ];
 
 // 마커 카테고리 정의
