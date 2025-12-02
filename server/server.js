@@ -7,7 +7,9 @@ import { Server } from 'socket.io';
 import authRoutes from './routes/authRoutes.js';
 import markerRoutes from './routes/markerRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import User from './models/User.js';
+import { checkBlacklist } from './middleware/ipMiddleware.js';
 
 // .env 파일 설정 로드
 dotenv.config();
@@ -23,6 +25,11 @@ if (!process.env.JWT_SECRET) {
     console.log("✅ JWT_SECRET이 설정되었습니다:", process.env.JWT_SECRET.substring(0, 3) + "***");
 }
 
+// MongoDB 연결
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('✅ MongoDB Connected'))
+    .catch(err => console.error('MongoDB Connection Error:', err));
+
 // CORS 설정 (모든 도메인 허용)
 app.use(cors({
     origin: '*',
@@ -33,6 +40,9 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' })); // 이미지 업로드를 위해 용량 제한 늘림
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+// IP 차단 미들웨어 (모든 요청에 적용)
+app.use(checkBlacklist);
+
 // 🔍 디버깅: 모든 요청 로깅
 app.use((req, res, next) => {
     console.log(`[REQUEST] ${req.method} ${req.url}`);
@@ -41,6 +51,13 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+// 라우트 설정
+app.use('/api/auth', authRoutes);
+app.use('/api/markers', markerRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/admin', adminRoutes);
+
 // Socket.IO 설정
 const io = new Server(httpServer, {
     cors: {
