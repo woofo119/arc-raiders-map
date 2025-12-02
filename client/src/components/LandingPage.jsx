@@ -84,23 +84,6 @@ const LandingPage = () => {
                     <br />
                     <span className="text-sm text-gray-300 mt-2 block font-light">ARCR MAP에서 당신의 여정을 준비하세요.</span>
                 </p>
-                <div className="flex justify-center gap-4">
-                    <button
-                        onClick={() => navigate('/map')}
-                        className="group bg-arc-accent hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg transition-all flex items-center gap-2 shadow-lg hover:shadow-orange-500/20 hover:scale-105"
-                    >
-                        맵 정보 확인하기
-                        <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                    </button>
-
-                    <button
-                        onClick={() => navigate('/community')}
-                        className="group bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all flex items-center gap-2 shadow-lg border border-gray-700 hover:border-gray-500 hover:scale-105"
-                    >
-                        커뮤니티
-                        <Users size={20} className="group-hover:scale-110 transition-transform" />
-                    </button>
-                </div>
             </section >
 
             {/* Feature Cards Grid */}
@@ -153,14 +136,17 @@ const LandingPage = () => {
                         </div>
                     </div>
 
-                    {/* Skills & Progress */}
-                    <div className={cardBackgroundStyle}>
+                    {/* Board (formerly Skills & Progress) */}
+                    <div
+                        className={cardBackgroundStyle}
+                        onClick={() => navigate('/community')}
+                    >
                         <div className={cardOverlayStyle} />
                         <div className={cardContentStyle}>
-                            <Zap className="text-orange-400 mb-4 relative z-10" size={32} />
-                            <h3 className="text-xl font-bold mb-2 relative z-10">스킬 & 진행</h3>
-                            <p className="text-gray-300 text-sm mb-4 relative z-10">캐릭터 성장과 스킬 마스터리 가이드.</p>
-                            <button className="text-orange-400 text-sm font-bold hover:underline relative z-10">살펴보기</button>
+                            <Users className="text-orange-400 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 relative z-10">게시판</h3>
+                            <p className="text-gray-300 text-sm mb-4 relative z-10">유저들과 정보를 공유하고 소통하세요.</p>
+                            <button className="text-orange-400 text-sm font-bold hover:underline relative z-10">입장하기</button>
                         </div>
                     </div>
 

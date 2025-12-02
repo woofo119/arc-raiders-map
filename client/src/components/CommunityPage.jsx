@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
-import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft } from 'lucide-react';
+import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as ImageIcon } from 'lucide-react';
 
 const CommunityPage = () => {
     const navigate = useNavigate();
@@ -53,7 +53,7 @@ const CommunityPage = () => {
                             >
                                 <ArrowLeft size={20} />
                             </button>
-                            <h1 className="text-3xl font-bold text-white">커뮤니티</h1>
+                            <h1 className="text-3xl font-bold text-white">게시판</h1>
                         </div>
                         <p className="text-gray-400 pl-14">ARC Raiders 유저들과 정보를 공유하세요.</p>
                     </div>
@@ -80,58 +80,64 @@ const CommunityPage = () => {
                     </div>
                 </div>
 
-                {/* 게시글 목록 */}
-                <div className="space-y-2">
-                    {filteredPosts.length === 0 ? (
-                        <div className="text-center py-20 text-gray-500">
-                            게시글이 없습니다. 첫 번째 글을 작성해보세요!
-                        </div>
-                    ) : (
-                        filteredPosts.map((post) => (
-                            <div
-                                key={post._id}
-                                onClick={() => navigate(`/community/${post._id}`)}
-                                className="bg-[#1a1a1a] hover:bg-[#222] border border-gray-800 hover:border-gray-700 p-4 rounded-xl cursor-pointer transition-all group"
-                            >
-                                <div className="flex justify-between items-start">
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <h3 className="text-lg font-bold text-gray-200 group-hover:text-arc-accent transition-colors line-clamp-1">
-                                                {post.title}
-                                            </h3>
-                                            {post.images && post.images.length > 0 && (
-                                                <span className="bg-gray-800 text-gray-400 text-[10px] px-1.5 py-0.5 rounded border border-gray-700">IMG</span>
-                                            )}
-                                            {post.views > 100 && (
-                                                <span className="bg-red-900/30 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-900/50">HOT</span>
-                                            )}
-                                        </div>
-                                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                                            <span className="flex items-center gap-1">
-                                                <User size={12} />
-                                                {post.author?.nickname || post.author?.username || '익명'}
-                                            </span>
-                                            <span className="flex items-center gap-1">
-                                                <Clock size={12} />
-                                                {formatDate(post.createdAt)}
-                                            </span>
-                                            <span className="flex items-center gap-1">
-                                                <Eye size={12} />
-                                                {post.views}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* 썸네일 (이미지가 있는 경우) */}
-                                    {post.images && post.images.length > 0 && (
-                                        <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-700 ml-4 flex-shrink-0">
-                                            <img src={post.images[0]} alt="Thumbnail" className="w-full h-full object-cover" />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))
-                    )}
+                {/* 게시글 목록 (테이블 형태) */}
+                <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-gray-800/50 text-gray-400 text-sm border-b border-gray-700">
+                                <th className="p-4 w-16 text-center font-medium">번호</th>
+                                <th className="p-4 font-medium">제목</th>
+                                <th className="p-4 w-32 text-center font-medium">글쓴이</th>
+                                <th className="p-4 w-24 text-center font-medium">등록일</th>
+                                <th className="p-4 w-20 text-center font-medium">조회</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredPosts.length === 0 ? (
+                                <tr>
+                                    <td colSpan="5" className="p-8 text-center text-gray-500">
+                                        게시글이 없습니다. 첫 번째 글을 작성해보세요!
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredPosts.map((post, index) => (
+                                    <tr
+                                        key={post._id}
+                                        onClick={() => navigate(`/community/${post._id}`)}
+                                        className="border-b border-gray-800 hover:bg-white/5 cursor-pointer transition-colors group"
+                                    >
+                                        <td className="p-4 text-center text-gray-500 text-sm">
+                                            {filteredPosts.length - index}
+                                        </td>
+                                        <td className="p-4">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-gray-200 group-hover:text-arc-accent transition-colors font-medium">
+                                                    {post.title}
+                                                </span>
+                                                {post.images && post.images.length > 0 && (
+                                                    <span className="text-gray-500" title="이미지 포함">
+                                                        <ImageIcon size={14} />
+                                                    </span>
+                                                )}
+                                                {post.views > 100 && (
+                                                    <span className="bg-red-900/30 text-red-400 text-[10px] px-1.5 py-0.5 rounded border border-red-900/50">HOT</span>
+                                                )}
+                                            </div>
+                                        </td>
+                                        <td className="p-4 text-center text-gray-400 text-sm">
+                                            {post.author?.nickname || post.author?.username || '익명'}
+                                        </td>
+                                        <td className="p-4 text-center text-gray-500 text-sm">
+                                            {formatDate(post.createdAt)}
+                                        </td>
+                                        <td className="p-4 text-center text-gray-500 text-sm">
+                                            {post.views}
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
