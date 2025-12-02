@@ -63,40 +63,47 @@ const LandingPage = () => {
                     <img src="/logo_white.png" alt="ARC Raiders" className="h-10 object-contain drop-shadow-lg" />
                     <span className="font-bold text-xl tracking-wider drop-shadow-md">ARCR MAP</span>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6 text-sm font-medium text-gray-300">
+                    <button
+                        onClick={() => navigate('/community')}
+                        className="hover:text-arc-accent transition-colors"
+                    >
+                        커뮤니티
+                    </button>
+                    <span className="text-gray-700">|</span>
+
                     {user ? (
                         <>
                             <button
                                 onClick={openMyPageModal}
-                                className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium"
+                                className="hover:text-arc-accent transition-colors flex items-center gap-1"
                             >
-                                <User size={18} />
-                                <span className="hidden md:inline">{user.nickname || user.username}</span>
+                                <span className="text-white font-bold">{user.nickname || user.username}</span>
+                                <span>님</span>
                             </button>
+                            <span className="text-gray-700">|</span>
+                            <button
+                                onClick={openMyPageModal}
+                                className="hover:text-white transition-colors"
+                            >
+                                내 정보
+                            </button>
+                            <span className="text-gray-700">|</span>
                             <button
                                 onClick={handleLogout}
-                                className="flex items-center gap-2 text-gray-300 hover:text-red-400 transition-colors font-medium"
+                                className="hover:text-white transition-colors"
                             >
-                                <LogOut size={18} />
-                                <span className="hidden md:inline">로그아웃</span>
+                                로그아웃
                             </button>
                         </>
                     ) : (
                         <button
                             onClick={openLoginModal}
-                            className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-medium"
+                            className="hover:text-white transition-colors"
                         >
-                            <LogIn size={18} />
                             로그인
                         </button>
                     )}
-                    <button
-                        onClick={() => navigate('/map')}
-                        className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2 shadow-lg ml-4"
-                    >
-                        <MapIcon size={18} />
-                        Launch Map
-                    </button>
                 </div>
             </header>
 
