@@ -33,12 +33,20 @@ const PostDetailPage = () => {
     if (loading) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">로딩 중...</div>;
     if (!currentPost) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">게시글을 찾을 수 없습니다.</div>;
 
-    const isAuthor = user && (user._id === currentPost.author?._id || user.role === 'admin');
+    const isAuthor = user && currentPost.author && (user._id === currentPost.author._id || user.role === 'admin');
 
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        if (!dateString) return '';
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return '';
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        } catch (e) {
+            return '';
+        }
     };
+
+    console.log('Current Post:', currentPost);
 
     const [commentContent, setCommentContent] = useState('');
 
