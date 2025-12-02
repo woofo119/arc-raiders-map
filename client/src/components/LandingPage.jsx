@@ -197,7 +197,7 @@ const LandingPage = () => {
             </section >
 
             {/* News Section */}
-            < section className="relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5" >
+            <section className="relative z-10 py-20 px-8 max-w-7xl mx-auto border-t border-white/5">
                 <h2 className="text-2xl font-bold mb-8">아크레이더스 소식</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
@@ -255,14 +255,14 @@ const LandingPage = () => {
                         </div>
                     ))}
                 </div>
-            </section >
+            </section>
 
             {/* Footer */}
-            < footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm" >
+            <footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm">
                 <p>&copy; 2025 ARCR MAP. All rights reserved.</p>
                 <p className="mt-2">This is a fan-made site and is not affiliated with Embark Studios.</p>
-            </footer >
-        </div >
+            </footer>
+        </div>
     );
 };
 
