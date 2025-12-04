@@ -38,7 +38,8 @@ const AdminPage = () => {
     const fetchUsers = async () => {
         try {
             setLoadingUsers(true);
-            const token = localStorage.getItem('token');
+            setLoadingUsers(true);
+            const token = user?.token;
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users?pageNumber=${userPage}&keyword=${keyword}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -59,7 +60,8 @@ const AdminPage = () => {
     const fetchBlacklist = async () => {
         try {
             setLoadingBlacklist(true);
-            const token = localStorage.getItem('token');
+            setLoadingBlacklist(true);
+            const token = user?.token;
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/blacklist`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -80,7 +82,7 @@ const AdminPage = () => {
         if (!confirm('정말로 이 유저의 상태를 변경하시겠습니까?')) return;
 
         try {
-            const token = localStorage.getItem('token');
+            const token = user?.token;
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users/${userId}/ban`, {
                 method: 'PUT',
                 headers: { Authorization: `Bearer ${token}` }
@@ -102,7 +104,7 @@ const AdminPage = () => {
         if (!newIp) return;
 
         try {
-            const token = localStorage.getItem('token');
+            const token = user?.token;
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/blacklist`, {
                 method: 'POST',
                 headers: {
@@ -128,7 +130,7 @@ const AdminPage = () => {
         if (!confirm('정말로 이 IP 차단을 해제하시겠습니까?')) return;
 
         try {
-            const token = localStorage.getItem('token');
+            const token = user?.token;
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/blacklist/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
