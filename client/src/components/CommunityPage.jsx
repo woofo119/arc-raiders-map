@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as ImageIcon } from 'lucide-react';
 
