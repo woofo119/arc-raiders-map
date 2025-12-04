@@ -207,14 +207,14 @@ const AccordionFilter = ({ mainType, category }) => {
                                 key={type.id}
                                 onClick={() => !isDisabled && toggleFilter(type.id)}
                                 className={`flex items-center justify-between py-2 px-3 pl-10 transition-colors group/item ${isDisabled
-                                    ? 'opacity-30 cursor-not-allowed'
+                                    ? 'opacity-50 cursor-not-allowed'
                                     : 'hover:bg-white/5 cursor-pointer'
                                     }`}
                             >
                                 <div className="flex items-center gap-2 overflow-hidden flex-1">
-                                    <div className={`w-1.5 h-1.5 rounded-full ${isDisabled ? 'bg-gray-700' : (filters[type.id] ? 'bg-arc-accent' : 'bg-gray-600')
+                                    <div className={`w-1.5 h-1.5 rounded-full ${isDisabled ? 'bg-gray-600' : (filters[type.id] ? 'bg-arc-accent' : 'bg-gray-600')
                                         }`} />
-                                    <span className={`text-xs transition-colors truncate ${isDisabled ? 'text-gray-700' : (filters[type.id] ? 'text-gray-300' : 'text-gray-600')
+                                    <span className={`text-xs transition-colors truncate ${isDisabled ? 'text-gray-500' : (filters[type.id] ? 'text-gray-300' : 'text-gray-600')
                                         }`}>
                                         {type.label.split('(')[0].trim()}
                                     </span>
