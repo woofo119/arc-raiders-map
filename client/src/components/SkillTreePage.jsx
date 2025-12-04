@@ -61,9 +61,38 @@ const decodeSkills = (code) => {
 const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
+    const [longPressTimer, setLongPressTimer] = React.useState(null);
 
     // Position tooltip below for top-row skills (y < 30), otherwise above
     const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
+
+    // 터치 이벤트 핸들러 (모바일 롱프레스 감지)
+    const handleTouchStart = (e) => {
+        if (isLocked) return;
+        const timer = setTimeout(() => {
+            // 롱프레스: 레벨다운
+            onRemove(skill.id);
+        }, 500); // 500ms 롱프레스
+        setLongPressTimer(timer);
+    };
+
+    const handleTouchEnd = (e) => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            setLongPressTimer(null);
+            // 타이머가 남아있으면 일반 탭: 레벨업
+            if (!isLocked) {
+                onAdd(skill.id);
+            }
+        }
+    };
+
+    const handleTouchCancel = () => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            setLongPressTimer(null);
+        }
+    };
 
     return (
         <div
@@ -89,6 +118,9 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     e.preventDefault();
                     onRemove(skill.id);
                 }}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchCancel}
             >
                 {/* Icon */}
                 <div className="w-full h-full p-1 rounded-full overflow-hidden relative flex items-center justify-center">
@@ -451,16 +483,6 @@ const SkillTreePage = () => {
                     rect={selectedSkill.rect}
                     currentLevel={skillsState[selectedSkill.skill.id] || 0}
                     onClose={() => setSelectedSkill(null)}
-                    onLevelUp={() => {
-                        const id = selectedSkill.skill.id;
-                        if (skillsState[id] >= selectedSkill.skill.maxLevel) return;
-                        handleSkillChange(id, (skillsState[id] || 0) + 1);
-                    }}
-                    onLevelDown={() => {
-                        const id = selectedSkill.skill.id;
-                        if (!skillsState[id] || skillsState[id] <= 0) return;
-                        handleSkillChange(id, skillsState[id] - 1);
-                    }}
                 />
             )}
         </div>
