@@ -371,11 +371,11 @@ const SkillTreePage = () => {
             </div>
 
             {/* Main Scrollable Container */}
-            <div className="flex-1 relative w-full h-full overflow-y-auto overflow-x-hidden bg-[#0a0a0a] custom-scrollbar">
+            <div className="flex-1 relative w-full h-full overflow-y-auto overflow-x-hidden bg-[#0a0a0a] custom-scrollbar flex flex-col items-center">
                 {/* Scaled Content Wrapper */}
                 {/* Mobile: Scale down to fit width (approx 0.38x for 375px width vs 1000px content) */}
                 {/* Desktop: No scale, centered or standard layout */}
-                <div className="relative w-full md:min-w-[1200px] md:min-h-[1400px] origin-top-left transform scale-[0.3] md:scale-100 md:transform-none h-[2000px] md:h-auto">
+                <div className="relative w-[1200px] md:w-full md:min-w-[1200px] md:min-h-[1400px] origin-top transform scale-[0.3] md:scale-100 md:transform-none h-[2000px] md:h-auto">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
                     <div className="absolute top-20 left-0 right-0 h-20 z-20 pointer-events-none w-[1000px] md:w-full">
@@ -483,18 +483,6 @@ const SkillTreePage = () => {
                     rect={selectedSkill.rect}
                     currentLevel={skillsState[selectedSkill.skill.id] || 0}
                     onClose={() => setSelectedSkill(null)}
-                    onLevelUp={() => {
-                        const current = skillsState[selectedSkill.skill.id] || 0;
-                        if (current < selectedSkill.skill.maxLevel) {
-                            handleSkillChange(selectedSkill.skill.id, current + 1);
-                        }
-                    }}
-                    onLevelDown={() => {
-                        const current = skillsState[selectedSkill.skill.id] || 0;
-                        if (current > 0) {
-                            handleSkillChange(selectedSkill.skill.id, current - 1);
-                        }
-                    }}
                 />
             )}
         </div>
@@ -502,7 +490,7 @@ const SkillTreePage = () => {
 };
 
 // Mobile Tooltip Component
-const MobileTooltip = ({ skill, rect, currentLevel, onClose, onLevelUp, onLevelDown }) => {
+const MobileTooltip = ({ skill, rect, currentLevel, onClose }) => {
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const tooltipRef = React.useRef(null);
 
@@ -542,40 +530,18 @@ const MobileTooltip = ({ skill, rect, currentLevel, onClose, onLevelUp, onLevelD
     return (
         <div
             ref={tooltipRef}
-            className="mobile-tooltip fixed bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-[1000] w-72 animate-fade-in"
+            className="mobile-tooltip fixed bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-[1000] w-72 animate-fade-in pointer-events-none"
             style={{ top: position.top, left: position.left }}
         >
             <div className="flex justify-between items-start mb-2">
                 <h4 className={`font-bold text-base text-${color}`}>{skill.name}</h4>
-                <button onClick={onClose} className="text-gray-500 hover:text-white">
-                    <X size={16} />
-                </button>
             </div>
             <p className="text-sm text-gray-300 mb-3 leading-relaxed whitespace-pre-wrap">{skill.description}</p>
 
             <div className="flex flex-col gap-2 border-t border-gray-800 pt-3">
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
+                <div className="flex justify-between text-xs text-gray-500">
                     <span>Level: {currentLevel} / {skill.maxLevel}</span>
                     {skill.reqPoints > 0 && <span>Req: {skill.reqPoints} pts</span>}
-                </div>
-
-                <div className="flex gap-2">
-                    <button
-                        onClick={onLevelDown}
-                        className="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 rounded text-xs font-bold border border-gray-600"
-                    >
-                        -
-                    </button>
-                    <button
-                        onClick={onLevelUp}
-                        className={`flex-1 py-2 rounded text-xs font-bold text-black
-                            ${skill.category === 'conditioning' ? 'bg-green-500 hover:bg-green-400' :
-                                skill.category === 'mobility' ? 'bg-yellow-500 hover:bg-yellow-400' :
-                                    'bg-red-500 hover:bg-red-400'}
-                        `}
-                    >
-                        +
-                    </button>
                 </div>
             </div>
         </div>
