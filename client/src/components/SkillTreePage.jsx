@@ -72,7 +72,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
         >
             {/* Skill Icon Circle */}
             <div
-                className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
+                className={`w-9 h-9 md:w-16 md:h-16 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -323,24 +323,24 @@ const SkillTreePage = () => {
             </div>
 
             {/* Header / Points Display (Floating) */}
-            <div className="absolute top-20 left-0 right-0 h-20 z-20 pointer-events-none">
-                <div className="absolute left-[25%] -translate-x-1/2 text-center">
-                    <h2 className="text-green-500 font-bold text-3xl md:text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
-                    <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
+            <div className="absolute top-16 md:top-20 left-0 right-0 h-20 z-20 pointer-events-none">
+                <div className="absolute left-[25%] -translate-x-1/2 text-center w-1/3">
+                    <h2 className="text-green-500 font-bold text-lg md:text-4xl drop-shadow-lg truncate">{SKILL_DATA.conditioning.label}</h2>
+                    <p className="text-green-400/80 text-xs md:text-sm font-mono">{points.conditioning} P</p>
                 </div>
-                <div className="absolute left-[50%] -translate-x-1/2 text-center">
-                    <h2 className="text-yellow-500 font-bold text-3xl md:text-4xl drop-shadow-lg">{SKILL_DATA.mobility.label}</h2>
-                    <p className="text-yellow-400/80 text-sm font-mono">{points.mobility} 포인트</p>
+                <div className="absolute left-[50%] -translate-x-1/2 text-center w-1/3">
+                    <h2 className="text-yellow-500 font-bold text-lg md:text-4xl drop-shadow-lg truncate">{SKILL_DATA.mobility.label}</h2>
+                    <p className="text-yellow-400/80 text-xs md:text-sm font-mono">{points.mobility} P</p>
                 </div>
-                <div className="absolute left-[75%] -translate-x-1/2 text-center">
-                    <h2 className="text-red-500 font-bold text-3xl md:text-4xl drop-shadow-lg">{SKILL_DATA.survival.label}</h2>
-                    <p className="text-red-400/80 text-sm font-mono">{points.survival} 포인트</p>
+                <div className="absolute left-[75%] -translate-x-1/2 text-center w-1/3">
+                    <h2 className="text-red-500 font-bold text-lg md:text-4xl drop-shadow-lg truncate">{SKILL_DATA.survival.label}</h2>
+                    <p className="text-red-400/80 text-xs md:text-sm font-mono">{points.survival} P</p>
                 </div>
             </div>
 
             {/* Main SVG/HTML Container */}
-            <div className="flex-1 relative w-full h-full min-h-[600px] overflow-auto custom-scrollbar">
-                <div className="relative w-full h-full min-w-[1000px] min-h-[800px]">
+            <div className="flex-1 relative w-full h-full overflow-hidden">
+                <div className="relative w-full h-full md:min-w-[1000px] md:min-h-[800px] md:overflow-auto custom-scrollbar">
                     {/* Background Lines (SVG) */}
                     <svg className="absolute inset-0 w-full h-full pointer-events-none">
                         {lines.map((line, i) => (
