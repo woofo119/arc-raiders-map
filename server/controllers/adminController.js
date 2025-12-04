@@ -49,39 +49,7 @@ export const getUserDetails = async (req, res) => {
     }
 };
 
-// @desc    Get user details (history, activity)
-// @route   GET /api/admin/users/:id
-// @access  Private/Admin
-export const getUserDetails = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id).select('-password');
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        // 최근 게시글 (5개)
-        // Post 모델을 import 해야 함. 상단에 import 추가 필요.
-        // 하지만 동적 import를 사용하거나, 상단에 추가해야 함.
-        // 여기서는 상단에 추가하는 것이 좋음.
-        // 일단 Post 모델이 없으므로 추가해야 함.
-
-        // Post 모델 가져오기 (상단 import 추가 전제)
-        // const posts = await Post.find({ author: user._id }).sort({ createdAt: -1 }).limit(5);
-
-        // 댓글은 Post 모델 내에 있거나 별도 모델일 수 있음.
-        // 현재 구조상 Post 모델 내에 comments 배열이 있음.
-        // 따라서 사용자가 작성한 댓글을 찾으려면 모든 Post를 검색하거나, 
-        // Comment 모델이 분리되어 있지 않다면 찾기 어려움.
-        // Post 스키마를 보면 comments 배열이 내장되어 있음.
-        // { comments: [{ author: ObjectId, content: String, ... }] }
-        // 이 경우 사용자가 쓴 댓글을 찾으려면 aggregate를 써야 함.
-
-        res.json({ user });
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error', error: error.message });
-    }
-};
 
 // @desc    Ban/Unban user
 // @route   PUT /api/admin/users/:id/ban
