@@ -50,11 +50,16 @@ export const registerUser = async (req, res) => {
         }
 
         // 사용자 생성
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        const normalizedIp = ip ? ip.replace(/^::ffff:/, '') : 'Unknown';
+
         const user = await User.create({
             username,
             email,
             password,
-            nickname: nickname || username // 닉네임이 없으면 아이디를 닉네임으로 사용
+            nickname: nickname || username, // 닉네임이 없으면 아이디를 닉네임으로 사용
+            ipHistory: [{ ip: normalizedIp }],
+            lastActiveAt: Date.now()
         });
 
         if (user) {
@@ -88,6 +93,19 @@ export const loginUser = async (req, res) => {
 
         // 사용자 존재 여부 및 비밀번호 일치 확인
         if (user && (await user.matchPassword(password))) {
+            // 로그인 성공 시 IP 및 마지막 활동 시간 기록
+            const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+            const normalizedIp = ip ? ip.replace(/^::ffff:/, '') : 'Unknown';
+
+            // IP 이력에 추가 (중복 방지 로직은 선택 사항이나, 여기선 모든 접속을 기록하거나 최근 것만 기록할 수 있음. 일단 단순 추가)
+            // 너무 많은 기록을 방지하기 위해 마지막 IP와 다를 때만 추가하는 것이 좋음
+            const lastIpEntry = user.ipHistory[user.ipHistory.length - 1];
+            if (!lastIpEntry || lastIpEntry.ip !== normalizedIp) {
+                user.ipHistory.push({ ip: normalizedIp });
+            }
+            user.lastActiveAt = Date.now();
+            await user.save();
+
             res.json({
                 _id: user._id,
                 username: user.username,
@@ -123,6 +141,9 @@ export const updateProfile = async (req, res) => {
                 if (nicknameExists) {
                     return res.status(400).json({ message: '이미 사용 중인 닉네임입니다.' });
                 }
+
+                // 닉네임 변경 이력 저장
+                user.nicknameHistory.push({ nickname: user.nickname });
                 user.nickname = req.body.nickname;
             }
 

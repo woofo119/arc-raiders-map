@@ -5,7 +5,8 @@ import {
     toggleBanUser,
     getBlacklist,
     addToBlacklist,
-    removeFromBlacklist
+    removeFromBlacklist,
+    getUserDetails
 } from '../controllers/adminController.js';
 
 const router = express.Router();
@@ -19,6 +20,9 @@ router.route('/users')
 
 router.route('/users/:id/ban')
     .put(toggleBanUser);
+
+router.route('/users/:id')
+    .get(getUserDetails);
 
 router.route('/blacklist')
     .get(getBlacklist)

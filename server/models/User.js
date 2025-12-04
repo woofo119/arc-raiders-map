@@ -48,6 +48,19 @@ const userSchema = new mongoose.Schema({
     experience: {
         type: Number,
         default: 0
+    },
+    // 이력 관리 필드
+    ipHistory: [{
+        ip: String,
+        date: { type: Date, default: Date.now }
+    }],
+    nicknameHistory: [{
+        nickname: String,
+        changedAt: { type: Date, default: Date.now }
+    }],
+    lastActiveAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
