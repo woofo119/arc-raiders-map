@@ -136,7 +136,7 @@ const CommunityPage = () => {
                                         </td>
                                         <td className="p-4">
                                             <div className="flex items-center gap-2">
-                                                <span className="text-gray-200 group-hover:text-arc-accent transition-colors font-medium">
+                                                <span className="text-gray-200 group-hover:text-arc-accent transition-colors">
                                                     {post.title}
                                                 </span>
                                                 {post.images && post.images.length > 0 && (
