@@ -129,25 +129,12 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
 
     return (
         <div
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 hover:z-[100]"
-            style={{ left: `${skill.x}%`, top: `${skill.y}%`, touchAction: 'manipulation' }}
-            onClick={(e) => {
-                // 데스크탑 클릭 처리 (터치 이벤트가 없을 때만 실행됨)
-                // 모바일에서는 onTouchEnd에서 preventDefault()를 호출하므로 실행되지 않음
-                if (!isLocked) onAdd(skill.id);
-            }}
-            onContextMenu={(e) => {
-                e.preventDefault();
-                onRemove(skill.id);
-            }}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onTouchMove={handleTouchMove}
-            onTouchCancel={handleTouchCancel}
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 hover:z-[100] pointer-events-none"
+            style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
-            {/* Skill Icon Circle */}
+            {/* Skill Icon Circle - Interactive Part */}
             <div
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -156,6 +143,19 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     }
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
+                onClick={(e) => {
+                    // 데스크탑 클릭 처리 (터치 이벤트가 없을 때만 실행됨)
+                    // 모바일에서는 onTouchEnd에서 preventDefault()를 호출하므로 실행되지 않음
+                    if (!isLocked) onAdd(skill.id);
+                }}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    onRemove(skill.id);
+                }}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchMove={handleTouchMove}
+                onTouchCancel={handleTouchCancel}
             >
                 {/* Icon */}
                 <div className="w-full h-full p-1 rounded-full overflow-hidden relative flex items-center justify-center">
@@ -186,7 +186,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Counter Pill - Positioned Absolutely below the icon */}
-            <div className={`absolute top-[85%] left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-50 shadow-md
+            <div className={`absolute top-[85%] left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-50 shadow-md pointer-events-auto
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
