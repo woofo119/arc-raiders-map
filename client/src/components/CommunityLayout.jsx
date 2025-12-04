@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react';
 import CommunitySidebar from './CommunitySidebar';
 import LoginModal from './LoginModal';
 import MyPageModal from './MyPageModal';
-import ChatWidget from './ChatWidget';
 import useStore from '../store/useStore';
 
 const CommunityLayout = () => {
@@ -34,8 +33,6 @@ const CommunityLayout = () => {
             <div className="flex-1 relative flex flex-col h-full overflow-hidden lg:ml-64">
                 <Outlet />
             </div>
-            {/* ChatWidget can be included if desired, or omitted for community pages */}
-            <ChatWidget />
         </div>
     );
 };

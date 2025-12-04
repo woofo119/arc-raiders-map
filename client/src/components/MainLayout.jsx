@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react';
 import Sidebar from './Sidebar';
 import LoginModal from './LoginModal';
 import MyPageModal from './MyPageModal';
-import ChatWidget from './ChatWidget';
 import useStore from '../store/useStore';
 
 const MainLayout = () => {
@@ -34,7 +33,6 @@ const MainLayout = () => {
             <div className="flex-1 relative flex flex-col h-full overflow-hidden lg:ml-72">
                 <Outlet />
             </div>
-            <ChatWidget />
         </div>
     );
 };

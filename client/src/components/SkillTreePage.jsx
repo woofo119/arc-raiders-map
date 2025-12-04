@@ -483,6 +483,18 @@ const SkillTreePage = () => {
                     rect={selectedSkill.rect}
                     currentLevel={skillsState[selectedSkill.skill.id] || 0}
                     onClose={() => setSelectedSkill(null)}
+                    onLevelUp={() => {
+                        const current = skillsState[selectedSkill.skill.id] || 0;
+                        if (current < selectedSkill.skill.maxLevel) {
+                            handleSkillChange(selectedSkill.skill.id, current + 1);
+                        }
+                    }}
+                    onLevelDown={() => {
+                        const current = skillsState[selectedSkill.skill.id] || 0;
+                        if (current > 0) {
+                            handleSkillChange(selectedSkill.skill.id, current - 1);
+                        }
+                    }}
                 />
             )}
         </div>
@@ -490,7 +502,7 @@ const SkillTreePage = () => {
 };
 
 // Mobile Tooltip Component
-const MobileTooltip = ({ skill, rect, currentLevel, onClose }) => {
+const MobileTooltip = ({ skill, rect, currentLevel, onClose, onLevelUp, onLevelDown }) => {
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const tooltipRef = React.useRef(null);
 
