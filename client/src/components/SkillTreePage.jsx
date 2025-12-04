@@ -82,7 +82,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
                 onClick={(e) => {
-                    if (!isLocked) onAdd(skill.id);
+                    onAdd(skill.id);
                 }}
                 onContextMenu={(e) => {
                     e.preventDefault();
@@ -402,11 +402,7 @@ const SkillTreePage = () => {
                                         color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                         onAdd={(id) => {
                                             if (window.innerWidth < 768) {
-                                                // 모바일: 레벨업 수행
-                                                if (skillsState[id] < skill.maxLevel) {
-                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
-                                                }
-                                                // 동시에 툴팁 표시
+                                                // 모바일: 툴팁 표시 (항상)
                                                 const el = document.getElementById(`skill-node-${skill.id}`);
                                                 if (el) {
                                                     const rect = el.getBoundingClientRect();
@@ -415,9 +411,16 @@ const SkillTreePage = () => {
                                                         rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
                                                     });
                                                 }
+
+                                                // 모바일: 레벨업 (잠금 해제된 경우만)
+                                                if (!isLocked && (skillsState[id] || 0) < skill.maxLevel) {
+                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                                }
                                             } else {
-                                                if (skillsState[id] >= skill.maxLevel) return;
-                                                handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                                // 데스크탑: 레벨업 (잠금 해제된 경우만)
+                                                if (!isLocked && (skillsState[id] || 0) < skill.maxLevel) {
+                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                                }
                                             }
                                         }}
                                         onRemove={(id) => {
