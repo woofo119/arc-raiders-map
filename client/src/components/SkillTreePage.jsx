@@ -395,10 +395,12 @@ const SkillTreePage = () => {
                                         isPrereqLocked={isPrereqLocked}
                                         color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                         onAdd={(id) => {
-                                            // 모바일에서는 클릭 시 정보창 띄우기
                                             if (window.innerWidth < 768) {
-                                                // Calculate position based on click event or element position
-                                                // Since we are inside a scaled container, getting client rect is best
+                                                // 모바일: 레벨업 수행
+                                                if (skillsState[id] < skill.maxLevel) {
+                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                                }
+                                                // 동시에 툴팁 표시
                                                 const el = document.getElementById(`skill-node-${skill.id}`);
                                                 if (el) {
                                                     const rect = el.getBoundingClientRect();
@@ -414,6 +416,11 @@ const SkillTreePage = () => {
                                         }}
                                         onRemove={(id) => {
                                             if (window.innerWidth < 768) {
+                                                // 모바일: 레벨다운 수행
+                                                if (skillsState[id] && skillsState[id] > 0) {
+                                                    handleSkillChange(id, skillsState[id] - 1);
+                                                }
+                                                // 동시에 툴팁 표시
                                                 const el = document.getElementById(`skill-node-${skill.id}`);
                                                 if (el) {
                                                     const rect = el.getBoundingClientRect();
