@@ -105,12 +105,19 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             longPressTimer.current = null;
         }
 
-        // 롱프레스가 발생했다면, 이후 발생하는 클릭 이벤트를 차단해야 함
-        if (isLongPressTriggered.current) {
+        // 스크롤 중이거나 롱프레스가 발생했다면 무시
+        if (isScrolling.current || isLongPressTriggered.current) {
+            if (e.cancelable) e.preventDefault();
+            return;
+        }
+
+        // 여기까지 왔으면 "짧은 탭"임 -> 즉시 레벨 업 실행
+        // onClick에 의존하지 않고 직접 실행하여 모바일 반응성 보장
+        if (!isLocked) {
+            onAdd(skill.id);
+            // 모바일에서 onClick이 중복 실행되지 않도록 방지
             if (e.cancelable) e.preventDefault();
         }
-        // 스크롤 중이었다면 아무것도 안함 (클릭도 발생 안함)
-        // 일반 탭(Tap)인 경우: 여기서 아무것도 안하면 브라우저가 자동으로 onClick을 발생시킴
     };
 
     const handleTouchCancel = () => {
@@ -123,10 +130,10 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
     return (
         <div
             className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 hover:z-[100]"
-            style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
+            style={{ left: `${skill.x}%`, top: `${skill.y}%`, touchAction: 'manipulation' }}
             onClick={(e) => {
-                // 일반 클릭 (데스크탑) 또는 모바일 탭 (TouchEnd 후 발생)
-                // 롱프레스 시에는 TouchEnd에서 preventDefault() 하므로 실행 안됨
+                // 데스크탑 클릭 처리 (터치 이벤트가 없을 때만 실행됨)
+                // 모바일에서는 onTouchEnd에서 preventDefault()를 호출하므로 실행되지 않음
                 if (!isLocked) onAdd(skill.id);
             }}
             onContextMenu={(e) => {
