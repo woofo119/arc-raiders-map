@@ -61,7 +61,7 @@ const decodeSkills = (code) => {
 const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
-    const [longPressTimer, setLongPressTimer] = React.useState(null);
+    const longPressTimer = React.useRef(null);
 
     // Position tooltip below for top-row skills (y < 30), otherwise above
     const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
@@ -69,17 +69,17 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
     // 터치 이벤트 핸들러 (모바일 롱프레스 감지)
     const handleTouchStart = (e) => {
         if (isLocked) return;
-        const timer = setTimeout(() => {
+        longPressTimer.current = setTimeout(() => {
             // 롱프레스: 레벨다운
             onRemove(skill.id);
+            longPressTimer.current = null;
         }, 500); // 500ms 롱프레스
-        setLongPressTimer(timer);
     };
 
     const handleTouchEnd = (e) => {
-        if (longPressTimer) {
-            clearTimeout(longPressTimer);
-            setLongPressTimer(null);
+        if (longPressTimer.current) {
+            clearTimeout(longPressTimer.current);
+            longPressTimer.current = null;
             // 타이머가 남아있으면 일반 탭: 레벨업
             if (!isLocked) {
                 onAdd(skill.id);
@@ -88,9 +88,9 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
     };
 
     const handleTouchCancel = () => {
-        if (longPressTimer) {
-            clearTimeout(longPressTimer);
-            setLongPressTimer(null);
+        if (longPressTimer.current) {
+            clearTimeout(longPressTimer.current);
+            longPressTimer.current = null;
         }
     };
 
@@ -101,7 +101,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
         >
             {/* Skill Icon Circle */}
             <div
-                className={`w-16 h-16 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -121,8 +121,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                 onTouchStart={handleTouchStart}
                 onTouchEnd={(e) => {
                     handleTouchEnd(e);
-                    // Prevent ghost clicks if handled
-                    if (!longPressTimer) e.preventDefault();
+                    e.preventDefault(); // Always prevent default to stop ghost clicks/zoom
                 }}
                 onTouchCancel={handleTouchCancel}
             >
@@ -155,7 +154,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Counter Pill - Positioned Absolutely below the icon */}
-            <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-3 md:mt-2 px-3 py-1 md:px-2 md:py-0.5 rounded-full text-xs md:text-sm font-bold border transition-colors whitespace-nowrap z-20
+            <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-1 md:mt-2 px-3 py-1 md:px-2 md:py-0.5 rounded-full text-xs md:text-sm font-bold border transition-colors whitespace-nowrap z-50
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -379,10 +378,10 @@ const SkillTreePage = () => {
                 {/* Scaled Content Wrapper */}
                 {/* Mobile: Scale down to fit width (approx 0.5x for 375px width vs 1200px content) */}
                 {/* Desktop: No scale, centered or standard layout */}
-                <div className="relative w-[1200px] md:w-full md:min-w-[1200px] md:min-h-[1400px] origin-top transform scale-[0.5] md:scale-100 md:transform-none h-[2000px] md:h-auto">
+                <div className="relative w-[1200px] md:w-full md:min-w-[1200px] md:min-h-[1400px] origin-top transform scale-[0.5] md:scale-100 md:transform-none h-[2400px] md:h-auto">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
-                    <div className="absolute top-20 left-0 right-0 h-20 z-20 pointer-events-none w-[1000px] md:w-full">
+                    <div className="absolute top-10 left-0 right-0 h-20 z-20 pointer-events-none w-[1000px] md:w-full">
                         <div className="absolute left-[25%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-green-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
                             <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
