@@ -62,6 +62,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
     const longPressTimer = React.useRef(null);
+    const isLongPress = React.useRef(false);
 
     // Position tooltip below for top-row skills (y < 30), otherwise above
     const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
@@ -69,8 +70,10 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
     // 터치 이벤트 핸들러 (모바일 롱프레스 감지)
     const handleTouchStart = (e) => {
         if (isLocked) return;
+        isLongPress.current = false;
         longPressTimer.current = setTimeout(() => {
             // 롱프레스: 레벨다운
+            isLongPress.current = true;
             onRemove(skill.id);
             longPressTimer.current = null;
         }, 500); // 500ms 롱프레스
@@ -80,10 +83,17 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
         if (longPressTimer.current) {
             clearTimeout(longPressTimer.current);
             longPressTimer.current = null;
-            // 타이머가 남아있으면 일반 탭: 레벨업
-            if (!isLocked) {
-                onAdd(skill.id);
-            }
+        }
+        // If it was a long press, prevent the click event
+        if (isLongPress.current) {
+            e.preventDefault();
+        }
+    };
+
+    const handleTouchMove = () => {
+        if (longPressTimer.current) {
+            clearTimeout(longPressTimer.current);
+            longPressTimer.current = null;
         }
     };
 
@@ -111,7 +121,8 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
                 onClick={(e) => {
-                    e.preventDefault();
+                    // Click handles Level Up (Tap)
+                    // If long press happened, preventDefault in onTouchEnd stops this
                     if (!isLocked) onAdd(skill.id);
                 }}
                 onContextMenu={(e) => {
@@ -119,10 +130,8 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     onRemove(skill.id);
                 }}
                 onTouchStart={handleTouchStart}
-                onTouchEnd={(e) => {
-                    handleTouchEnd(e);
-                    e.preventDefault(); // Always prevent default to stop ghost clicks/zoom
-                }}
+                onTouchEnd={handleTouchEnd}
+                onTouchMove={handleTouchMove}
                 onTouchCancel={handleTouchCancel}
             >
                 {/* Icon */}
@@ -378,16 +387,14 @@ const SkillTreePage = () => {
                 ref={(el) => {
                     // Auto-scroll to center on mount for mobile
                     if (el && window.innerWidth < 768 && !el.hasScrolled) {
-                        el.scrollLeft = (800 - window.innerWidth) / 2;
+                        el.scrollLeft = (1280 - window.innerWidth) / 2;
                         el.hasScrolled = true;
                     }
                 }}
                 className="flex-1 relative w-full h-full overflow-y-auto overflow-x-auto bg-[#0a0a0a] custom-scrollbar flex flex-col items-start justify-start"
             >
                 {/* Content Wrapper */}
-                {/* Mobile: Fixed width 800px (scrollable), Height 1600px */}
-                {/* Desktop: Min width 1200px, Height auto */}
-                <div className="relative w-[800px] h-[1600px] md:w-full md:min-w-[1200px] md:h-auto md:min-h-[1400px]">
+                <div className="relative w-[1280px] h-[1600px] md:w-full md:min-w-[1200px] md:h-auto md:min-h-[1400px]">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
                     <div className="absolute top-4 left-0 right-0 h-20 z-20 pointer-events-none w-full">
