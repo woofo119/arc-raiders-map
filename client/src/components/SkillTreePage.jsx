@@ -70,14 +70,13 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 md:hover:z-[100] pointer-events-none"
             style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
-            {/* Skill Icon Circle - Interactive Part */}
             <div
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation active:scale-95 md:active:scale-100
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
                             ? `border-${color} bg-gray-800 text-${color} shadow-[0_0_15px_rgba(0,0,0,0.5)]`
-                            : 'border-gray-600 bg-gray-800 text-gray-400 hover:border-gray-400'
+                            : 'border-gray-600 bg-gray-800 text-gray-400 md:hover:border-gray-400'
                     }
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
@@ -95,7 +94,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                         <img
                             src={skill.icon}
                             alt={skill.name}
-                            className={`w-3/4 h-3/4 object-contain transition-all duration-300 ${isActive ? 'opacity-100 grayscale-0' : 'opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-80'
+                            className={`w-3/4 h-3/4 object-contain transition-all duration-300 ${isActive ? 'opacity-100 grayscale-0' : 'opacity-50 grayscale md:group-hover:grayscale-0 md:group-hover:opacity-80'
                                 }`}
                             onError={(e) => {
                                 e.target.style.display = 'none';
