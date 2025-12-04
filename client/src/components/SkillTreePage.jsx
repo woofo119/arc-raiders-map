@@ -130,8 +130,8 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                 {currentLevel}/{skill.maxLevel}
             </div>
 
-            {/* Tooltip */}
-            <div className={`absolute ${tooltipPosition} hidden group-hover:block w-72 bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-50 pointer-events-none`}>
+            {/* Tooltip (Desktop Only) */}
+            <div className={`absolute ${tooltipPosition} hidden md:group-hover:block w-72 bg-gray-950 border border-gray-700 rounded-lg p-4 shadow-2xl z-50 pointer-events-none`}>
                 <h4 className={`font-bold text-base mb-2 text-${color}`}>{skill.name}</h4>
                 <p className="text-sm text-gray-300 mb-3 leading-relaxed whitespace-pre-wrap">{skill.description}</p>
                 <div className="flex flex-col gap-1 text-xs text-gray-500 border-t border-gray-800 pt-2">
@@ -155,6 +155,7 @@ const SkillTreePage = () => {
     const [skillsState, setSkillsState] = useState({});
     const [searchParams, setSearchParams] = useSearchParams();
     const [isCopied, setIsCopied] = useState(false);
+    const [selectedSkill, setSelectedSkill] = useState(null); // For mobile bottom sheet
     const { user, openLoginModal } = useStore();
 
     // Load state from URL on mount
@@ -339,8 +340,9 @@ const SkillTreePage = () => {
             </div>
 
             {/* Main SVG/HTML Container */}
-            <div className="flex-1 relative w-full h-full overflow-hidden">
-                <div className="relative w-full h-full md:min-w-[1000px] md:min-h-[800px] md:overflow-auto custom-scrollbar">
+            <div className="flex-1 relative w-full h-full overflow-hidden bg-[#0a0a0a]">
+                {/* Mobile: Scale down to fit, Desktop: Normal */}
+                <div className="relative w-full h-full origin-top transform scale-[0.55] md:scale-100 md:min-w-[1000px] md:min-h-[800px] md:overflow-auto custom-scrollbar transition-transform duration-300">
                     {/* Background Lines (SVG) */}
                     <svg className="absolute inset-0 w-full h-full pointer-events-none">
                         {lines.map((line, i) => (
@@ -360,14 +362,11 @@ const SkillTreePage = () => {
                     {/* Skill Nodes */}
                     {allSkills.map(skill => {
                         const totalPoints = points[skill.category];
-                        // Check if locked by points
                         const isPointsLocked = skill.reqPoints > totalPoints;
-
-                        // Check if locked by prerequisites (parent must be active)
                         const isPrereqLocked = skill.prerequisites && skill.prerequisites.length > 0 &&
                             !skill.prerequisites.some(pid => skillsState[pid] > 0);
-
                         const isLocked = isPointsLocked || isPrereqLocked;
+                        const isSelected = selectedSkill?.id === skill.id;
 
                         return (
                             <SkillNode
@@ -378,10 +377,16 @@ const SkillTreePage = () => {
                                 isPrereqLocked={isPrereqLocked}
                                 color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                 onAdd={(id) => {
+                                    // 모바일에서는 클릭 시 선택만 하고, 더블 클릭이나 별도 버튼으로 레벨업?
+                                    // 현재는 클릭 시 선택 + 레벨업 로직이 섞여 있음.
+                                    // 개선: 클릭 시 일단 정보창을 띄우고, 정보창에서 레벨업/다운 조작?
+                                    // 또는 데스크톱과 동일하게 유지하되 정보창만 띄움.
+                                    setSelectedSkill(skill);
                                     if (skillsState[id] >= skill.maxLevel) return;
                                     handleSkillChange(id, (skillsState[id] || 0) + 1);
                                 }}
                                 onRemove={(id) => {
+                                    setSelectedSkill(skill);
                                     if (!skillsState[id] || skillsState[id] <= 0) return;
                                     handleSkillChange(id, skillsState[id] - 1);
                                 }}
@@ -390,6 +395,70 @@ const SkillTreePage = () => {
                     })}
                 </div>
             </div>
+
+            {/* Mobile Bottom Sheet for Skill Details */}
+            {selectedSkill && (
+                <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 p-4 z-50 md:hidden shadow-[0_-5px_20px_rgba(0,0,0,0.5)] animate-slide-up">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="flex items-center gap-3">
+                            {/* Icon */}
+                            <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center bg-gray-800
+                                ${selectedSkill.category === 'conditioning' ? 'border-green-500 text-green-500' :
+                                    selectedSkill.category === 'mobility' ? 'border-yellow-500 text-yellow-500' :
+                                        'border-red-500 text-red-500'}
+                            `}>
+                                {selectedSkill.icon ? (
+                                    <img src={selectedSkill.icon} alt={selectedSkill.name} className="w-3/4 h-3/4 object-contain" />
+                                ) : (
+                                    <span className="font-bold">{selectedSkill.name.slice(0, 1)}</span>
+                                )}
+                            </div>
+                            <div>
+                                <h3 className={`font-bold text-lg
+                                    ${selectedSkill.category === 'conditioning' ? 'text-green-500' :
+                                        selectedSkill.category === 'mobility' ? 'text-yellow-500' :
+                                            'text-red-500'}
+                                `}>{selectedSkill.name}</h3>
+                                <p className="text-xs text-gray-400">
+                                    Level {skillsState[selectedSkill.id] || 0} / {selectedSkill.maxLevel}
+                                </p>
+                            </div>
+                        </div>
+                        <button onClick={() => setSelectedSkill(null)} className="text-gray-500 hover:text-white">
+                            <ArrowLeft className="rotate-[-90deg]" />
+                        </button>
+                    </div>
+                    <p className="text-sm text-gray-300 mb-4 leading-relaxed">{selectedSkill.description}</p>
+
+                    {/* Controls */}
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => {
+                                const id = selectedSkill.id;
+                                if (!skillsState[id] || skillsState[id] <= 0) return;
+                                handleSkillChange(id, skillsState[id] - 1);
+                            }}
+                            className="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 rounded font-bold border border-gray-600"
+                        >
+                            - 레벨 다운
+                        </button>
+                        <button
+                            onClick={() => {
+                                const id = selectedSkill.id;
+                                if (skillsState[id] >= selectedSkill.maxLevel) return;
+                                handleSkillChange(id, (skillsState[id] || 0) + 1);
+                            }}
+                            className={`flex-1 py-2 rounded font-bold text-black
+                                ${selectedSkill.category === 'conditioning' ? 'bg-green-500 hover:bg-green-400' :
+                                    selectedSkill.category === 'mobility' ? 'bg-yellow-500 hover:bg-yellow-400' :
+                                        'bg-red-500 hover:bg-red-400'}
+                            `}
+                        >
+                            + 레벨 업
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
