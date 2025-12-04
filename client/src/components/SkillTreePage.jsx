@@ -96,7 +96,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
 
     return (
         <div
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-all duration-200 hover:z-[100]"
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 hover:z-[100]"
             style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
             {/* Skill Icon Circle */}
@@ -150,8 +150,8 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                 )}
             </div>
 
-            {/* Counter Pill */}
-            <div className={`mt-2 md:mt-3 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-20
+            {/* Counter Pill - Positioned Absolutely below the icon */}
+            <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-20
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -375,7 +375,7 @@ const SkillTreePage = () => {
                 {/* Scaled Content Wrapper */}
                 {/* Mobile: Scale down to fit width (approx 0.38x for 375px width vs 1000px content) */}
                 {/* Desktop: No scale, centered or standard layout */}
-                <div className="relative w-full md:min-w-[1000px] md:min-h-[800px] origin-top-left transform scale-[0.38] md:scale-100 md:transform-none h-[2000px] md:h-auto">
+                <div className="relative w-full md:min-w-[1200px] md:min-h-[1400px] origin-top-left transform scale-[0.3] md:scale-100 md:transform-none h-[2000px] md:h-auto">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
                     <div className="absolute top-20 left-0 right-0 h-20 z-20 pointer-events-none w-[1000px] md:w-full">

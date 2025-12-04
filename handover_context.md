@@ -31,3 +31,4 @@
 - **Aesthetic:** Retro-futuristic, dark, diagonal neon stripes (Red, Yellow, Green, Cyan).
 - **Layout:** Grid cards acting as transparent windows to a single background.
 - **Specifics:** Prefers the "Skill Tree" visual theme.
+- **Language:** Always use Korean for results and intermediate steps (process descriptions).
