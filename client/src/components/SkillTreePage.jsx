@@ -61,80 +61,18 @@ const decodeSkills = (code) => {
 const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
-    const longPressTimer = React.useRef(null);
-    const isLongPressTriggered = React.useRef(false);
-    const touchStartPos = React.useRef({ x: 0, y: 0 });
-    const isScrolling = React.useRef(false);
 
     // Position tooltip below for top-row skills (y < 30), otherwise above
     const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
 
-    // 터치 이벤트 핸들러
-    const handleTouchStart = (e) => {
-        if (isLocked) return;
-
-        touchStartPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        isScrolling.current = false;
-        isLongPressTriggered.current = false;
-
-        longPressTimer.current = setTimeout(() => {
-            if (!isScrolling.current) {
-                isLongPressTriggered.current = true;
-                onRemove(skill.id); // Long Press -> Level Down
-                if (navigator.vibrate) navigator.vibrate(50);
-            }
-        }, 500);
-    };
-
-    const handleTouchMove = (e) => {
-        if (longPressTimer.current) {
-            const moveX = Math.abs(e.touches[0].clientX - touchStartPos.current.x);
-            const moveY = Math.abs(e.touches[0].clientY - touchStartPos.current.y);
-
-            if (moveX > 10 || moveY > 10) {
-                isScrolling.current = true;
-                clearTimeout(longPressTimer.current);
-                longPressTimer.current = null;
-            }
-        }
-    };
-
-    const handleTouchEnd = (e) => {
-        if (longPressTimer.current) {
-            clearTimeout(longPressTimer.current);
-            longPressTimer.current = null;
-        }
-
-        // 스크롤 중이거나 롱프레스가 발생했다면 무시
-        if (isScrolling.current || isLongPressTriggered.current) {
-            if (e.cancelable) e.preventDefault();
-            return;
-        }
-
-        // 여기까지 왔으면 "짧은 탭"임 -> 즉시 레벨 업 실행
-        // onClick에 의존하지 않고 직접 실행하여 모바일 반응성 보장
-        if (!isLocked) {
-            onAdd(skill.id);
-            // 모바일에서 onClick이 중복 실행되지 않도록 방지
-            if (e.cancelable) e.preventDefault();
-        }
-    };
-
-    const handleTouchCancel = () => {
-        if (longPressTimer.current) {
-            clearTimeout(longPressTimer.current);
-            longPressTimer.current = null;
-        }
-    };
-
     return (
         <div
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 hover:z-[100] pointer-events-none"
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 md:hover:z-[100] pointer-events-none"
             style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
             {/* Skill Icon Circle - Interactive Part */}
             <div
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -144,18 +82,12 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
                 onClick={(e) => {
-                    // 데스크탑 클릭 처리 (터치 이벤트가 없을 때만 실행됨)
-                    // 모바일에서는 onTouchEnd에서 preventDefault()를 호출하므로 실행되지 않음
                     if (!isLocked) onAdd(skill.id);
                 }}
                 onContextMenu={(e) => {
                     e.preventDefault();
                     onRemove(skill.id);
                 }}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchMove={handleTouchMove}
-                onTouchCancel={handleTouchCancel}
             >
                 {/* Icon */}
                 <div className="w-full h-full p-1 rounded-full overflow-hidden relative flex items-center justify-center">
