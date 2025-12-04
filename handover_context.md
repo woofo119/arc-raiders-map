@@ -32,3 +32,4 @@
 - **Layout:** Grid cards acting as transparent windows to a single background.
 - **Specifics:** Prefers the "Skill Tree" visual theme.
 - **Language:** 작업 내용, 결과, 중간 과정 등 모든 커뮤니케이션은 항상 '한글'로 작성할 것. (메모리 고정)
+- **Deployment:** 배포 시 어떤 서비스(프론트엔드/백엔드)를 재배포해야 하는지 항상 명시할 것.
