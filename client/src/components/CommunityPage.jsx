@@ -40,19 +40,19 @@ const CommunityPage = () => {
     };
 
     return (
-        <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-8">
+        <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-4 md:p-8 pt-16 md:pt-8">
             <div className="max-w-5xl mx-auto">
                 {/* 헤더 */}
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
                     <div>
                         <div className="flex items-center gap-4 mb-2">
-                            <h1 className="text-3xl font-bold text-white">게시판</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white">게시판</h1>
                         </div>
-                        <p className="text-gray-400 pl-14">ARC Raiders 유저들과 정보를 공유하세요.</p>
+                        <p className="text-gray-400 text-sm md:text-base pl-0 md:pl-14">ARC Raiders 유저들과 정보를 공유하세요.</p>
                     </div>
                     <button
                         onClick={handleWriteClick}
-                        className="bg-arc-accent hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors shadow-lg shadow-orange-900/20"
+                        className="w-full md:w-auto bg-arc-accent hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold flex items-center justify-center gap-2 transition-colors shadow-lg shadow-orange-900/20"
                     >
                         <PenTool size={18} />
                         글쓰기
@@ -73,8 +73,8 @@ const CommunityPage = () => {
                     </div>
                 </div>
 
-                {/* 게시글 목록 (테이블 형태) */}
-                <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden">
+                {/* 게시글 목록 (데스크톱: 테이블) */}
+                <div className="hidden md:block bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-gray-800/50 text-gray-400 text-sm border-b border-gray-700">
@@ -138,6 +138,53 @@ const CommunityPage = () => {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* 게시글 목록 (모바일: 카드 리스트) */}
+                <div className="md:hidden space-y-3">
+                    {filteredPosts.length === 0 ? (
+                        <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 p-8 text-center text-gray-500">
+                            게시글이 없습니다. 첫 번째 글을 작성해보세요!
+                        </div>
+                    ) : (
+                        filteredPosts.map((post) => (
+                            <div
+                                key={post._id}
+                                onClick={() => navigate(`/community/${post._id}`)}
+                                className="bg-[#1a1a1a] rounded-xl border border-gray-800 p-4 active:bg-gray-800 transition-colors"
+                            >
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="text-white font-bold text-lg line-clamp-2 flex-1 mr-2">
+                                        {post.title}
+                                    </h3>
+                                    {post.images && post.images.length > 0 && (
+                                        <ImageIcon size={16} className="text-gray-500 mt-1 flex-shrink-0" />
+                                    )}
+                                </div>
+
+                                <div className="flex items-center justify-between text-xs text-gray-500">
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-1">
+                                            <img
+                                                src={`/levels/level_${post.author?.level || 1}.png`}
+                                                alt={`Lv.${post.author?.level || 1}`}
+                                                className="w-3 h-3 object-contain"
+                                            />
+                                            <span className="text-gray-400">
+                                                {post.author?.nickname || post.author?.username || '익명'}
+                                            </span>
+                                        </div>
+                                        <span>•</span>
+                                        <span>{formatDate(post.createdAt)}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <Eye size={12} />
+                                        <span>{post.views}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>
