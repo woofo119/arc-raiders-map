@@ -101,7 +101,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
         >
             {/* Skill Icon Circle */}
             <div
-                className={`w-12 h-12 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
+                className={`w-16 h-16 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -119,7 +119,11 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                     onRemove(skill.id);
                 }}
                 onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
+                onTouchEnd={(e) => {
+                    handleTouchEnd(e);
+                    // Prevent ghost clicks if handled
+                    if (!longPressTimer) e.preventDefault();
+                }}
                 onTouchCancel={handleTouchCancel}
             >
                 {/* Icon */}
@@ -151,7 +155,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Counter Pill - Positioned Absolutely below the icon */}
-            <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-20
+            <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-3 md:mt-2 px-3 py-1 md:px-2 md:py-0.5 rounded-full text-xs md:text-sm font-bold border transition-colors whitespace-nowrap z-20
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -371,11 +375,11 @@ const SkillTreePage = () => {
             </div>
 
             {/* Main Scrollable Container */}
-            <div className="flex-1 relative w-full h-full overflow-y-auto overflow-x-hidden bg-[#0a0a0a] custom-scrollbar flex flex-col items-center">
+            <div className="flex-1 relative w-full h-full overflow-y-auto overflow-x-hidden bg-[#0a0a0a] custom-scrollbar flex flex-col items-center justify-start pt-10 md:pt-0">
                 {/* Scaled Content Wrapper */}
-                {/* Mobile: Scale down to fit width (approx 0.38x for 375px width vs 1000px content) */}
+                {/* Mobile: Scale down to fit width (approx 0.5x for 375px width vs 1200px content) */}
                 {/* Desktop: No scale, centered or standard layout */}
-                <div className="relative w-[1200px] md:w-full md:min-w-[1200px] md:min-h-[1400px] origin-top transform scale-[0.3] md:scale-100 md:transform-none h-[2000px] md:h-auto">
+                <div className="relative w-[1200px] md:w-full md:min-w-[1200px] md:min-h-[1400px] origin-top transform scale-[0.5] md:scale-100 md:transform-none h-[2000px] md:h-auto">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
                     <div className="absolute top-20 left-0 right-0 h-20 z-20 pointer-events-none w-[1000px] md:w-full">
