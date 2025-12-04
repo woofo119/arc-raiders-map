@@ -154,7 +154,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Counter Pill - Positioned Absolutely below the icon */}
-            <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-1 md:mt-2 px-3 py-1 md:px-2 md:py-0.5 rounded-full text-xs md:text-sm font-bold border transition-colors whitespace-nowrap z-50
+            <div className={`absolute top-[85%] left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-50 shadow-md
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -374,14 +374,23 @@ const SkillTreePage = () => {
             </div>
 
             {/* Main Scrollable Container */}
-            <div className="flex-1 relative w-full h-full overflow-y-auto overflow-x-hidden bg-[#0a0a0a] custom-scrollbar flex flex-col items-center justify-start pt-10 md:pt-0">
-                {/* Scaled Content Wrapper */}
-                {/* Mobile: Scale down to fit width (approx 0.5x for 375px width vs 1200px content) */}
-                {/* Desktop: No scale, centered or standard layout */}
-                <div className="relative w-[1200px] md:w-full md:min-w-[1200px] md:min-h-[1400px] origin-top transform scale-[0.5] md:scale-100 md:transform-none h-[2400px] md:h-auto">
+            <div
+                ref={(el) => {
+                    // Auto-scroll to center on mount for mobile
+                    if (el && window.innerWidth < 768 && !el.hasScrolled) {
+                        el.scrollLeft = (800 - window.innerWidth) / 2;
+                        el.hasScrolled = true;
+                    }
+                }}
+                className="flex-1 relative w-full h-full overflow-y-auto overflow-x-auto bg-[#0a0a0a] custom-scrollbar flex flex-col items-start justify-start"
+            >
+                {/* Content Wrapper */}
+                {/* Mobile: Fixed width 800px (scrollable), Height 1600px */}
+                {/* Desktop: Min width 1200px, Height auto */}
+                <div className="relative w-[800px] h-[1600px] md:w-full md:min-w-[1200px] md:h-auto md:min-h-[1400px]">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
-                    <div className="absolute top-10 left-0 right-0 h-20 z-20 pointer-events-none w-[1000px] md:w-full">
+                    <div className="absolute top-4 left-0 right-0 h-20 z-20 pointer-events-none w-full">
                         <div className="absolute left-[25%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-green-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
                             <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
@@ -397,7 +406,7 @@ const SkillTreePage = () => {
                     </div>
 
                     {/* Background Lines (SVG) */}
-                    <svg className="absolute inset-0 w-[1000px] md:w-full h-full pointer-events-none">
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none">
                         {lines.map((line, i) => (
                             <line
                                 key={i}
@@ -413,7 +422,7 @@ const SkillTreePage = () => {
                     </svg>
 
                     {/* Skill Nodes */}
-                    <div className="absolute inset-0 w-[1000px] md:w-full h-full">
+                    <div className="absolute inset-0 w-full h-full">
                         {allSkills.map(skill => {
                             const totalPoints = points[skill.category];
                             const isPointsLocked = skill.reqPoints > totalPoints;
