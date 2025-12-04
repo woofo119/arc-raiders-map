@@ -40,12 +40,13 @@ export const getPostById = async (req, res) => {
 // @route   POST /api/posts
 // @access  Private
 export const createPost = async (req, res) => {
-    const { title, content, images } = req.body;
+    const { title, content, category, images } = req.body;
 
     try {
         const post = await Post.create({
             title,
             content,
+            category: category || 'free',
             images: images || [],
             author: req.user._id
         });
@@ -82,7 +83,7 @@ export const deletePost = async (req, res) => {
 // @route   PUT /api/posts/:id
 // @access  Private
 export const updatePost = async (req, res) => {
-    const { title, content, images } = req.body;
+    const { title, content, category, images } = req.body;
 
     try {
         const post = await Post.findById(req.params.id);
@@ -95,6 +96,7 @@ export const updatePost = async (req, res) => {
 
             post.title = title || post.title;
             post.content = content || post.content;
+            if (category) post.category = category;
             if (images) post.images = images;
 
             const updatedPost = await post.save();
