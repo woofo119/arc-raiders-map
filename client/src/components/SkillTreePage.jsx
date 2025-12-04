@@ -101,7 +101,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
         >
             {/* Skill Icon Circle */}
             <div
-                className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
+                className={`w-12 h-12 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -151,7 +151,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             </div>
 
             {/* Counter Pill */}
-            <div className={`mt-1 px-2 py-0.5 rounded-full text-[10px] md:text-xs font-bold border transition-colors whitespace-nowrap z-20
+            <div className={`mt-2 md:mt-3 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-20
                 ${isLocked
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
@@ -490,9 +490,17 @@ const SkillTreePage = () => {
 };
 
 // Mobile Tooltip Component
-const MobileTooltip = ({ skill, rect, currentLevel, onClose, onLevelUp, onLevelDown }) => {
+const MobileTooltip = ({ skill, rect, currentLevel, onClose }) => {
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const tooltipRef = React.useRef(null);
+
+    // 3초 후 자동 닫기
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            onClose();
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, [onClose]);
 
     useEffect(() => {
         if (tooltipRef.current && rect) {
