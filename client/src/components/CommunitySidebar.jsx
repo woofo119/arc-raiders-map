@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import useStore from '../store/useStore';
-import { MessageSquare, PenTool, HelpCircle, Zap, Shield, Activity, User, LogOut, ChevronRight, Map as MapIcon } from 'lucide-react';
+import { MessageSquare, PenTool, HelpCircle, Zap, Shield, Activity, User, LogOut, ChevronRight, Map as MapIcon, Sword } from 'lucide-react';
 
 const CommunitySidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
@@ -10,6 +10,7 @@ const CommunitySidebar = ({ isOpen = false }) => {
     const communityCategories = [
         { id: 'all', label: '전체 게시판', icon: <Activity size={18} /> },
         { id: 'free', label: '자유게시판', icon: <MessageSquare size={18} /> },
+        { id: 'quest', label: '퀘스트', icon: <Sword size={18} /> },
         { id: 'tips', label: '공략 / 팁', icon: <PenTool size={18} /> },
         { id: 'qna', label: '질문게시판', icon: <HelpCircle size={18} /> },
     ];
@@ -37,9 +38,9 @@ const CommunitySidebar = ({ isOpen = false }) => {
                                 key={cat.id}
                                 onClick={() => navigate(cat.id === 'all' ? '/community' : `/community?category=${cat.id}`)}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${(cat.id === 'all' && location.pathname === '/community' && !location.search) ||
-                                        (location.pathname === '/community' && location.search.includes(`category=${cat.id}`))
-                                        ? 'bg-arc-accent text-white font-bold'
-                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                                    (location.pathname === '/community' && location.search.includes(`category=${cat.id}`))
+                                    ? 'bg-arc-accent text-white font-bold'
+                                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                                     }`}
                             >
                                 {cat.icon}
