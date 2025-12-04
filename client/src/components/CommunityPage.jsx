@@ -5,6 +5,8 @@ import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as I
 
 const CommunityPage = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const currentCategory = searchParams.get('category');
     const { posts, fetchPosts, user, isAuthenticated, openLoginModal } = useStore();
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -12,10 +14,28 @@ const CommunityPage = () => {
         fetchPosts();
     }, []);
 
-    const filteredPosts = posts.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.author?.nickname?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const categoryNames = {
+        free: '자유',
+        quest: '퀘스트',
+        tips: '공략/팁',
+        qna: '질문'
+    };
+
+    const categoryColors = {
+        free: 'bg-gray-700 text-gray-200',
+        quest: 'bg-blue-900/50 text-blue-300 border-blue-800',
+        tips: 'bg-green-900/50 text-green-300 border-green-800',
+        qna: 'bg-purple-900/50 text-purple-300 border-purple-800'
+    };
+
+    const filteredPosts = posts.filter(post => {
+        const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.author?.nickname?.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesCategory = currentCategory ? post.category === currentCategory : true;
+
+        return matchesSearch && matchesCategory;
+    });
 
     const handleWriteClick = () => {
         if (!isAuthenticated) {
@@ -46,9 +66,15 @@ const CommunityPage = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8 gap-4">
                     <div>
                         <div className="flex items-center gap-4 mb-2">
-                            <h1 className="text-2xl md:text-3xl font-bold text-white">게시판</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white">
+                                {currentCategory ? categoryNames[currentCategory] : '전체 게시판'}
+                            </h1>
                         </div>
-                        <p className="text-gray-400 text-sm md:text-base pl-0 md:pl-14">ARC Raiders 유저들과 정보를 공유하세요.</p>
+                        <p className="text-gray-400 text-sm md:text-base pl-0 md:pl-1">
+                            {currentCategory
+                                ? `${categoryNames[currentCategory]} 관련 이야기를 나누어보세요.`
+                                : 'ARC Raiders 유저들과 정보를 공유하세요.'}
+                        </p>
                     </div>
                     <button
                         onClick={handleWriteClick}
@@ -79,6 +105,7 @@ const CommunityPage = () => {
                         <thead>
                             <tr className="bg-gray-800/50 text-gray-400 text-sm border-b border-gray-700">
                                 <th className="p-4 w-16 text-center font-medium">번호</th>
+                                <th className="p-4 w-24 text-center font-medium">분류</th>
                                 <th className="p-4 font-medium">제목</th>
                                 <th className="p-4 w-32 text-center font-medium">글쓴이</th>
                                 <th className="p-4 w-24 text-center font-medium">등록일</th>
@@ -88,7 +115,7 @@ const CommunityPage = () => {
                         <tbody>
                             {filteredPosts.length === 0 ? (
                                 <tr>
-                                    <td colSpan="5" className="p-8 text-center text-gray-500">
+                                    <td colSpan="6" className="p-8 text-center text-gray-500">
                                         게시글이 없습니다. 첫 번째 글을 작성해보세요!
                                     </td>
                                 </tr>
@@ -101,6 +128,11 @@ const CommunityPage = () => {
                                     >
                                         <td className="p-4 text-center text-gray-500 text-sm">
                                             {filteredPosts.length - index}
+                                        </td>
+                                        <td className="p-4 text-center">
+                                            <span className={`text-xs px-2 py-1 rounded border ${categoryColors[post.category || 'free']}`}>
+                                                {categoryNames[post.category || 'free']}
+                                            </span>
                                         </td>
                                         <td className="p-4">
                                             <div className="flex items-center gap-2">
@@ -154,9 +186,14 @@ const CommunityPage = () => {
                                 className="bg-[#1a1a1a] rounded-xl border border-gray-800 p-4 active:bg-gray-800 transition-colors"
                             >
                                 <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-white font-bold text-lg line-clamp-2 flex-1 mr-2">
-                                        {post.title}
-                                    </h3>
+                                    <div className="flex-1 mr-2">
+                                        <span className={`inline-block text-[10px] px-1.5 py-0.5 rounded border mb-1 ${categoryColors[post.category || 'free']}`}>
+                                            {categoryNames[post.category || 'free']}
+                                        </span>
+                                        <h3 className="text-white font-bold text-lg line-clamp-2">
+                                            {post.title}
+                                        </h3>
+                                    </div>
                                     {post.images && post.images.length > 0 && (
                                         <ImageIcon size={16} className="text-gray-500 mt-1 flex-shrink-0" />
                                     )}

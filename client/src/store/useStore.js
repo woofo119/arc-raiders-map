@@ -295,7 +295,7 @@ const useStore = create((set, get) => ({
         }
     },
 
-    createPost: async (title, content, images) => {
+    createPost: async (title, content, category, images) => {
         const { user } = get();
         if (!user) return { success: false, message: '로그인이 필요합니다.' };
 
@@ -303,7 +303,7 @@ const useStore = create((set, get) => ({
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const response = await axios.post(`${API_URL}/posts`, { title, content, images }, config);
+            const response = await axios.post(`${API_URL}/posts`, { title, content, category, images }, config);
             set((state) => ({ posts: [response.data, ...state.posts] }));
             return { success: true };
         } catch (error) {
@@ -311,7 +311,7 @@ const useStore = create((set, get) => ({
         }
     },
 
-    updatePost: async (id, title, content, images) => {
+    updatePost: async (id, title, content, category, images) => {
         const { user } = get();
         if (!user) return { success: false, message: '로그인이 필요합니다.' };
 
@@ -319,7 +319,7 @@ const useStore = create((set, get) => ({
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const response = await axios.put(`${API_URL}/posts/${id}`, { title, content, images }, config);
+            const response = await axios.put(`${API_URL}/posts/${id}`, { title, content, category, images }, config);
             const updatedPost = response.data;
 
             set((state) => ({

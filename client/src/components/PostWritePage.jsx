@@ -12,10 +12,18 @@ const PostWritePage = () => {
     const { createPost, updatePost, fetchPost, currentPost } = useStore();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [category, setCategory] = useState('free'); // Default category
     const [images, setImages] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const isEditMode = !!id;
+
+    const categories = [
+        { id: 'free', name: '자유' },
+        { id: 'quest', name: '퀘스트' },
+        { id: 'tips', name: '공략/팁' },
+        { id: 'qna', name: '질문' }
+    ];
 
     useEffect(() => {
         if (isEditMode) {
@@ -24,12 +32,14 @@ const PostWritePage = () => {
                 if (currentPost && currentPost._id === id) {
                     setTitle(currentPost.title);
                     setContent(currentPost.content);
+                    setCategory(currentPost.category || 'free');
                     setImages(currentPost.images || []);
                 } else {
                     const result = await fetchPost(id);
                     if (result.success) {
                         setTitle(result.data.title);
                         setContent(result.data.content);
+                        setCategory(result.data.category || 'free');
                         setImages(result.data.images || []);
                     } else {
                         alert('게시글을 불러올 수 없습니다.');
@@ -101,9 +111,9 @@ const PostWritePage = () => {
 
         let result;
         if (isEditMode) {
-            result = await updatePost(id, title, content, images);
+            result = await updatePost(id, title, content, category, images);
         } else {
-            result = await createPost(title, content, images);
+            result = await createPost(title, content, category, images);
         }
 
         setIsSubmitting(false);
@@ -129,13 +139,25 @@ const PostWritePage = () => {
                 <h1 className="text-2xl font-bold mb-6">{isEditMode ? '글 수정' : '글쓰기'}</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
+                    <div className="flex gap-4">
+                        {/* 카테고리 선택 */}
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="bg-[#1a1a1a] border border-gray-700 rounded-xl p-4 text-lg text-white focus:border-arc-accent focus:outline-none transition-colors w-40"
+                        >
+                            {categories.map(cat => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+
+                        {/* 제목 입력 */}
                         <input
                             type="text"
                             placeholder="제목을 입력하세요"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full bg-[#1a1a1a] border border-gray-700 rounded-xl p-4 text-lg text-white placeholder-gray-500 focus:border-arc-accent focus:outline-none transition-colors"
+                            className="flex-1 bg-[#1a1a1a] border border-gray-700 rounded-xl p-4 text-lg text-white placeholder-gray-500 focus:border-arc-accent focus:outline-none transition-colors"
                         />
                     </div>
 
