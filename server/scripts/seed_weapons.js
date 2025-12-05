@@ -22,85 +22,193 @@ const connectDB = async () => {
 
 const items = [
     {
-        name: 'Kettle', nameKr: '케틀', grade: 'Common', image: '/MP/imgi_4_kettle.png',
-        description: '빠르고 정확하지만 탄속이 느린 돌격 소총.',
+        name: 'Kettle',
+        nameKr: '케틀',
+        grade: 'Common',
+        image: '/MP/imgi_4_kettle.png',
+        description: '빠르고 정확하게 발사하지만 탄속이 느리고 재장전 시간이 오래 걸립니다.',
         ammoType: '경량 탄약 (Light)',
-        magazineSize: '25',
-        fireMode: '반자동 (Semi-Auto)',
-        stats: { damage: 10, fireRate: 28, range: 43, stability: 60, mobility: 80, stealth: 50 },
-        crafting: [{ level: 1, cost: 500, materials: [{ name: '기계 부품', count: 1 }] }]
-    },
-    {
-        name: 'Rattler', nameKr: '레틀러', grade: 'Common', image: '/MP/imgi_5_rattler.png',
-        description: '저렴한 공격 수단. 독특한 2발 장전 메커니즘을 가집니다.',
-        ammoType: '준중량 탄약 (Medium)',
         magazineSize: '20',
+        fireMode: '반자동 (Semi-Auto)',
+        penetration: '매우 취약',
+        stats: { damage: 10, fireRate: 28, range: 42.8, stability: 69.8, mobility: 58.5, stealth: 26 },
+        weight: 7.0,
+        crafting: [
+            { level: 1, cost: 840, bonusStats: '-', materials: [{ name: '금속 부품', count: 6 }, { name: '고무 부품', count: 8 }] },
+            { level: 2, cost: 2000, bonusStats: '탄속 +25%\n재장전 시간 -13%\n내구력 +10', materials: [{ name: '금속 부품', count: 8 }, { name: '플라스틱 부품', count: 10 }] },
+            { level: 3, cost: 3000, bonusStats: '탄속 +50%\n재장전 시간 -26%\n내구력 +20', materials: [{ name: '금속 부품', count: 10 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 4, cost: 5000, bonusStats: '탄속 +75%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
+    },
+    {
+        name: 'Rattler',
+        nameKr: '래틀러',
+        grade: 'Common',
+        image: '/MP/imgi_5_rattler.png',
+        description: '저렴한 공격 수단이지만, 발사할 때마다 총알 2발을 재장전해야 합니다.',
+        ammoType: '준중량 탄약 (Medium)',
+        magazineSize: '10 → 14 → 18 → 22',
         fireMode: '전자동 (Full-Auto)',
-        stats: { damage: 9, fireRate: 33, range: 56, stability: 50, mobility: 70, stealth: 40 },
-        crafting: [{ level: 1, cost: 600, materials: [] }]
+        penetration: '준수',
+        stats: { damage: 9, fireRate: 33.3, range: 56.2, stability: 72.2, mobility: 54.8, stealth: 14 },
+        weight: 6.0,
+        crafting: [
+            { level: 1, cost: 1750, bonusStats: '-', materials: [{ name: '금속 부품', count: 16 }, { name: '고무 부품', count: 12 }] },
+            { level: 2, cost: 3000, bonusStats: '탄창 크기 +4\n내구력 +10', materials: [{ name: '기계 부품', count: 2 }] },
+            { level: 3, cost: 5000, bonusStats: '탄창 크기 +8\n내구력 +20', materials: [{ name: '기계 부품', count: 2 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 4, cost: 7000, bonusStats: '탄창 크기 +12\n내구력 +30', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
     },
     {
-        name: 'Arpeggio', nameKr: '아르페지오', grade: 'Uncommon', image: '/MP/imgi_6_arpeggio.png',
-        description: '균형 잡힌 성능의 돌격 소총.',
-        ammoType: '경량 탄약 (Light)',
-        magazineSize: '30',
-        fireMode: '점사 (Burst)',
-        stats: { damage: 11, fireRate: 40, range: 50, stability: 70, mobility: 75, stealth: 60 }
+        name: 'Arpeggio',
+        nameKr: '아르페지오',
+        grade: 'Uncommon',
+        image: '/MP/imgi_6_arpeggio.png',
+        description: '준수한 피해량과 정확도를 지녔습니다.',
+        ammoType: '준중량 탄약 (Medium)',
+        magazineSize: '24',
+        fireMode: '3점사 (Burst)',
+        penetration: '준수',
+        stats: { damage: 9.5, fireRate: 18.3, range: 55.9, stability: 84, mobility: 57.3, stealth: 14 },
+        weight: 7.0,
+        crafting: [
+            { level: 1, cost: 5500, bonusStats: '-', materials: [{ name: '기계 부품', count: 6 }, { name: '간단한 총기 부품', count: 6 }] },
+            { level: 2, cost: 8000, bonusStats: '발사 속도 +20%\n재장전 시간 -12.5%\n내구력 +10', materials: [{ name: '기계 부품', count: 4 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 3, cost: 11500, bonusStats: '발사 속도 +40%\n재장전 시간 -25%\n내구력 +20', materials: [{ name: '기계 부품', count: 5 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 4, cost: 15000, bonusStats: '발사 속도 +60%\n재장전 시간 -50%\n내구력 +30', materials: [{ name: '기계 부품', count: 5 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
     },
     {
-        name: 'Bettina', nameKr: '베티나', grade: 'Epic', image: '/MP/bettina.png',
-        description: '느린 발사 속도와 강력한 피해량을 가진 에픽 소총.',
+        name: 'Bettina',
+        nameKr: '베티나',
+        grade: 'Epic',
+        image: '/MP/bettina.png',
+        description: '느린 발사 속도와 높은 피해량을 지녔습니다.',
         ammoType: '중량 탄약 (Heavy)',
         magazineSize: '20',
         fireMode: '전자동 (Full-Auto)',
-        stats: { damage: 14, fireRate: 32, range: 51, stability: 40, mobility: 50, stealth: 30 }
+        penetration: '강력',
+        stats: { damage: 14, fireRate: 32, range: 51.3, stability: 76.4, mobility: 48.2, stealth: 14 },
+        weight: 11.0,
+        crafting: [
+            { level: 1, cost: 8000, bonusStats: '-', materials: [{ name: '베티나 설계도', count: 1 }, { name: '고급 기계 부품', count: 3 }, { name: '중량 총기 부품', count: 3 }, { name: '캔', count: 3 }] },
+            { level: 2, cost: 11000, bonusStats: '발사 속도 +5%\n재장전 시간 -11.1%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 14000, bonusStats: '발사 속도 +10%\n재장전 시간 -22.2%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '중량 총기 부품', count: 2 }] },
+            { level: 4, cost: 18000, bonusStats: '발사 속도 +15%\n재장전 시간 -33.3%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 2 }] }
+        ]
     },
     {
-        name: 'Tempest', nameKr: '템페스트', grade: 'Epic', image: '/MP/imgi_7_tempest.png',
-        description: '불펍 방식의 올라운더 무기. 근중장거리 모두 대응 가능.',
+        name: 'Tempest',
+        nameKr: '템페스트',
+        grade: 'Epic',
+        image: '/MP/imgi_7_tempest.png',
+        description: '적당한 발사 속도와 정확도를 지녔습니다.',
         ammoType: '준중량 탄약 (Medium)',
-        magazineSize: '30',
+        magazineSize: '25',
         fireMode: '전자동 (Full-Auto)',
-        stats: { damage: 13, fireRate: 38, range: 60, stability: 80, mobility: 80, stealth: 60 }
+        penetration: '준수',
+        stats: { damage: 10, fireRate: 36.7, range: 55.9, stability: 78.9, mobility: 46, stealth: 14 },
+        weight: 11.0,
+        crafting: [
+            { level: 1, cost: 13000, bonusStats: '-', materials: [{ name: '템페스트 설계도', count: 1 }, { name: '자성 가속기', count: 1 }, { name: '준중량 총기 부품', count: 3 }, { name: '엑소더스 모듈', count: 2 }] },
+            { level: 2, cost: 17000, bonusStats: '수평 반동 -16.6%\n재장전 시간 -13%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 1 }] },
+            { level: 3, cost: 22000, bonusStats: '수평 반동 -33.3%\n재장전 시간 -26%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 3 }] },
+            { level: 4, cost: 27000, bonusStats: '수평 반동 -50%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 3 }] }
+        ]
     },
     {
-        name: 'Ferro', nameKr: '페로', grade: 'Common', image: '/MP/imgi_2_ferro.png',
-        description: '강력한 위력의 중절식(Break-Action) 전투 소총.',
+        name: 'Ferro',
+        nameKr: '페로',
+        grade: 'Common',
+        image: '/MP/imgi_2_ferro.png',
+        description: '강력한 위력을 뽐내지만 발사할 때마다 재장전해야 합니다.',
         ammoType: '중량 탄약 (Heavy)',
         magazineSize: '1',
-        fireMode: '단발 (Single)',
-        stats: { damage: 40, fireRate: 7, range: 53, stability: 30, mobility: 90, stealth: 70 }
+        fireMode: '중절식 (Break-Action)',
+        penetration: '강력',
+        stats: { damage: 40, fireRate: 6.6, range: 53.1, stability: 78.1, mobility: 31.5, stealth: 8 },
+        weight: 8.0,
+        crafting: [
+            { level: 1, cost: 475, bonusStats: '-', materials: [{ name: '금속 부품', count: 5 }, { name: '고무 부품', count: 2 }] },
+            { level: 2, cost: 1000, bonusStats: '재장전 시간 -13%\n내구력 +10', materials: [{ name: '금속 부품', count: 7 }] },
+            { level: 3, cost: 2000, bonusStats: '재장전 시간 -26%\n내구력 +20', materials: [{ name: '금속 부품', count: 9 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 4, cost: 2900, bonusStats: '재장전 시간 -39%\n내구력 +30', materials: [{ name: '기계 부품', count: 1 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
     },
     {
-        name: 'Renegade', nameKr: '레니게이드', grade: 'Rare', image: '/MP/imgi_3_renegade.png',
-        description: '레버액션 방식의 암살용 무기.',
-        ammoType: '중량 탄약 (Heavy)',
-        magazineSize: '6',
-        fireMode: '수동 (Lever-Action)',
-        stats: { damage: 45, fireRate: 5, range: 70, stability: 60, mobility: 60, stealth: 85 }
+        name: 'Renegade',
+        nameKr: '레니게이드',
+        grade: 'Rare',
+        image: '/MP/imgi_3_renegade.png',
+        description: '높은 피해량, 정확도, 헤드샷 대미지를 지녔습니다.',
+        ammoType: '준중량 탄약 (Medium)',
+        magazineSize: '8',
+        fireMode: '레버 액션 (Lever-Action)',
+        penetration: '준수',
+        stats: { damage: 35, fireRate: 21, range: 68.8, stability: 85.7, mobility: 55.8, stealth: 16 },
+        weight: 10.0,
+        crafting: [
+            { level: 1, cost: 7000, bonusStats: '-', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 3 }, { name: '기름', count: 5 }] },
+            { level: 2, cost: 10000, bonusStats: '탄 퍼짐 회복시간 -16.6%\n발사 속도 +25%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '준중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 13000, bonusStats: '탄 퍼짐 회복시간 -33.3%\n발사 속도 +50%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '준중량 총기 부품', count: 2 }] },
+            { level: 4, cost: 17000, bonusStats: '탄 퍼짐 회복시간 -50%\n발사 속도 +75%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 2 }] }
+        ]
     },
     {
-        name: 'Aphelion', nameKr: '아펠리온', grade: 'Legendary', image: '/MP/aphelion.png',
-        description: '최고 등급의 전투 소총. 강력한 저지력을 가집니다.',
-        ammoType: '에너지 (Energy)',
+        name: 'Aphelion',
+        nameKr: '아펠리온',
+        grade: 'Legendary',
+        image: '/MP/aphelion.png',
+        description: '고속 에너지탄을 발사합니다.',
+        ammoType: '에너지 탄창 (Energy)',
+        magazineSize: '10',
+        fireMode: '2점사 (2-Burst)',
+        penetration: '강력',
+        stats: { damage: 24, fireRate: 9, range: 76, stability: 88, mobility: 39, stealth: 16 },
+        weight: 10.0,
+        crafting: [
+            { level: 1, cost: 27500, bonusStats: '-', materials: [{ name: '아펠리온 설계도', count: 1 }, { name: '자성 가속기', count: 3 }, { name: '정교한 총기 부품', count: 3 }, { name: '마트리아크 원자로', count: 1 }] }
+        ]
+    },
+    {
+        name: 'Stitcher',
+        nameKr: '스티처',
+        grade: 'Common',
+        image: '/MP/imgi_12_stitcher.png',
+        description: '피해량은 준수하지만 발사 속도가 꽤 느리고 조작이 까다롭습니다.',
+        ammoType: '경량 탄약 (Light)',
         magazineSize: '20',
-        stats: { damage: 50, fireRate: 20, range: 80, stability: 90, mobility: 80, stealth: 90 }
-    },
-    {
-        name: 'Stitcher', nameKr: '스티처', grade: 'Common', image: '/MP/imgi_12_stitcher.png',
-        description: '높은 연사력으로 근거리 화력이 우수한 기관단총.',
-        ammoType: '경량 탄약 (Light)',
-        magazineSize: '40',
         fireMode: '전자동 (Full-Auto)',
-        stats: { damage: 7, fireRate: 45, range: 42, stability: 50, mobility: 100, stealth: 60 }
+        penetration: '매우 취약',
+        stats: { damage: 7, fireRate: 45.3, range: 42.1, stability: 45.3, mobility: 73.8, stealth: 19 },
+        weight: 5.0,
+        crafting: [
+            { level: 1, cost: 800, bonusStats: '-', materials: [{ name: '금속 부품', count: 8 }, { name: '고무 부품', count: 4 }] },
+            { level: 2, cost: 2000, bonusStats: '수평 반동 -16.6%\n재장전 시간 -13%\n내구력 +10', materials: [{ name: '금속 부품', count: 8 }, { name: '고무 부품', count: 1 }] },
+            { level: 3, cost: 3000, bonusStats: '수평 반동 -33.3%\n재장전 시간 -26%\n내구력 +20', materials: [{ name: '금속 부품', count: 10 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 4, cost: 5000, bonusStats: '수평 반동 -50%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
     },
     {
-        name: 'Bobcat', nameKr: '밥캣', grade: 'Epic', image: '/MP/imgi_13_bobcat.png',
-        description: '빠른 기동성을 제공하는 고성능 기관단총.',
+        name: 'Bobcat',
+        nameKr: '밥캣',
+        grade: 'Epic',
+        image: '/MP/imgi_13_bobcat.png',
+        description: '발사 속도는 빠르지만 정확도가 낮습니다.',
         ammoType: '경량 탄약 (Light)',
-        magazineSize: '35',
-        stats: { damage: 8, fireRate: 50, range: 40, stability: 60, mobility: 95, stealth: 70 }
+        magazineSize: '20',
+        fireMode: '전자동 (Full-Auto)',
+        penetration: '매우 취약',
+        stats: { damage: 6, fireRate: 66.7, range: 44, stability: 45.9, mobility: 73.1, stealth: 21 },
+        weight: 7.0,
+        crafting: [
+            { level: 1, cost: 13000, bonusStats: '-', materials: [{ name: '밥캣 설계도', count: 1 }, { name: '자성 가속기', count: 1 }, { name: '경량 총기 부품', count: 3 }, { name: '엑소더스 모듈', count: 2 }] },
+            { level: 2, cost: 17000, bonusStats: '최대 한 발 탄 퍼짐 -15%\n수평 반동 -15%\n재장전 시간 -13%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '경량 총기 부품', count: 1 }] },
+            { level: 3, cost: 22000, bonusStats: '최대 한 발 탄 퍼짐 -30%\n수평 반동 -30%\n재장전 시간 -26%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '경량 총기 부품', count: 3 }] },
+            { level: 4, cost: 27000, bonusStats: '최대 한 발 탄 퍼짐 -50%\n수평 반동 -45%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '경량 총기 부품', count: 3 }] }
+        ]
     },
+    // Remaining items with default templates
     {
         name: 'Hairpin', nameKr: '헤어핀', grade: 'Common', image: '/MP/imgi_8_hairpin.png',
         description: '기본적인 호신용 권총 (Welrod inspiration).',
@@ -165,59 +273,18 @@ const items = [
         nameKr: '토렌테',
         grade: 'Rare',
         image: '/MP/imgi_16_torrente.png',
-        description: '대용량 탄창을 지녔지만, 웅크린 상태에서만 정확하게 발사할 수 있습니다.', // Updated from screenshot
+        description: '대용량 탄창을 지녔지만, 웅크린 상태에서만 정확하게 발사할 수 있습니다.',
         ammoType: '중량 탄약 (Heavy)',
         magazineSize: '60 → 70 → 80 → 90',
         fireMode: '전자동 (Full-Auto)',
         penetration: '준수',
-        stats: {
-            damage: 8,
-            fireRate: 58.3,
-            range: 49.9,
-            stability: 74.2,
-            mobility: 37.7,
-            stealth: 1
-        },
+        stats: { damage: 8, fireRate: 58.3, range: 49.9, stability: 74.2, mobility: 37.7, stealth: 1 },
         weight: 12.0,
         crafting: [
-            {
-                level: 1,
-                bonusStats: '-',
-                materials: [
-                    { name: '토렌테 설계도', count: 1 },
-                    { name: '고급 기계 부품', count: 2 },
-                    { name: '중량 총기 부품', count: 3 },
-                    { name: '강철 스프링', count: 6 }
-                ],
-                cost: 7000
-            },
-            {
-                level: 2,
-                bonusStats: '탄창 크기 +10%\n재장전 시간 -15%\n내구력 +10',
-                materials: [
-                    { name: '고급 기계 부품', count: 1 },
-                    { name: '중량 총기 부품', count: 2 }
-                ],
-                cost: 10000
-            },
-            {
-                level: 3,
-                bonusStats: '탄창 크기 +20%\n재장전 시간 -30%\n내구력 +20',
-                materials: [
-                    { name: '고급 기계 부품', count: 1 },
-                    { name: '중량 총기 부품', count: 2 }
-                ],
-                cost: 13000
-            },
-            {
-                level: 4,
-                bonusStats: '탄창 크기 +30%\n재장전 시간 -45%\n내구력 +30',
-                materials: [
-                    { name: '고급 기계 부품', count: 2 },
-                    { name: '중량 총기 부품', count: 2 }
-                ],
-                cost: 17000
-            }
+            { level: 1, cost: 7000, bonusStats: '-', materials: [{ name: '토렌테 설계도', count: 1 }, { name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 3 }, { name: '강철 스프링', count: 6 }] },
+            { level: 2, cost: 10000, bonusStats: '탄창 크기 +10%\n재장전 시간 -15%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 13000, bonusStats: '탄창 크기 +20%\n재장전 시간 -30%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '중량 총기 부품', count: 2 }] },
+            { level: 4, cost: 17000, bonusStats: '탄창 크기 +30%\n재장전 시간 -45%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 2 }] }
         ]
     }
 ];
