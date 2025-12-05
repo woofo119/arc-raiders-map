@@ -260,6 +260,7 @@ const useStore = create((set, get) => ({
     // --------------------------------------------------------------------------
     isLoginModalOpen: false, // 모달이 열렸는지 닫혔는지 저장
     isMyPageModalOpen: false, // 마이페이지 모달 상태
+    isNavMenuOpen: false, // Quick Nav Popup State
 
     openLoginModal: () => set({ isLoginModalOpen: true }), // 열기 함수
     closeLoginModal: () => set({ isLoginModalOpen: false }), // 닫기 함수

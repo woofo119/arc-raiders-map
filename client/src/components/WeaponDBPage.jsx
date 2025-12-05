@@ -91,73 +91,96 @@ const WeaponDBPage = () => {
 
             {/* Content Grid */}
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mx-auto">
-                    {filteredWeapons.map(weapon => (
-                        <div
-                            key={weapon._id}
-                            className="relative group cursor-pointer"
-                            onClick={() => navigate(`/weapons/${weapon._id}`)}
-                        >
-                            {/* Outer Wrapper with Grade Color Border Effect */}
-                            <div
-                                style={{
-                                    background: GRADE_COLORS[weapon.grade || 'Common'],
-                                    padding: '1px',
-                                    borderRadius: '5px'
-                                }}
-                                className="relative transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-                            >
-                                {/* Inner Card Content */}
-                                <div
-                                    style={{
-                                        background: 'radial-gradient(at top right, #0c0f1b 50%, #0c0f1ba0)',
-                                        borderRadius: '4px 4px 4px 50px',
-                                        overflow: 'hidden'
-                                    }}
-                                    className="relative h-full flex flex-col"
-                                >
-                                    {/* Image Area */}
-                                    <div className="aspect-[4/3] relative flex items-center justify-center p-4">
-                                        {weapon.imageUrl ? (
-                                            <img src={weapon.imageUrl} alt={weapon.name} className="w-full h-full object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]" />
-                                        ) : (
-                                            <div className="text-gray-600 text-xs text-center p-4">No Image</div>
-                                        )}
 
-                                        {/* Grade Label */}
-                                        <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white font-bold uppercase tracking-wider backdrop-blur-sm border border-white/10">
-                                            {weapon.grade || 'Common'}
-                                        </div>
-                                    </div>
-
-                                    {/* Text Info */}
-                                    <div className="p-3 pt-0 flex-1 flex flex-col justify-end">
-                                        <h3 className="text-sm font-bold text-white leading-tight mb-1 truncate">{weapon.name}</h3>
-                                        <p className="text-[10px] text-gray-400 font-mono uppercase tracking-wide">{weapon.type}</p>
-
-                                        {/* Admin Delete Button (Invisible until hover) */}
-                                        {user && user.role === 'admin' && (
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleDelete(weapon._id);
-                                                }}
-                                                className="absolute bottom-2 right-2 p-1.5 bg-red-900/80 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-800"
-                                            >
-                                                <Trash2 size={12} />
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {filteredWeapons.length === 0 && (
+                {filteredWeapons.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-gray-500 opacity-50">
                         <Search size={48} className="mb-4" />
                         <p>등록된 아이템이 없습니다.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-12 max-w-7xl mx-auto">
+                        {[
+                            { key: 'Common', label: '일반 (Common)' },
+                            { key: 'Uncommon', label: '고급 (Uncommon)' },
+                            { key: 'Rare', label: '희귀 (Rare)' },
+                            { key: 'Epic', label: '영웅 (Epic)' },
+                            { key: 'Legendary', label: '전설 (Legendary)' }
+                        ].map(({ key, label }) => {
+                            const gradeWeapons = filteredWeapons.filter(w => (w.grade || 'Common') === key);
+                            if (gradeWeapons.length === 0) return null;
+
+                            return (
+                                <div key={key}>
+                                    <h2 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: GRADE_COLORS[key] }}>
+                                        <div className="w-2 h-8 rounded-full" style={{ background: GRADE_COLORS[key] }}></div>
+                                        {label.split('(')[0].trim()}
+                                        <span className="text-sm font-normal text-gray-500 opacity-60 ml-2">{label.split('(')[1].replace(')', '')}</span>
+                                    </h2>
+                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                                        {gradeWeapons.map(weapon => (
+                                            <div
+                                                key={weapon._id}
+                                                className="relative group cursor-pointer"
+                                                onClick={() => navigate(`/weapons/${weapon._id}`)}
+                                            >
+                                                {/* Outer Wrapper with Grade Color Border Effect */}
+                                                <div
+                                                    style={{
+                                                        background: GRADE_COLORS[weapon.grade || 'Common'],
+                                                        padding: '1px',
+                                                        borderRadius: '5px'
+                                                    }}
+                                                    className="relative transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                                                >
+                                                    {/* Inner Card Content */}
+                                                    <div
+                                                        style={{
+                                                            background: 'radial-gradient(at top right, #0c0f1b 50%, #0c0f1ba0)',
+                                                            borderRadius: '4px 4px 4px 50px',
+                                                            overflow: 'hidden'
+                                                        }}
+                                                        className="relative h-full flex flex-col"
+                                                    >
+                                                        {/* Image Area */}
+                                                        <div className="aspect-[4/3] relative flex items-center justify-center p-4">
+                                                            {weapon.imageUrl ? (
+                                                                <img src={weapon.imageUrl} alt={weapon.name} className="w-full h-full object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]" />
+                                                            ) : (
+                                                                <div className="text-gray-600 text-xs text-center p-4">No Image</div>
+                                                            )}
+
+                                                            {/* Grade Label */}
+                                                            <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white font-bold uppercase tracking-wider backdrop-blur-sm border border-white/10">
+                                                                {weapon.grade || 'Common'}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Text Info */}
+                                                        <div className="p-3 pt-0 flex-1 flex flex-col justify-end">
+                                                            <h3 className="text-sm font-bold text-white leading-tight mb-1 truncate">{weapon.name}</h3>
+                                                            <p className="text-[10px] text-gray-400 font-mono uppercase tracking-wide">{weapon.type}</p>
+
+                                                            {/* Admin Delete Button (Invisible until hover) */}
+                                                            {user && user.role === 'admin' && (
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        handleDelete(weapon._id);
+                                                                    }}
+                                                                    className="absolute bottom-2 right-2 p-1.5 bg-red-900/80 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-800"
+                                                                >
+                                                                    <Trash2 size={12} />
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
             </div>

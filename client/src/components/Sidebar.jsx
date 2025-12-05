@@ -76,8 +76,52 @@ const Sidebar = ({ isOpen = false }) => {
                 </div>
             </div>
 
-            {/* 사용자 프로필 영역 */}
-            <div className="py-4 px-4 border-t border-gray-800 bg-[#0f0f0f] overflow-hidden whitespace-nowrap">
+            {/* 사용자 프로필 영역 및 네비게이션 트리거 */}
+            <div className="py-4 px-4 border-t border-gray-800 bg-[#0f0f0f] overflow-hidden whitespace-nowrap flex flex-col gap-2 relative">
+
+                {/* Navigation Popup Menu (Animate from bottom) */}
+                <div className={`absolute bottom-full left-0 w-full bg-[#1a1a1a] border-t border-r border-gray-800 rounded-t-xl transition-all duration-300 ease-out transform ${isOpen && useStore.getState().isNavMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'}`}>
+                    <div className="p-2 grid grid-cols-2 gap-2">
+                        <div
+                            onClick={() => navigate('/')}
+                            className="flex flex-col items-center justify-center p-3 bg-gray-800/50 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
+                        >
+                            <Home size={20} className="mb-1 text-gray-400" />
+                            <span className="text-[10px] text-gray-400">홈</span>
+                        </div>
+                        <div
+                            onClick={() => navigate('/skills')}
+                            className="flex flex-col items-center justify-center p-3 bg-gray-800/50 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
+                        >
+                            <Zap size={20} className="mb-1 text-green-500" />
+                            <span className="text-[10px] text-gray-400">스킬</span>
+                        </div>
+                        <div
+                            onClick={() => navigate('/community')}
+                            className="flex flex-col items-center justify-center p-3 bg-gray-800/50 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
+                        >
+                            <Users size={20} className="mb-1 text-blue-500" />
+                            <span className="text-[10px] text-gray-400">커뮤니티</span>
+                        </div>
+                        <div
+                            onClick={() => navigate('/weapons')}
+                            className="flex flex-col items-center justify-center p-3 bg-gray-800/50 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
+                        >
+                            <Crosshair size={20} className="mb-1 text-purple-500" />
+                            <span className="text-[10px] text-gray-400">무기 정보</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Navigation Toggle Button */}
+                <button
+                    onClick={() => useStore.setState(state => ({ isNavMenuOpen: !state.isNavMenuOpen }))}
+                    className={`w-full flex items-center justify-center gap-2 py-2 rounded-lg transition-all ${useStore.getState().isNavMenuOpen ? 'bg-arc-accent text-white' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+                >
+                    {useStore.getState().isNavMenuOpen ? <ChevronDown size={16} /> : <Layers size={16} />}
+                    <span className="text-xs font-bold uppercase">Quick Nav</span>
+                </button>
+
                 {isAuthenticated ? (
                     <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
                         <div className="flex items-center gap-3">
