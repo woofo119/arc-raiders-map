@@ -385,15 +385,46 @@ const useStore = create((set, get) => ({
 
     // --------------------------------------------------------------------------
     // 💾 UI 상태 (Persisted UI State) - 마커 생성 폼 설정 기억
-    // --------------------------------------------------------------------------
-    lastMarkerOptions: {
-        mainType: 'container',
-        subType: MARKER_CATEGORIES.container.types[0].id,
-        isOfficial: false
+    fetchWeapons: async () => {
+        try {
+            const response = await axios.get(`${API_URL}/weapons`);
+            set({ weapons: response.data });
+        } catch (error) {
+            console.error('무기 불러오기 실패:', error);
+        }
     },
-    setLastMarkerOptions: (options) => set((state) => ({
-        lastMarkerOptions: { ...state.lastMarkerOptions, ...options }
-    })),
+
+    createWeapon: async (weaponData) => {
+        const { user } = get();
+        if (!user || user.role !== 'admin') return { success: false, message: '권한이 없습니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.post(`${API_URL}/weapons`, weaponData, config);
+            set((state) => ({ weapons: [response.data, ...state.weapons] }));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '무기 등록 실패' };
+        }
+    },
+
+    deleteWeapon: async (id) => {
+        const { user } = get();
+        if (!user || user.role !== 'admin') return { success: false, message: '권한이 없습니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            await axios.delete(`${API_URL}/weapons/${id}`, config);
+            set((state) => ({ weapons: state.weapons.filter(w => w._id !== id) }));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '무기 삭제 실패' };
+        }
+    },
 }));
 
 export default useStore;

@@ -11,6 +11,7 @@ import CommunityLayout from './components/CommunityLayout';
 import LoginModal from './components/LoginModal';
 import MyPageModal from './components/MyPageModal';
 import AdminPage from './pages/AdminPage';
+import WeaponDBPage from './components/WeaponDBPage';
 import useStore from './store/useStore';
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
                             <Route path="/community/write" element={<PostWritePage />} />
                             <Route path="/community/edit/:id" element={<PostWritePage />} />
                             <Route path="/community/:id" element={<PostDetailPage />} />
+                            <Route path="/weapons" element={<WeaponDBPage />} />
                         </Route>
 
                         {/* 관리자 페이지 */}

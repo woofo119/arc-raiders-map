@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js';
 import markerRoutes from './routes/markerRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import weaponRoutes from './routes/weaponRoutes.js';
 import User from './models/User.js';
 import { checkBlacklist } from './middleware/ipMiddleware.js';
 
@@ -56,6 +57,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/markers', markerRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/weapons', weaponRoutes);
 
 // 서버 시작
 httpServer.listen(PORT, () => {
