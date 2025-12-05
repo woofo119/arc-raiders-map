@@ -17,15 +17,16 @@ export const getWeapons = async (req, res) => {
 // @access  Private/Admin
 export const createWeapon = async (req, res) => {
     try {
-        const { name, type, grade, imageUrl, description, stats } = req.body;
+        const {
+            name, type, grade, imageUrl, description,
+            ammoType, magazineSize, fireMode, penetration,
+            stats, weight, crafting
+        } = req.body;
 
         const weapon = new Weapon({
-            name,
-            type,
-            grade,
-            imageUrl,
-            description,
-            stats
+            name, type, grade, imageUrl, description,
+            ammoType, magazineSize, fireMode, penetration,
+            stats, weight, crafting
         });
 
         const createdWeapon = await weapon.save();

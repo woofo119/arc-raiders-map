@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Search, Filter } from 'lucide-react';
 import useStore from '../store/useStore';
 import WeaponUploadModal from './WeaponUploadModal';
@@ -12,6 +13,7 @@ const GRADE_COLORS = {
 };
 
 const WeaponDBPage = () => {
+    const navigate = useNavigate();
     const { weapons, fetchWeapons, deleteWeapon, user } = useStore();
     const [selectedTab, setSelectedTab] = useState('Main'); // Main, Side, All
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -91,7 +93,11 @@ const WeaponDBPage = () => {
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mx-auto">
                     {filteredWeapons.map(weapon => (
-                        <div key={weapon._id} className="relative group">
+                        <div
+                            key={weapon._id}
+                            className="relative group cursor-pointer"
+                            onClick={() => navigate(`/weapons/${weapon._id}`)}
+                        >
                             {/* Outer Wrapper with Grade Color Border Effect */}
                             <div
                                 style={{
