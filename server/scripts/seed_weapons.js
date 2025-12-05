@@ -21,6 +21,7 @@ const connectDB = async () => {
 };
 
 const items = [
+    // --- Batch 1 ---
     {
         name: 'Kettle',
         nameKr: '케틀',
@@ -116,6 +117,8 @@ const items = [
             { level: 4, cost: 27000, bonusStats: '수평 반동 -50%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 3 }] }
         ]
     },
+
+    // --- Batch 2 ---
     {
         name: 'Ferro',
         nameKr: '페로',
@@ -208,43 +211,104 @@ const items = [
             { level: 4, cost: 27000, bonusStats: '최대 한 발 탄 퍼짐 -50%\n수평 반동 -45%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '경량 총기 부품', count: 3 }] }
         ]
     },
-    // Remaining items with default templates
+
+    // --- Batch 3 ---
     {
-        name: 'Hairpin', nameKr: '헤어핀', grade: 'Common', image: '/MP/imgi_8_hairpin.png',
-        description: '기본적인 호신용 권총 (Welrod inspiration).',
+        name: 'Hairpin',
+        nameKr: '헤어핀',
+        grade: 'Common',
+        image: '/MP/imgi_8_hairpin.png',
+        description: '소음기가 내장되어 있습니다. 잠행에는 유리하지만, 전투에서는 다루기 까다롭습니다.',
+        ammoType: '경량 탄약 (Light)',
+        magazineSize: '8',
+        fireMode: '슬라이드 액션 (Slide Action)',
+        penetration: '매우 취약',
+        stats: { damage: 20, fireRate: 9, range: 38.6, stability: 90.9, mobility: 78.3, stealth: 70 },
+        weight: 3.0,
+        crafting: [
+            { level: 1, cost: 450, bonusStats: '-', materials: [{ name: '금속 부품', count: 2 }, { name: '플라스틱 부품', count: 5 }] },
+            { level: 2, cost: 1000, bonusStats: '발사 속도 +10%\n재장전 시간 -13%\n내구력 +10', materials: [{ name: '금속 부품', count: 8 }] },
+            { level: 3, cost: 2000, bonusStats: '발사 속도 +20%\n재장전 시간 -26%\n내구력 +20', materials: [{ name: '금속 부품', count: 6 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 4, cost: 2900, bonusStats: '발사 속도 +30%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '기계 부품', count: 1 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
+    },
+    {
+        name: 'Burletta',
+        nameKr: '부를레타',
+        grade: 'Common',
+        image: '/MP/imgi_9_burletta.png',
+        description: '준수한 피해량과 정확도를 지녔습니다.',
         ammoType: '경량 탄약 (Light)',
         magazineSize: '12',
-        stats: { damage: 15, fireRate: 20, range: 30, stability: 80, mobility: 100, stealth: 90 }
+        fireMode: '반자동 (Semi-Auto)',
+        penetration: '매우 취약',
+        stats: { damage: 10, fireRate: 28, range: 41.7, stability: 74.5, mobility: 84.4, stealth: 24 },
+        weight: 4.0,
+        crafting: [
+            { level: 1, cost: 2900, bonusStats: '-', materials: [{ name: '부를레타 설계도', count: 1 }, { name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 3 }] },
+            { level: 2, cost: 5000, bonusStats: '재장전 시간 -16.6%\n내구력 +10', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 3, cost: 7000, bonusStats: '재장전 시간 -33.3%\n내구력 +20', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 2 }] },
+            { level: 4, cost: 10000, bonusStats: '재장전 시간 -50%\n내구력 +30', materials: [{ name: '기계 부품', count: 4 }, { name: '간단한 총기 부품', count: 1 }] }
+        ]
     },
     {
-        name: 'Burletta', nameKr: '부를레타', grade: 'Uncommon', image: '/MP/imgi_9_burletta.png',
-        description: '안정적인 성능의 반자동 권총.',
-        ammoType: '경량 탄약 (Light)',
-        magazineSize: '15',
-        stats: { damage: 18, fireRate: 22, range: 35, stability: 85, mobility: 100, stealth: 85 }
+        name: 'Venator',
+        nameKr: '베나토르',
+        grade: 'Rare',
+        image: '/MP/imgi_11_venator.png',
+        description: '한 번에 두 발을 발사하고 준중형 탄약을 사용하는 반자동 권총입니다.',
+        ammoType: '준중량 탄약 (Medium)',
+        magazineSize: '10',
+        fireMode: '단발 (Single)',
+        penetration: '준수',
+        stats: { damage: 18, fireRate: 36.7, range: 48.4, stability: 61.3, mobility: 76.4, stealth: 12 },
+        weight: 5.0,
+        crafting: [
+            { level: 1, cost: 7000, bonusStats: '-', materials: [{ name: '베나토르 설계도', count: 1 }, { name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 3 }, { name: '자석', count: 5 }] },
+            { level: 2, cost: 10000, bonusStats: '발사 속도 +13%\n재장전 시간 -16%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '준중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 13000, bonusStats: '발사 속도 +26%\n재장전 시간 -33%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '준중량 총기 부품', count: 2 }] },
+            { level: 4, cost: 17000, bonusStats: '발사 속도 +40%\n재장전 시간 -50%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 2 }] }
+        ]
     },
     {
-        name: 'Venator', nameKr: '베나토르', grade: 'Rare', image: '/MP/imgi_11_venator.png',
-        description: '강력한 더블 배럴 권총.',
-        ammoType: '산탄 (Shotgun)',
-        magazineSize: '2',
-        stats: { damage: 60, fireRate: 4, range: 15, stability: 20, mobility: 90, stealth: 40 }
-    },
-    {
-        name: 'Anvil', nameKr: '앤빌', grade: 'Uncommon', image: '/MP/imgi_10_anvil.png',
-        description: '아크 장갑 파괴에 탁월한 중량탄 핸드캐논.',
+        name: 'Anvil',
+        nameKr: '앤빌',
+        grade: 'Uncommon',
+        image: '/MP/imgi_10_anvil.png',
+        description: '높은 피해량과 헤드샷 대미지를 지녔지만 조작 속도가 느립니다.',
         ammoType: '중량 탄약 (Heavy)',
         magazineSize: '6',
-        fireMode: '리볼버 (Revolver)',
-        stats: { damage: 40, fireRate: 10, range: 45, stability: 40, mobility: 80, stealth: 60 }
+        fireMode: '싱글 액션 (Single Action)',
+        penetration: '강력',
+        stats: { damage: 40, fireRate: 16.3, range: 50.2, stability: 75.2, mobility: 69.1, stealth: 10 },
+        weight: 5.0,
+        crafting: [
+            { level: 1, cost: 5000, bonusStats: '-', materials: [{ name: '앤빌 설계도', count: 1 }, { name: '기계 부품', count: 5 }, { name: '간단한 총기 부품', count: 6 }] },
+            { level: 2, cost: 7000, bonusStats: '탄 퍼짐 회복시간 -6.5%\n발사 속도 +25%\n내구력 +10', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 3, cost: 10000, bonusStats: '탄 퍼짐 회복시간 -12.5%\n발사 속도 +50%\n내구력 +20', materials: [{ name: '기계 부품', count: 4 }, { name: '중량 총기 부품', count: 1 }] },
+            { level: 4, cost: 13000, bonusStats: '탄 퍼짐 회복시간 -18.75%\n발사 속도 +75%\n내구력 +30', materials: [{ name: '기계 부품', count: 4 }, { name: '중량 총기 부품', count: 1 }] }
+        ]
     },
     {
-        name: 'Il Toro', nameKr: '일 토로', grade: 'Uncommon', image: '/MP/imgi_14_il_toro.png',
-        description: '근거리 제압용 산탄총.',
-        ammoType: '산탄 (Shotgun)',
-        magazineSize: '5',
-        stats: { damage: 100, fireRate: 8, range: 20, stability: 30, mobility: 70, stealth: 20 }
+        name: 'Il Toro',
+        nameKr: '일 토로',
+        grade: 'Uncommon',
+        image: '/MP/imgi_14_il_toro.png',
+        description: '탄 퍼짐이 크고 거리에 따른 대미지 감소 폭이 크며, 피해량이 높습니다.',
+        ammoType: '산탄총 탄약 (Shotgun)',
+        magazineSize: '5 → 6 → 7 → 8',
+        fireMode: '펌프 액션 (Pump Action)',
+        penetration: '취약',
+        stats: { damage: 67.5, fireRate: 14.3, range: 20, stability: 80.6, mobility: 61.1, stealth: 18 },
+        weight: 8.0,
+        crafting: [
+            { level: 1, cost: 5000, bonusStats: '-', materials: [{ name: '일 토로 설계도', count: 1 }, { name: '기계 부품', count: 5 }, { name: '간단한 총기 부품', count: 6 }] },
+            { level: 2, cost: 7000, bonusStats: '발사 속도 -17.5%\n탄창 크기 +1\n내구력 +10', materials: [{ name: '기계 부품', count: 3 }, { name: '간단한 총기 부품', count: 1 }] },
+            { level: 3, cost: 10000, bonusStats: '발사 속도 -35%\n탄창 크기 +2\n내구력 +20', materials: [{ name: '기계 부품', count: 4 }, { name: '중량 총기 부품', count: 1 }] },
+            { level: 4, cost: 13000, bonusStats: '발사 속도 -50%\n탄창 크기 +3\n내구력 +30', materials: [{ name: '기계 부품', count: 4 }, { name: '중량 총기 부품', count: 1 }] }
+        ]
     },
+    // Remaining items with default templates
     {
         name: 'Vulcano', nameKr: '볼카노', grade: 'Epic', image: '/MP/imgi_15_vulcano.png',
         description: '근접 DPS 최강자 반자동 산탄총.',
