@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 import useStore from '../store/useStore';
-import WeaponUploadModal from './WeaponUploadModal';
 
 const GRADE_COLORS = {
     Common: '#666871',
@@ -22,20 +21,13 @@ const GRADE_KR = {
 
 const WeaponDBPage = () => {
     const navigate = useNavigate();
-    const { weapons, fetchWeapons, deleteWeapon, user } = useStore();
+    const { weapons, fetchWeapons, user } = useStore();
     const [selectedTab, setSelectedTab] = useState('Main'); // Main, Side, All
-    const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchWeapons().catch(err => console.error("Failed to fetch weapons:", err));
     }, []);
-
-    const handleDelete = async (id) => {
-        if (window.confirm('정말로 이 무기를 삭제하시겠습니까?')) {
-            await deleteWeapon(id);
-        }
-    };
 
     console.log('Current weapons state:', weapons);
 
@@ -69,15 +61,7 @@ const WeaponDBPage = () => {
                         />
                     </div>
 
-                    {user && user.role === 'admin' && (
-                        <button
-                            onClick={() => setIsUploadModalOpen(true)}
-                            className="flex items-center gap-2 px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold rounded-lg transition-all text-sm shadow-[0_0_15px_rgba(234,179,8,0.3)] hover:shadow-[0_0_20px_rgba(234,179,8,0.5)]"
-                        >
-                            <Plus size={16} />
-                            <span>아이템 추가</span>
-                        </button>
-                    )}
+
                 </div>
             </div>
 
@@ -153,18 +137,7 @@ const WeaponDBPage = () => {
                                                         <h3 className="text-sm font-bold text-white leading-tight mb-1 truncate">{weapon.name}</h3>
                                                         {/* Type removed as per request */}
 
-                                                        {/* Admin Delete Button (Invisible until hover) */}
-                                                        {user && user.role === 'admin' && (
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleDelete(weapon._id);
-                                                                }}
-                                                                className="absolute bottom-2 right-2 p-1.5 bg-red-900/80 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-800"
-                                                            >
-                                                                <Trash2 size={12} />
-                                                            </button>
-                                                        )}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -176,7 +149,7 @@ const WeaponDBPage = () => {
                     </div>
                 )}
 
-                {isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} />}
+
             </div>
         </div>
     );
