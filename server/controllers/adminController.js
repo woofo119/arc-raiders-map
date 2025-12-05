@@ -134,3 +134,23 @@ export const removeFromBlacklist = async (req, res) => {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
+
+// @desc    Get visitor stats
+// @route   GET /api/admin/stats
+// @access  Private/Admin
+import VisitorLog from '../models/VisitorLog.js';
+export const getVisitorStats = async (req, res) => {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
+
+        const todayCount = await VisitorLog.countDocuments({ date: today });
+        const weeklyCount = await VisitorLog.countDocuments({ date: { $gte: sevenDaysAgoStr } });
+
+        res.json({ today: todayCount, weekly: weeklyCount });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
