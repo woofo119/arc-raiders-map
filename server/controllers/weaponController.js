@@ -17,11 +17,12 @@ export const getWeapons = async (req, res) => {
 // @access  Private/Admin
 export const createWeapon = async (req, res) => {
     try {
-        const { name, type, imageUrl, description, stats } = req.body;
+        const { name, type, grade, imageUrl, description, stats } = req.body;
 
         const weapon = new Weapon({
             name,
             type,
+            grade,
             imageUrl,
             description,
             stats

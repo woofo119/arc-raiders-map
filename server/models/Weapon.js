@@ -12,6 +12,12 @@ const weaponSchema = new mongoose.Schema({
         enum: ['Main', 'Side', 'Melee', 'Grenade', 'Gadget'],
         default: 'Main'
     },
+    grade: {
+        type: String,
+        required: true,
+        enum: ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'],
+        default: 'Common'
+    },
     imageUrl: {
         type: String, // Base64 or URL
         required: false

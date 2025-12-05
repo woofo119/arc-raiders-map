@@ -7,6 +7,7 @@ const WeaponUploadModal = ({ onClose }) => {
     const [formData, setFormData] = useState({
         name: '',
         type: 'Main', // Main, Side, Melee, Grenade
+        grade: 'Common', // Common, Uncommon, Rare, Epic, Legendary
         description: '',
         stats: {}
     });
