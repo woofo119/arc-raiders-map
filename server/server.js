@@ -3,6 +3,11 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import { createServer } from 'http';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import authRoutes from './routes/authRoutes.js';
 import markerRoutes from './routes/markerRoutes.js';
 import postRoutes from './routes/postRoutes.js';
@@ -58,6 +63,11 @@ app.use('/api/markers', markerRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/weapons', weaponRoutes);
+
+// SPA Fallback (Must be last)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 // 서버 시작
 httpServer.listen(PORT, () => {

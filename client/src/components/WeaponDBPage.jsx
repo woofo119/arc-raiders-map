@@ -47,22 +47,6 @@ const WeaponDBPage = () => {
             <div className="h-16 border-b border-gray-800 flex items-center justify-between px-6 bg-gray-900/50 backdrop-blur-sm z-20 shrink-0">
                 <div className="flex items-center gap-4">
                     <h1 className="text-xl font-bold text-yellow-500 tracking-wider">WEAPON INFO</h1>
-
-                    {/* Tabs */}
-                    <div className="flex bg-gray-900 rounded-lg p-1 border border-gray-700 ml-8">
-                        {['Main', 'Side', 'All'].map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setSelectedTab(tab)}
-                                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${selectedTab === tab
-                                    ? 'bg-gray-700 text-white shadow-md'
-                                    : 'text-gray-400 hover:text-gray-200'
-                                    }`}
-                            >
-                                {tab === 'All' ? '전체' : tab === 'Main' ? '주무기' : '보조무기'}
-                            </button>
-                        ))}
-                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -158,7 +142,7 @@ const WeaponDBPage = () => {
                                                         {/* Text Info */}
                                                         <div className="p-3 pt-0 flex-1 flex flex-col justify-end">
                                                             <h3 className="text-sm font-bold text-white leading-tight mb-1 truncate">{weapon.name}</h3>
-                                                            <p className="text-[10px] text-gray-400 font-mono uppercase tracking-wide">{weapon.type}</p>
+                                                            {/* Type removed as per request */}
 
                                                             {/* Admin Delete Button (Invisible until hover) */}
                                                             {user && user.role === 'admin' && (

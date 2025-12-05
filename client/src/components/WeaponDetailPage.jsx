@@ -1,7 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import useStore from '../store/useStore';
 import { ArrowLeft, Share2, AlertCircle } from 'lucide-react';
+
+const GRADE_COLORS = {
+    Common: '#666871',
+    Uncommon: '#35c15c',
+    Rare: '#009bf4',
+    Epic: '#d74798',
+    Legendary: '#ffbf00'
+};
+
+const GRADE_KR = {
+    Common: '일반',
+    Uncommon: '고급',
+    Rare: '희귀',
+    Epic: '영웅',
+    Legendary: '전설'
+};
 
 const WeaponDetailPage = () => {
     const { id } = useParams();
@@ -63,7 +76,7 @@ const WeaponDetailPage = () => {
                     className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                 >
                     <ArrowLeft size={20} />
-                    <span>Back to List</span>
+                    <span>목록으로</span>
                 </button>
             </div>
 
@@ -71,14 +84,19 @@ const WeaponDetailPage = () => {
             <div className="max-w-5xl mx-auto bg-[#1a1a1a] border border-gray-800 rounded-lg overflow-hidden shadow-2xl">
 
                 {/* 1. Top Image Section */}
-                <div className="bg-gradient-to-b from-blue-900/40 to-[#1a1a1a] p-8 flex justify-center items-center min-h-[300px] relative">
+                <div
+                    className="p-8 flex justify-center items-center min-h-[300px] relative transition-colors duration-500"
+                    style={{
+                        background: `linear-gradient(to bottom, ${GRADE_COLORS[weapon.grade || 'Common']}40, #1a1a1a)`
+                    }}
+                >
                     <img
                         src={weapon.imageUrl}
                         alt={weapon.name}
                         className="max-w-full max-h-[250px] object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
                     />
                     <div className="absolute top-4 right-4 text-xs font-bold px-2 py-1 bg-black/50 border border-white/10 rounded">
-                        {weapon.grade}
+                        {GRADE_KR[weapon.grade] || weapon.grade}
                     </div>
                 </div>
 
@@ -201,9 +219,7 @@ const WeaponDetailPage = () => {
                 </div>
             </div>
 
-            <div className="text-center mt-8 text-gray-500 text-xs">
-                데이터 출처: ARC Raiders Wiki Reference
-            </div>
+            {/* Footer removed as per request */}
         </div>
     );
 };
