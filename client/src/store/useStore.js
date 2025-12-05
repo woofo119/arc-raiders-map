@@ -274,6 +274,11 @@ const useStore = create((set, get) => ({
     posts: [],
     currentPost: null,
 
+    // --------------------------------------------------------------------------
+    // ⚔️ 무기 DB 상태 (Weapon DB State)
+    // --------------------------------------------------------------------------
+    weapons: [],
+
     clearCurrentPost: () => set({ currentPost: null }),
 
     fetchPosts: async () => {

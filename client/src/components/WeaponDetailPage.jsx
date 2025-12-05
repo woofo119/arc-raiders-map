@@ -43,7 +43,7 @@ const WeaponDetailPage = () => {
 
     // 🛡️ Safety Warning: If ID mismatch occurs after DB reset (stale client cache)
     useEffect(() => {
-        if (id && weapons.length > 0 && !weapon) {
+        if (id && safeWeapons.length > 0 && !weapon) {
             console.warn(`Weapon ID ${id} not found in loaded list. Stale cache suspected.`);
         }
     }, [id, weapons, weapon]);
