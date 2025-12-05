@@ -36,15 +36,14 @@ export const SKILL_DATA = {
         border: "border-yellow-500",
         skills: [
             // Tier 0
-            { id: "m3", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 25, icon: skillIcons.m3, prerequisites: ["m14"] },
+            { id: "m3", name: "혈기 왕성 뜀박질", maxLevel: 1, description: "기력 소진 상태에서 더는 뛰어넘기 속도가 느려지지 않습니다.", reqPoints: 0, x: 50, y: 25, icon: skillIcons.m12, prerequisites: ["m14"] },
             { id: "m13", name: "멀리멀리 슬라이드", maxLevel: 5, description: "더 멀리 더 빠르게 슬라이드할 수 있습니다.", reqPoints: 0, x: 55, y: 65, icon: skillIcons.m13, prerequisites: ["m5"] },
             { id: "m11", name: "튼튼한 발목", maxLevel: 5, description: "치명적이지 않은 높이에서 떨어질 때 받는 낙상 피해가 줄어듭니다.", reqPoints: 0, x: 55, y: 55, icon: skillIcons.m11, prerequisites: ["m13"] },
             { id: "m4", name: "마라톤 선수", maxLevel: 5, description: "이동으로 소모하는 기력이 줄어듭니다. 기력 소모가 최대 25% 감소한다.", reqPoints: 0, x: 45, y: 65, icon: skillIcons.m4, prerequisites: ["m5", "m1"] },
             { id: "m2", name: "젊음의 폐", maxLevel: 5, description: "최대 기력이 증가합니다. 기력이 최대 25% 증가한다.", reqPoints: 0, x: 45, y: 55, icon: skillIcons.m2, prerequisites: ["m4"] },
             { id: "m5", name: "미친 듯 벽 타기", maxLevel: 5, description: "더 멀리 벽 도약을 시전할 수 있습니다. 도약 거리가 약 10% 증가한다.", reqPoints: 0, x: 50, y: 75, icon: skillIcons.m5, prerequisites: [] },
-            { id: "m_new1", name: "구를 준비 완료", maxLevel: 5, description: "낙하 시, 낙법을 시전할 수 있는 타이밍이 길어집니다.", reqPoints: 0, x: 55, y: 25, icon: skillIcons.m6, prerequisites: ["m_new2"] }, // Using m6 icon default
-            { id: "m14", name: "걷기 전에 기기", maxLevel: 5, description: "쓰러졌을 때 기어가는 속도가 빨라집니다. 기어가는 속도가 최대 35% 증가한다.", reqPoints: 0, x: 50, y: 35, icon: skillIcons.m14, prerequisites: ["m_new2", "m_new1"] },
-            { id: "m_new2", name: "혈기 왕성 뜀박질", maxLevel: 1, description: "기력 소진 상태에서 더는 뛰어넘기 속도가 느려지지 않습니다.", reqPoints: 0, x: 55, y: 35, icon: skillIcons.m12, prerequisites: ["m1"] }, // Using m12 icon default
+            { id: "m_new1", name: "구를 준비 완료", maxLevel: 5, description: "낙하 시, 낙법을 시전할 수 있는 타이밍이 길어집니다.", reqPoints: 0, x: 55, y: 25, icon: skillIcons.m6, prerequisites: ["m14"] },
+            { id: "m14", name: "걷기 전에 기기", maxLevel: 5, description: "쓰러졌을 때 기어가는 속도가 빨라집니다. 기어가는 속도가 최대 35% 증가한다.", reqPoints: 0, x: 50, y: 35, icon: skillIcons.m14, prerequisites: ["m9", "m1"] },
             { id: "m7", name: "힘들이지 않고 구르기", maxLevel: 5, description: "회피 구르기로 소모하는 기력이 줄어듭니다. 3레벨에서 기력 감소가 최소가 되며, 구르기 횟수가 추가된다.", reqPoints: 0, x: 45, y: 45, icon: skillIcons.m7, prerequisites: ["m9"] },
             { id: "m10", name: "영웅적 도약", maxLevel: 5, description: "전력 질주 회피 구르기를 더 멀리까지 시전할 수 있습니다. 구르기 거리가 약 5~10% 증가한다.", reqPoints: 0, x: 45, y: 25, icon: skillIcons.m10, prerequisites: ["m7"] },
 
