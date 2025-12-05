@@ -94,7 +94,7 @@ const MainLayout = () => {
                         >
                             <Database size={24} strokeWidth={1.5} />
                         </NavLink>
-                        <span className="text-[10px] mt-1 text-gray-500 font-medium group-hover:text-gray-300 transition-colors">무기 DB</span>
+                        <span className="text-[10px] mt-1 text-gray-500 font-medium group-hover:text-gray-300 transition-colors">무기 정보</span>
                     </div>
 
                     {/* Admin Link (Only for admin) */}

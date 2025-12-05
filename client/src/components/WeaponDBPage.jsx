@@ -44,7 +44,7 @@ const WeaponDBPage = () => {
             {/* Header */}
             <div className="h-16 border-b border-gray-800 flex items-center justify-between px-6 bg-gray-900/50 backdrop-blur-sm z-20 shrink-0">
                 <div className="flex items-center gap-4">
-                    <h1 className="text-xl font-bold text-yellow-500 tracking-wider">ITEM DATABASE</h1>
+                    <h1 className="text-xl font-bold text-yellow-500 tracking-wider">WEAPON INFO</h1>
 
                     {/* Tabs */}
                     <div className="flex bg-gray-900 rounded-lg p-1 border border-gray-700 ml-8">
