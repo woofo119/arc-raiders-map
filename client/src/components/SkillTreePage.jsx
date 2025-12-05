@@ -58,7 +58,7 @@ const decodeSkills = (code) => {
     return newState;
 };
 
-const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRemove, color }) => {
+const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
 
@@ -130,7 +130,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                 {/* Lock Overlay */}
                 {isLocked && (
                     <div className="absolute -top-1 -right-1 bg-gray-900 rounded-full p-1 border border-gray-700 z-20">
-                        <Lock size={14} className="text-red-500" />
+                        <Lock size={14} className={isPointsLocked ? "text-red-500" : "text-gray-400"} />
                     </div>
                 )}
             </div>
@@ -417,6 +417,7 @@ const SkillTreePage = () => {
                                         currentLevel={skillsState[skill.id] || 0}
                                         isLocked={isLocked}
                                         isPrereqLocked={isPrereqLocked}
+                                        isPointsLocked={isPointsLocked}
                                         color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                         onAdd={(id) => {
                                             if (window.innerWidth < 768) {

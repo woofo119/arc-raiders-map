@@ -62,10 +62,10 @@ export const SKILL_DATA = {
         bg: "bg-red-500",
         border: "border-red-500",
         skills: [
-            { id: "s1", name: "새것처럼 쌩쌩", maxLevel: 1, description: "치유 효과를 받고 있으면 기력 회복이 증가합니다.", reqPoints: 0, x: 80, y: 45, icon: skillIcons.s1, prerequisites: ["s8"] },
+            { id: "s1", name: "새것처럼 쌩쌩", maxLevel: 1, description: "치유 효과를 받고 있으면 기력 회복이 증가합니다.", reqPoints: 15, x: 80, y: 45, icon: skillIcons.s1, prerequisites: ["s8"] },
             { id: "s2", name: "튼튼한 노새", maxLevel: 5, description: "과중 상태가 기력 회복에 미치는 영향이 줄어듭니다.", reqPoints: 0, x: 80, y: 35, icon: skillIcons.s2, prerequisites: ["s1"] },
             { id: "s3", name: "노획 본능", maxLevel: 5, description: "컨테이너 수색 시, 전리품이 더 빨리 드러납니다. 수색 속도는 최대 20% 증가한다.", reqPoints: 0, x: 70, y: 65, icon: skillIcons.s3, prerequisites: ["s16"] },
-            { id: "s5", name: "침묵 속의 고통", maxLevel: 1, description: "치명상 상태 시, 움직일 때 내는 소음이 줄어듭니다.", reqPoints: 0, x: 70, y: 45, icon: skillIcons.s5, prerequisites: ["s4"] },
+            { id: "s5", name: "침묵 속의 고통", maxLevel: 1, description: "치명상 상태 시, 움직일 때 내는 소음이 줄어듭니다.", reqPoints: 15, x: 70, y: 45, icon: skillIcons.s5, prerequisites: ["s4"] },
             { id: "s6", name: "쪼그려서 원기회복", maxLevel: 5, description: "웅크린 상태에서 기력 회복량이 증가합니다. 기력 회복량은 최대 30% 증가한다.", reqPoints: 0, x: 80, y: 65, icon: skillIcons.s6, prerequisites: ["s16"] },
             { id: "s8", name: "라운드 중 제작", maxLevel: 1, description: "지상의 필드에서 아이템을 제작할 수 있는 능력이 잠금 해제됩니다.", reqPoints: 0, x: 80, y: 55, icon: skillIcons.s8, prerequisites: ["s6"] },
             { id: "s9", name: "심호흡 세 번", maxLevel: 5, description: "능력 사용으로 소모한 기력을 더 빨리 회복합니다. 기존 5초인 기력 회복 시간을 약 2.5초 줄여준다.", reqPoints: 0, x: 80, y: 25, icon: skillIcons.s9, prerequisites: ["s2"] },
@@ -75,7 +75,7 @@ export const SKILL_DATA = {
             { id: "s13", name: "노획자의 행운", maxLevel: 5, description: "노획 시, 아이템을 두 배로 발견할 확률이 생깁니다. 아이템을 두 배 획득하는 것이 아니고, 아이템 감정을 동시에 2개를 할 수 있는 스킬이다.", reqPoints: 0, x: 70, y: 25, icon: skillIcons.s13, prerequisites: ["s12"] },
 
             // Tier 1
-            { id: "s4", name: "침묵의 청소부", maxLevel: 5, description: "노획할 때 내는 소음이 줄어듭니다.", reqPoints: 15, x: 70, y: 55, icon: skillIcons.s4, prerequisites: ["s3"] },
+            { id: "s4", name: "침묵의 청소부", maxLevel: 5, description: "노획할 때 내는 소음이 줄어듭니다.", reqPoints: 0, x: 70, y: 55, icon: skillIcons.s4, prerequisites: ["s3"] },
 
             // Tier 2
             { id: "s14", name: "지뢰 해체", maxLevel: 1, description: "인접한 지뢰와 배치형 폭발물을 해체할 수 있습니다.", reqPoints: 36, x: 80, y: 15, icon: skillIcons.s14, prerequisites: ["s9", "s11"] },
