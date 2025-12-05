@@ -22,22 +22,36 @@ const WeaponDetailPage = () => {
     const { weapons, fetchWeapons } = useStore();
     const [weapon, setWeapon] = useState(null);
 
+    const safeWeapons = Array.isArray(weapons) ? weapons : [];
+
     useEffect(() => {
         // Ensure weapons are loaded
-        if (weapons.length === 0) {
+        if (safeWeapons.length === 0) {
             fetchWeapons();
         }
-    }, [fetchWeapons, weapons.length]);
+    }, [fetchWeapons, safeWeapons.length]);
 
     useEffect(() => {
-        if (weapons.length > 0) {
-            const found = weapons.find(w => w._id === id);
+        if (safeWeapons.length > 0) {
+            const found = safeWeapons.find(w => w._id === id);
             setWeapon(found);
         }
-    }, [weapons, id]);
+    }, [safeWeapons, id]);
 
-    if (!weapon && weapons.length === 0) return <div className="flex items-center justify-center h-screen text-white">Loading...</div>;
-    if (!weapon && weapons.length > 0) return <div className="flex items-center justify-center h-screen text-white">Item not found</div>;
+    if (!weapon && safeWeapons.length === 0) return <div className="flex items-center justify-center h-screen text-white">Loading...</div>;
+    if (!weapon && safeWeapons.length > 0) return (
+        <div className="flex flex-col items-center justify-center h-screen text-white gap-4">
+            <AlertCircle size={48} className="text-red-500" />
+            <h2 className="text-xl font-bold">아이템을 찾을 수 없습니다</h2>
+            <p className="text-gray-400">삭제되었거나 주소가 잘못되었습니다.</p>
+            <button
+                onClick={() => navigate('/weapons')}
+                className="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700 transition"
+            >
+                목록으로 돌아가기
+            </button>
+        </div>
+    );
 
     // Helper to render stat bar
     const StatBar = ({ label, value, max = 100 }) => (
@@ -62,10 +76,17 @@ const WeaponDetailPage = () => {
     );
 
     // Parsing stats object safely
-    const stats = weapon.stats || {};
+    const stats = (weapon && weapon.stats) ? weapon.stats : {};
     // Parsing crafting array safely, filling up to 4 levels if missing
-    const crafting = weapon.crafting || [];
+    const crafting = (weapon && weapon.crafting && Array.isArray(weapon.crafting)) ? weapon.crafting : [];
     const getLevelData = (lvl) => crafting.find(c => c.level === lvl) || {};
+
+    // 🛡️ Safety Warning: If ID mismatch occurs after DB reset (stale client cache)
+    useEffect(() => {
+        if (id && weapons.length > 0 && !weapon) {
+            console.warn(`Weapon ID ${id} not found in loaded list. Stale cache suspected.`);
+        }
+    }, [id, weapons, weapon]);
 
     return (
         <div className="min-h-screen bg-black text-white p-4 md:p-8 overflow-y-auto pb-20">
