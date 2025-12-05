@@ -20,6 +20,11 @@ export const protect = async (req, res, next) => {
             // 토큰에서 사용자 ID를 추출하여 DB에서 조회 (비밀번호 제외)
             req.user = await User.findById(decoded.id).select('-password');
 
+            // 마지막 활동 시간 업데이트
+            if (req.user) {
+                await User.findByIdAndUpdate(decoded.id, { lastActiveAt: Date.now() });
+            }
+
             next(); // 다음 미들웨어로 이동
         } catch (error) {
             console.error(error);

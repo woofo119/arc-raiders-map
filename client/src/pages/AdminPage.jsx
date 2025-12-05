@@ -264,13 +264,15 @@ const AdminPage = () => {
                             <span className="text-3xl font-black text-arc-accent">{stats.weekly.toLocaleString()}</span>
                             <span className="text-gray-600 text-xs mt-1">최근 7일간 방문자 수</span>
                         </div>
-                        <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col opacity-50">
+                        <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col">
                             <span className="text-gray-500 text-sm font-bold uppercase mb-2">Total Users</span>
-                            <span className="text-3xl font-black text-white">-</span>
+                            <span className="text-3xl font-black text-white">{stats.totalUsers ? stats.totalUsers.toLocaleString() : 0}</span>
+                            <span className="text-gray-600 text-xs mt-1">총 가입 유저 수</span>
                         </div>
-                        <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col opacity-50">
+                        <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col">
                             <span className="text-gray-500 text-sm font-bold uppercase mb-2">Active Now</span>
-                            <span className="text-3xl font-black text-white">-</span>
+                            <span className="text-3xl font-black text-white">{stats.activeUsers ? stats.activeUsers.toLocaleString() : 0}</span>
+                            <span className="text-gray-600 text-xs mt-1">실시간 접속자 (5분 이내)</span>
                         </div>
                     </div>
 

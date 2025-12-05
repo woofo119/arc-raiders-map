@@ -149,7 +149,19 @@ export const getVisitorStats = async (req, res) => {
         const todayCount = await VisitorLog.countDocuments({ date: today });
         const weeklyCount = await VisitorLog.countDocuments({ date: { $gte: sevenDaysAgoStr } });
 
-        res.json({ today: todayCount, weekly: weeklyCount });
+        // Total Users
+        const totalUsers = await User.countDocuments({});
+
+        // Active Users (Last 5 minutes)
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+        const activeUsers = await User.countDocuments({ lastActiveAt: { $gte: fiveMinutesAgo } });
+
+        res.json({
+            today: todayCount,
+            weekly: weeklyCount,
+            totalUsers,
+            activeUsers
+        });
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
