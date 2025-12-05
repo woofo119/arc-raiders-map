@@ -29,12 +29,12 @@ const WeaponDBPage = () => {
 
     const filteredWeapons = weapons.filter(weapon => {
         const matchesTab = selectedTab === 'All' || weapon.type === selectedTab;
-        const matchesSearch = weapon.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = weapon.name?.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesTab && matchesSearch;
     });
 
     return (
-        <div className="flex-1 bg-black text-white flex flex-col h-full overflow-hidden">
+        <div className="flex-1 bg-black text-white flex flex-col overflow-hidden min-h-0">
             {/* Header */}
             <div className="h-16 border-b border-gray-800 flex items-center justify-between px-6 bg-gray-900/50 backdrop-blur-sm z-20 shrink-0">
                 <div className="flex items-center gap-4">

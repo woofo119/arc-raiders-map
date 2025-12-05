@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
-import MapContainer from './components/MapContainer';
+import MapPage from './components/MapPage';
 import SkillTreePage from './components/SkillTreePage';
 import CommunityPage from './components/CommunityPage';
 import PostWritePage from './components/PostWritePage';
@@ -26,7 +26,7 @@ const App = () => {
 
                         {/* 맵은 기존 MainLayout (Map Sidebar 포함) 사용 */}
                         <Route element={<MainLayout />}>
-                            <Route path="/map" element={<MapContainer />} />
+                            <Route path="/map" element={<MapPage />} />
                         </Route>
 
                         {/* 스킬 트리와 커뮤니티는 CommunityLayout (Community Sidebar 포함) 사용 */}

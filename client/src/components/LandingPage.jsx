@@ -198,29 +198,21 @@ const LandingPage = () => {
                         </div>
                     </div>
 
-                    {/* Weapons DB - Coming Soon */}
-                    <div className={`${cardBackgroundStyle} opacity-60 cursor-not-allowed hover:border-gray-800 hover:bg-[#121212] hover:shadow-none hover:translate-y-0`}>
+                    {/* Item DB - Active */}
+                    <div
+                        onClick={() => navigate('/weapons')}
+                        className={cardBackgroundStyle}
+                    >
+                        <div className={cardOverlayStyle} />
                         <div className={cardContentStyle}>
-                            <div className="flex justify-between items-start mb-4">
-                                <Crosshair className="text-gray-600 relative z-10" size={32} />
-                                <span className="bg-gray-800 text-gray-500 px-2 py-1 rounded text-[10px] font-bold border border-gray-700">준비중</span>
-                            </div>
-                            <h3 className="text-xl font-bold mb-2 text-gray-500 relative z-10">무기 DB</h3>
-                            <p className="text-gray-600 text-sm relative z-10">모든 무기의 스탯과 파츠 정보.</p>
+                            <Crosshair className="text-purple-500 mb-4 relative z-10" size={32} />
+                            <h3 className="text-xl font-bold mb-2 group-hover:text-purple-400 relative z-10">아이템 DB (Item DB)</h3>
+                            <p className="text-gray-300 text-sm mb-4 relative z-10">모든 아이템의 등급과 정보.</p>
+                            <button className="text-purple-500 text-sm font-bold hover:underline relative z-10">입장하기</button>
                         </div>
                     </div>
 
-                    {/* Items DB - Coming Soon */}
-                    <div className={`${cardBackgroundStyle} opacity-60 cursor-not-allowed hover:border-gray-800 hover:bg-[#121212] hover:shadow-none hover:translate-y-0`}>
-                        <div className={cardContentStyle}>
-                            <div className="flex justify-between items-start mb-4">
-                                <Box className="text-gray-600 relative z-10" size={32} />
-                                <span className="bg-gray-800 text-gray-500 px-2 py-1 rounded text-[10px] font-bold border border-gray-700">준비중</span>
-                            </div>
-                            <h3 className="text-xl font-bold mb-2 text-gray-500 relative z-10">아이템 DB</h3>
-                            <p className="text-gray-600 text-sm relative z-10">파밍 가능한 모든 아이템 목록.</p>
-                        </div>
-                    </div>
+
 
                     {/* Loadout - Coming Soon */}
                     <div className={`${cardBackgroundStyle} opacity-60 cursor-not-allowed hover:border-gray-800 hover:bg-[#121212] hover:shadow-none hover:translate-y-0`}>
