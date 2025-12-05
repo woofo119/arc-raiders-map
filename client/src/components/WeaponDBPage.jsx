@@ -12,6 +12,14 @@ const GRADE_COLORS = {
     Legendary: '#ffbf00'
 };
 
+const GRADE_KR = {
+    Common: '일반',
+    Uncommon: '고급',
+    Rare: '희귀',
+    Epic: '영웅',
+    Legendary: '전설'
+};
+
 const WeaponDBPage = () => {
     const navigate = useNavigate();
     const { weapons, fetchWeapons, deleteWeapon, user } = useStore();
@@ -134,43 +142,42 @@ const WeaponDBPage = () => {
                                                             )}
 
                                                             {/* Grade Label */}
-                                                            <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white font-bold uppercase tracking-wider backdrop-blur-sm border border-white/10">
-                                                                {weapon.grade || 'Common'}
-                                                            </div>
+                                                            {GRADE_KR[weapon.grade] || weapon.grade}
                                                         </div>
+                                                    </div>
 
-                                                        {/* Text Info */}
-                                                        <div className="p-3 pt-0 flex-1 flex flex-col justify-end">
-                                                            <h3 className="text-sm font-bold text-white leading-tight mb-1 truncate">{weapon.name}</h3>
-                                                            {/* Type removed as per request */}
+                                                    {/* Text Info */}
+                                                    <div className="p-3 pt-0 flex-1 flex flex-col justify-end">
+                                                        <h3 className="text-sm font-bold text-white leading-tight mb-1 truncate">{weapon.name}</h3>
+                                                        {/* Type removed as per request */}
 
-                                                            {/* Admin Delete Button (Invisible until hover) */}
-                                                            {user && user.role === 'admin' && (
-                                                                <button
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        handleDelete(weapon._id);
-                                                                    }}
-                                                                    className="absolute bottom-2 right-2 p-1.5 bg-red-900/80 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-800"
-                                                                >
-                                                                    <Trash2 size={12} />
-                                                                </button>
-                                                            )}
-                                                        </div>
+                                                        {/* Admin Delete Button (Invisible until hover) */}
+                                                        {user && user.role === 'admin' && (
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    handleDelete(weapon._id);
+                                                                }}
+                                                                className="absolute bottom-2 right-2 p-1.5 bg-red-900/80 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-800"
+                                                            >
+                                                                <Trash2 size={12} />
+                                                            </button>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
                                         ))}
-                                    </div>
                                 </div>
-                            );
+                                </div>
+                );
                         })}
-                    </div>
-                )}
             </div>
-
-            {isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} />}
+                )}
         </div>
+
+            { isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} /> }
+        </div >
     );
 };
 

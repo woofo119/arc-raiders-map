@@ -356,7 +356,7 @@ const items = [
         ]
     },
     {
-        name: 'Equalizer', nameKr: '이퀄라이저', grade: 'Legendary', image: '/MP/equalizer.png', // Needs upload or placeholder, assuming /MP/equalizer.png
+        name: 'Equalizer', nameKr: '이퀄라이저', grade: 'Legendary', image: '/MP/imgi_19_equalizer.png',
         description: '에너지 탄약을 사용하는 LMG 에너지 빔 소총입니다.',
         ammoType: '에너지 탄창 (Energy)',
         magazineSize: '50',
@@ -369,7 +369,7 @@ const items = [
         ]
     },
     {
-        name: 'Hullcracker', nameKr: '헐크래커', grade: 'Epic', image: '/MP/hullcracker.png', // Needs upload or placeholder
+        name: 'Hullcracker', nameKr: '헐크래커', grade: 'Epic', image: '/MP/hull_cracker.png',
         description: '아크에 명중할 때만 폭발하는 발사체를 발사합니다.',
         ammoType: '발사기 탄약 (Launcher)',
         magazineSize: '5',
