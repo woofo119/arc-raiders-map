@@ -47,7 +47,7 @@ export const SKILL_DATA = {
             { id: "m13", name: "멀리멀리 슬라이드", maxLevel: 5, description: "더 멀리 더 빠르게 슬라이드할 수 있습니다.", reqPoints: 0, x: 55, y: 65, icon: skillIcons.m13, prerequisites: ["m5"] },
 
             // Tier 1
-            { id: "m4", name: "마라톤 선수", maxLevel: 5, description: "이동으로 소모하는 기력이 줄어듭니다. 기력 소모가 최대 25% 감소한다.", reqPoints: 15, x: 45, y: 65, icon: skillIcons.m4, prerequisites: ["m5"] },
+            { id: "m4", name: "마라톤 선수", maxLevel: 5, description: "이동으로 소모하는 기력이 줄어듭니다. 기력 소모가 최대 25% 감소한다.", reqPoints: 0, x: 45, y: 65, icon: skillIcons.m4, prerequisites: ["m5"] },
             { id: "m7", name: "힘들이지 않고 구르기", maxLevel: 5, description: "회피 구르기로 소모하는 기력이 줄어듭니다. 3레벨에서 기력 감소가 최소가 되며, 구르기 횟수가 추가된다.", reqPoints: 15, x: 45, y: 35, icon: skillIcons.m7, prerequisites: ["m9"] },
 
             // Tier 2
