@@ -64,6 +64,9 @@ app.use('/api/posts', postRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/weapons', weaponRoutes);
 
+// 정적 파일 제공 (Front-end build)
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
 // SPA Fallback (Must be last)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
