@@ -24,7 +24,7 @@ const items = [
     {
         name: 'Kettle', nameKr: '케틀', grade: 'Common', image: '/MP/imgi_4_kettle.png',
         description: '빠르고 정확하지만 탄속이 느린 돌격 소총.',
-        ammoType: '경량 탄약 (Light)', // Light Ammo
+        ammoType: '경량 탄약 (Light)',
         magazineSize: '25',
         fireMode: '반자동 (Semi-Auto)',
         stats: { damage: 10, fireRate: 28, range: 43, stability: 60, mobility: 80, stealth: 50 },
@@ -33,7 +33,7 @@ const items = [
     {
         name: 'Rattler', nameKr: '레틀러', grade: 'Common', image: '/MP/imgi_5_rattler.png',
         description: '저렴한 공격 수단. 독특한 2발 장전 메커니즘을 가집니다.',
-        ammoType: '준중량 탄약 (Medium)', // Medium Ammo
+        ammoType: '준중량 탄약 (Medium)',
         magazineSize: '20',
         fireMode: '전자동 (Full-Auto)',
         stats: { damage: 9, fireRate: 33, range: 56, stability: 50, mobility: 70, stealth: 40 },
@@ -50,7 +50,7 @@ const items = [
     {
         name: 'Bettina', nameKr: '베티나', grade: 'Epic', image: '/MP/bettina.png',
         description: '느린 발사 속도와 강력한 피해량을 가진 에픽 소총.',
-        ammoType: '중량 탄약 (Heavy)', // Heavy Ammo
+        ammoType: '중량 탄약 (Heavy)',
         magazineSize: '20',
         fireMode: '전자동 (Full-Auto)',
         stats: { damage: 14, fireRate: 32, range: 51, stability: 40, mobility: 50, stealth: 30 }
@@ -161,13 +161,77 @@ const items = [
         stats: { damage: 150, fireRate: 10, range: 100, stability: 70, mobility: 40, stealth: 70 }
     },
     {
-        name: 'Torrente', nameKr: '토렌테', grade: 'Rare', image: '/MP/imgi_16_torrente.png',
-        description: '높은 연사력과 제압력을 가진 경기관총 (LMG).',
+        name: 'Torrente',
+        nameKr: '토렌테',
+        grade: 'Rare',
+        image: '/MP/imgi_16_torrente.png',
+        description: '대용량 탄창을 지녔지만, 웅크린 상태에서만 정확하게 발사할 수 있습니다.', // Updated from screenshot
         ammoType: '중량 탄약 (Heavy)',
-        magazineSize: '50',
-        stats: { damage: 25, fireRate: 60, range: 60, stability: 45, mobility: 30, stealth: 10 }
+        magazineSize: '60 → 70 → 80 → 90',
+        fireMode: '전자동 (Full-Auto)',
+        penetration: '준수',
+        stats: {
+            damage: 8,
+            fireRate: 58.3,
+            range: 49.9,
+            stability: 74.2,
+            mobility: 37.7,
+            stealth: 1
+        },
+        weight: 12.0,
+        crafting: [
+            {
+                level: 1,
+                bonusStats: '-',
+                materials: [
+                    { name: '토렌테 설계도', count: 1 },
+                    { name: '고급 기계 부품', count: 2 },
+                    { name: '중량 총기 부품', count: 3 },
+                    { name: '강철 스프링', count: 6 }
+                ],
+                cost: 7000
+            },
+            {
+                level: 2,
+                bonusStats: '탄창 크기 +10%\n재장전 시간 -15%\n내구력 +10',
+                materials: [
+                    { name: '고급 기계 부품', count: 1 },
+                    { name: '중량 총기 부품', count: 2 }
+                ],
+                cost: 10000
+            },
+            {
+                level: 3,
+                bonusStats: '탄창 크기 +20%\n재장전 시간 -30%\n내구력 +20',
+                materials: [
+                    { name: '고급 기계 부품', count: 1 },
+                    { name: '중량 총기 부품', count: 2 }
+                ],
+                cost: 13000
+            },
+            {
+                level: 4,
+                bonusStats: '탄창 크기 +30%\n재장전 시간 -45%\n내구력 +30',
+                materials: [
+                    { name: '고급 기계 부품', count: 2 },
+                    { name: '중량 총기 부품', count: 2 }
+                ],
+                cost: 17000
+            }
+        ]
     }
 ];
+
+// Helper to generate default crafting data for others
+const defaultCrafting = (grade) => {
+    const baseCost = grade === 'Common' ? 1000 : grade === 'Uncommon' ? 2000 : 5000;
+    return [
+        { level: 1, cost: baseCost, bonusStats: '-', materials: [{ name: '기계 부품', count: 5 }] },
+        { level: 2, cost: baseCost * 1.5, bonusStats: '대미지 +5%', materials: [{ name: '강화 부품', count: 2 }] },
+        { level: 3, cost: baseCost * 2, bonusStats: '대미지 +10%', materials: [{ name: '희귀 합금', count: 1 }] },
+        { level: 4, cost: baseCost * 3, bonusStats: '대미지 +15%\n재장전 속도 +10%', materials: [{ name: '코어 프로세서', count: 1 }] }
+    ];
+};
 
 const seedWeapons = async () => {
     try {
@@ -185,8 +249,10 @@ const seedWeapons = async () => {
             magazineSize: item.magazineSize || '30',
             fireMode: item.fireMode || '자동',
             stats: item.stats || { damage: 0, fireRate: 0, range: 0, stability: 0, mobility: 0, stealth: 0 },
-            crafting: item.crafting || [],
-            weight: 0,
+            // Use specific crafting if defined, otherwise use default
+            crafting: item.crafting && item.crafting.length > 0 ? item.crafting : defaultCrafting(item.grade),
+            penetration: item.penetration || '-',
+            weight: item.weight || (Math.random() * 10 + 5).toFixed(1),
             createdAt: new Date()
         }));
 
