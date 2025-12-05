@@ -18,7 +18,7 @@ const WeaponDBPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetchWeapons();
+        fetchWeapons().catch(err => console.error("Failed to fetch weapons:", err));
     }, []);
 
     const handleDelete = async (id) => {
@@ -27,9 +27,15 @@ const WeaponDBPage = () => {
         }
     };
 
-    const filteredWeapons = weapons.filter(weapon => {
+    console.log('Current weapons state:', weapons);
+
+    // Safeguard: Ensure weapons is an array
+    const safeWeapons = Array.isArray(weapons) ? weapons : [];
+
+    const filteredWeapons = safeWeapons.filter(weapon => {
+        if (!weapon) return false;
         const matchesTab = selectedTab === 'All' || weapon.type === selectedTab;
-        const matchesSearch = weapon.name?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = weapon.name ? weapon.name.toLowerCase().includes(searchTerm.toLowerCase()) : false;
         return matchesTab && matchesSearch;
     });
 
