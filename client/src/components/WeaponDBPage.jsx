@@ -173,15 +173,13 @@ const WeaponDBPage = () => {
                                 </div>
                             </div>
                 );
-                        })}
+                    })}
             </div>
-            )
-                        }
-        </div>
+            )}
 
-            { isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} /> }
-            </div >
-            );
+            {isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} />}
+        </div>
+    );
 };
 
 export default WeaponDBPage;
