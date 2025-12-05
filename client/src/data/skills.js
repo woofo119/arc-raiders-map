@@ -52,8 +52,8 @@ export const SKILL_DATA = {
 
             // Tier 2
             { id: "m14", name: "걷기 전에 기기", maxLevel: 5, description: "쓰러졌을 때 기어가는 속도가 빨라집니다. 기어가는 속도가 최대 35% 증가한다.", reqPoints: 36, x: 50, y: 35, icon: skillIcons.m14, prerequisites: ["m9", "m1"] },
-            { id: "m15", name: "추진력을 얻기 위함", maxLevel: 1, description: "전력 질주 회피 구르기 후, 잠깐 전력 질주가 기력을 소모하지 않습니다. 쿨다운 시간이 적용됩니다. 약 2초간 기력을 소모하지 않는다. 쿨은 약 15초.", reqPoints: 36, x: 55, y: 15, icon: skillIcons.m15, prerequisites: ["m6", "m3"] },
-            { id: "m16", name: "넘고 넘고 뛰어넘고", maxLevel: 1, description: "뛰어넘기가 더는 기력을 소모하지 않습니다.", reqPoints: 0, x: 45, y: 15, icon: skillIcons.m16, prerequisites: ["m10", "m3"] }
+            { id: "m15", name: "추진력을 얻기 위함", maxLevel: 1, description: "전력 질주 회피 구르기 후, 잠깐 전력 질주가 기력을 소모하지 않습니다. 쿨다운 시간이 적용됩니다. 약 2초간 기력을 소모하지 않는다. 쿨은 약 15초.", reqPoints: 36, x: 55, y: 15, icon: skillIcons.m15, prerequisites: ["m3"] },
+            { id: "m16", name: "넘고 넘고 뛰어넘고", maxLevel: 1, description: "뛰어넘기가 더는 기력을 소모하지 않습니다.", reqPoints: 0, x: 45, y: 15, icon: skillIcons.m16, prerequisites: ["m3"] }
         ]
     },
     survival: {
