@@ -37,7 +37,7 @@ export const SKILL_DATA = {
         skills: [
             { id: "m1", name: "차분한 산보", maxLevel: 1, description: "걸을 때도 가만히 서 있을 때처럼 기력이 회복됩니다. 기본 이동이 아니라 V를 누르고 걸을 때의 회복량이 늘어난다.", reqPoints: 0, x: 55, y: 45, icon: skillIcons.m1, prerequisites: ["m11"] },
             { id: "m2", name: "젊음의 폐", maxLevel: 5, description: "최대 기력이 증가합니다. 기력이 최대 25% 증가한다.", reqPoints: 0, x: 45, y: 55, icon: skillIcons.m2, prerequisites: ["m4"] },
-            { id: "m3", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 25, icon: skillIcons.m3, prerequisites: ["m14"] },
+            { id: "m3", name: "혈기 왕성 뜀박질", maxLevel: 1, description: "기력 소진 상태에서 더는 뛰어넘기 속도가 느려지지 않습니다.", reqPoints: 0, x: 50, y: 25, icon: skillIcons.m3, prerequisites: ["m14"] },
             { id: "m5", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 75, icon: skillIcons.m5, prerequisites: [] },
             { id: "m6", name: "구를 준비 완료", maxLevel: 5, description: "낙하 시, 낙법을 시전할 수 있는 타이밍이 길어집니다.", reqPoints: 0, x: 55, y: 25, icon: skillIcons.m6, prerequisites: ["m12"] },
             { id: "m9", name: "재빠른 재장전", maxLevel: 5, description: "재장전 속도 증가", reqPoints: 0, x: 45, y: 45, icon: skillIcons.m9, prerequisites: ["m2"] },
