@@ -70,18 +70,19 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             className="absolute transform -translate-x-1/2 -translate-y-1/2 group transition-all duration-200 md:hover:z-[100] pointer-events-none"
             style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
+            {/* Skill Icon Circle - Interactive Part */}
             <div
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full ${isActive ? 'border-4' : 'border-2'} flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation active:scale-95 md:active:scale-100
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
                             ? `border-${color} bg-gray-800 text-${color} shadow-[0_0_15px_rgba(0,0,0,0.5)]`
-                            : 'border-gray-600 bg-gray-800 text-gray-400 md:hover:border-gray-400'
+                            : 'border-gray-600 bg-gray-800 text-gray-400 hover:border-gray-400'
                     }
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
                 onClick={(e) => {
-                    onAdd(skill.id);
+                    if (!isLocked) onAdd(skill.id);
                 }}
                 onContextMenu={(e) => {
                     e.preventDefault();
@@ -112,7 +113,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                             <img
                                 src={skill.icon}
                                 alt={skill.name}
-                                className="w-3/4 h-3/4 object-contain transition-all duration-300 opacity-50 grayscale md:group-hover:grayscale-0 md:group-hover:opacity-80"
+                                className="w-3/4 h-3/4 object-contain transition-all duration-300 opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-80"
                                 onError={(e) => {
                                     e.target.style.display = 'none';
                                     e.target.parentElement.innerHTML = `<div class="text-[8px] text-center">${skill.name}</div>`;
@@ -266,31 +267,27 @@ const SkillTreePage = () => {
         { x1: 25.0, y1: 33.13, x2: 25.0, y2: 26.88 },
         { x1: 20.0, y1: 33.13, x2: 20.0, y2: 26.88 },
         { x1: 30.0, y1: 33.13, x2: 30.0, y2: 26.88 },
+        { x1: 20.0, y1: 23.13, x2: 20.0, y2: 17.81 },
         { x1: 24.16, y1: 23.32, x2: 21.26, y2: 17.52 },
+        { x1: 30.0, y1: 23.13, x2: 30.0, y2: 17.81 },
         { x1: 25.84, y1: 23.32, x2: 28.74, y2: 17.52 },
-        // Mobility (Root x=50, Left x=42, Right x=58 split to 54/62)
-        // Root m3 (50, 75) to columns
-        { x1: 48.74, y1: 72.48, x2: 43.26, y2: 66.68 }, // m3 -> m4 (Left)
-        { x1: 51.26, y1: 72.48, x2: 56.74, y2: 66.68 }, // m3 -> m13 (Right)
-
-        // Left Column (x=42)
-        { x1: 42.0, y1: 63.13, x2: 42.0, y2: 56.88 }, // m4 -> m2
-        { x1: 42.0, y1: 53.13, x2: 42.0, y2: 47.81 }, // m2 -> m7
-        { x1: 42.0, y1: 42.19, x2: 42.0, y2: 36.88 }, // m7 -> m15
-        { x1: 42.0, y1: 33.13, x2: 42.0, y2: 26.88 }, // m15 -> m10
-        { x1: 42.0, y1: 23.13, x2: 42.0, y2: 17.81 }, // m10 -> m_new3
-
-        // Right Column Start (m13 at 58, 65)
-        // Branch A (x=54)
-        { x1: 56.74, y1: 63.32, x2: 54.0, y2: 56.88 }, // m13 -> m11
-        { x1: 54.0, y1: 53.13, x2: 54.0, y2: 47.81 }, // m11 -> m1
-        { x1: 54.0, y1: 42.19, x2: 54.0, y2: 36.88 }, // m1 -> m_new2
-
-        // Branch B (x=62)
-        { x1: 59.26, y1: 63.32, x2: 62.0, y2: 56.88 }, // m13 -> m5
-        { x1: 62.0, y1: 53.13, x2: 62.0, y2: 47.81 }, // m5 -> m_new1
-        { x1: 62.0, y1: 42.19, x2: 62.0, y2: 36.88 }, // m_new1 -> m14
-        { x1: 62.0, y1: 33.13, x2: 62.0, y2: 26.88 }, // m14 -> m16
+        { x1: 48.74, y1: 72.48, x2: 45.84, y2: 66.68 },
+        { x1: 51.26, y1: 72.48, x2: 54.16, y2: 66.68 },
+        { x1: 45.0, y1: 63.13, x2: 45.0, y2: 56.88 },
+        { x1: 55.0, y1: 63.13, x2: 55.0, y2: 56.88 },
+        { x1: 45.0, y1: 53.13, x2: 45.0, y2: 47.81 },
+        { x1: 55.0, y1: 53.13, x2: 55.0, y2: 47.81 },
+        { x1: 46.26, y1: 42.48, x2: 49.16, y2: 36.68 },
+        { x1: 53.74, y1: 42.48, x2: 50.84, y2: 36.68 },
+        { x1: 45.0, y1: 42.19, x2: 45.0, y2: 36.88 },
+        { x1: 55.0, y1: 42.19, x2: 55.0, y2: 36.88 },
+        { x1: 50.0, y1: 33.13, x2: 50.0, y2: 26.88 },
+        { x1: 45.0, y1: 33.13, x2: 45.0, y2: 26.88 },
+        { x1: 55.0, y1: 33.13, x2: 55.0, y2: 26.88 },
+        { x1: 45.0, y1: 23.13, x2: 45.0, y2: 17.81 },
+        { x1: 49.16, y1: 23.32, x2: 46.26, y2: 17.52 },
+        { x1: 55.0, y1: 23.13, x2: 55.0, y2: 17.81 },
+        { x1: 50.84, y1: 23.32, x2: 53.74, y2: 17.52 },
         { x1: 73.74, y1: 72.48, x2: 70.84, y2: 66.68 },
         { x1: 76.26, y1: 72.48, x2: 79.16, y2: 66.68 },
         { x1: 70.0, y1: 63.13, x2: 70.0, y2: 56.88 },
@@ -304,7 +301,9 @@ const SkillTreePage = () => {
         { x1: 75.0, y1: 33.13, x2: 75.0, y2: 26.88 },
         { x1: 70.0, y1: 33.13, x2: 70.0, y2: 26.88 },
         { x1: 80.0, y1: 33.13, x2: 80.0, y2: 26.88 },
+        { x1: 70.0, y1: 23.13, x2: 70.0, y2: 17.81 },
         { x1: 74.16, y1: 23.32, x2: 71.26, y2: 17.52 },
+        { x1: 80.0, y1: 23.13, x2: 80.0, y2: 17.81 },
         { x1: 75.84, y1: 23.32, x2: 78.74, y2: 17.52 }
     ];
 
@@ -421,7 +420,11 @@ const SkillTreePage = () => {
                                         color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                         onAdd={(id) => {
                                             if (window.innerWidth < 768) {
-                                                // 모바일: 툴팁 표시 (항상)
+                                                // 모바일: 레벨업 수행
+                                                if (skillsState[id] < skill.maxLevel) {
+                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                                }
+                                                // 동시에 툴팁 표시
                                                 const el = document.getElementById(`skill-node-${skill.id}`);
                                                 if (el) {
                                                     const rect = el.getBoundingClientRect();
@@ -430,16 +433,9 @@ const SkillTreePage = () => {
                                                         rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
                                                     });
                                                 }
-
-                                                // 모바일: 레벨업 (잠금 해제된 경우만)
-                                                if (!isLocked && (skillsState[id] || 0) < skill.maxLevel) {
-                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
-                                                }
                                             } else {
-                                                // 데스크탑: 레벨업 (잠금 해제된 경우만)
-                                                if (!isLocked && (skillsState[id] || 0) < skill.maxLevel) {
-                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
-                                                }
+                                                if (skillsState[id] >= skill.maxLevel) return;
+                                                handleSkillChange(id, (skillsState[id] || 0) + 1);
                                             }
                                         }}
                                         onRemove={(id) => {
