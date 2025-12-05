@@ -39,7 +39,7 @@ export const SKILL_DATA = {
             { id: "m2", name: "젊음의 폐", maxLevel: 5, description: "최대 기력이 증가합니다. 기력이 최대 25% 증가한다.", reqPoints: 0, x: 45, y: 55, icon: skillIcons.m2, prerequisites: ["m4"] },
             { id: "m3", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 25, icon: skillIcons.m3, prerequisites: ["m14"] },
             { id: "m5", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 75, icon: skillIcons.m5, prerequisites: [] },
-            { id: "m6", name: "빠른 손놀림", maxLevel: 5, description: "무기 교체 속도 증가", reqPoints: 0, x: 55, y: 25, icon: skillIcons.m6, prerequisites: ["m12"] },
+            { id: "m6", name: "구를 준비 완료", maxLevel: 5, description: "낙하 시, 낙법을 시전할 수 있는 타이밍이 길어집니다.", reqPoints: 0, x: 55, y: 25, icon: skillIcons.m6, prerequisites: ["m12"] },
             { id: "m9", name: "재빠른 재장전", maxLevel: 5, description: "재장전 속도 증가", reqPoints: 0, x: 45, y: 45, icon: skillIcons.m9, prerequisites: ["m2"] },
             { id: "m10", name: "영웅적 도약", maxLevel: 5, description: "전력 질주 회피 구르기를 더 멀리까지 시전할 수 있습니다. 구르기 거리가 약 5~10% 증가한다.", reqPoints: 0, x: 45, y: 25, icon: skillIcons.m10, prerequisites: ["m7"] },
             { id: "m11", name: "튼튼한 발목", maxLevel: 5, description: "치명적이지 않은 높이에서 떨어질 때 받는 낙상 피해가 줄어듭니다.", reqPoints: 0, x: 55, y: 55, icon: skillIcons.m11, prerequisites: ["m13"] },
