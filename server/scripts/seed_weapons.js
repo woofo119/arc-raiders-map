@@ -308,30 +308,85 @@ const items = [
             { level: 4, cost: 13000, bonusStats: '발사 속도 -50%\n탄창 크기 +3\n내구력 +30', materials: [{ name: '기계 부품', count: 4 }, { name: '중량 총기 부품', count: 1 }] }
         ]
     },
-    // Remaining items with default templates
+
+    // --- Batch 4 (FINAL) ---
     {
-        name: 'Vulcano', nameKr: '볼카노', grade: 'Epic', image: '/MP/imgi_15_vulcano.png',
-        description: '근접 DPS 최강자 반자동 산탄총.',
-        ammoType: '산탄 (Shotgun)',
-        magazineSize: '8',
-        fireMode: '반자동 (Semi-Auto)',
-        stats: { damage: 110, fireRate: 12, range: 25, stability: 40, mobility: 65, stealth: 10 }
+        name: 'Vulcano', nameKr: '불카노', grade: 'Epic', image: '/MP/imgi_15_vulcano.png',
+        description: '탄 퍼짐은 적당하지만 거리에 따른 대미지 감소 폭이 큽니다.',
+        ammoType: '산탄총 탄약 (Shotgun)',
+        magazineSize: '6',
+        fireMode: '단발 (Single)',
+        penetration: '취약',
+        stats: { damage: 49.5, fireRate: 26.3, range: 26, stability: 68.6, mobility: 70.3, stealth: 15 },
+        weight: 8.0,
+        crafting: [
+            { level: 1, cost: 10000, bonusStats: '-', materials: [{ name: '불카노 설계도', count: 1 }, { name: '자성 가속기', count: 1 }, { name: '중량 총기 부품', count: 3 }, { name: '엑소더스 모듈', count: 1 }] },
+            { level: 2, cost: 13000, bonusStats: '발사 속도 +10%\n재장전 시간 -13%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 17000, bonusStats: '발사 속도 +20%\n재장전 시간 -26%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 1 }] },
+            { level: 4, cost: 22000, bonusStats: '발사 속도 +30%\n재장전 시간 -40%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 3 }] }
+        ]
     },
     {
         name: 'Osprey', nameKr: '오스프레이', grade: 'Rare', image: '/MP/imgi_17_osprey.png',
-        description: '스코프가 기본 장착된 초장거리 저격 소총 (Sniper).',
+        description: '안정적인 피해량과 정확도를 지녔습니다.',
         ammoType: '준중량 탄약 (Medium)',
-        magazineSize: '5',
-        fireMode: '볼트액션 (Bolt-Action)',
-        stats: { damage: 85, fireRate: 15, range: 95, stability: 60, mobility: 50, stealth: 80 }
+        magazineSize: '8',
+        fireMode: '볼트 액션 (Bolt Action)',
+        penetration: '준수',
+        stats: { damage: 45, fireRate: 17.7, range: 80.3, stability: 89.4, mobility: 45.9, stealth: 12 },
+        weight: 7.0,
+        crafting: [
+            { level: 1, cost: 7000, bonusStats: '-', materials: [{ name: '오스프레이 설계도', count: 1 }, { name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 3 }, { name: '전선', count: 7 }] },
+            { level: 2, cost: 10000, bonusStats: '볼트 액션 시간 -20%\n재장전 시간 -12.5%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '준중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 13000, bonusStats: '볼트 액션 시간 -40%\n재장전 시간 -25%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 1 }, { name: '준중량 총기 부품', count: 2 }] },
+            { level: 4, cost: 17000, bonusStats: '볼트 액션 시간 -60%\n재장전 시간 -37.5%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '준중량 총기 부품', count: 2 }] }
+        ]
     },
     {
         name: 'Jupiter', nameKr: '주피터', grade: 'Legendary', image: '/MP/imgi_18_jupiter.png',
-        description: '전설적인 위력의 저격 소총.',
-        ammoType: '에너지 (Energy)',
+        description: '에너지 탄약을 사용하는 볼트 액션 저격총입니다.',
+        ammoType: '에너지 탄창 (Energy)',
         magazineSize: '5',
-        stats: { damage: 150, fireRate: 10, range: 100, stability: 70, mobility: 40, stealth: 70 }
+        fireMode: '볼트 액션 (Bolt Action)',
+        penetration: '매우 강력',
+        stats: { damage: 55, fireRate: 7.67, range: 71.7, stability: 73.5, mobility: 39.2, stealth: 5 },
+        weight: 9.0,
+        crafting: [
+            { level: 1, cost: 27500, bonusStats: '-', materials: [{ name: '주피터 설계도', count: 1 }, { name: '자성 가속기', count: 3 }, { name: '정교한 총기 부품', count: 3 }, { name: '퀸 원자로', count: 1 }] }
+        ]
     },
+    {
+        name: 'Equalizer', nameKr: '이퀄라이저', grade: 'Legendary', image: '/MP/equalizer.png', // Needs upload or placeholder, assuming /MP/equalizer.png
+        description: '에너지 탄약을 사용하는 LMG 에너지 빔 소총입니다.',
+        ammoType: '에너지 탄창 (Energy)',
+        magazineSize: '50',
+        fireMode: '전자동 (Full-Auto)',
+        penetration: '매우 강력',
+        stats: { damage: 8, fireRate: 33.33, range: 68.2, stability: 84.6, mobility: 44.6, stealth: 1 },
+        weight: 14.0,
+        crafting: [
+            { level: 1, cost: 27500, bonusStats: '-', materials: [{ name: '이퀄라이저 설계도', count: 1 }, { name: '자성 가속기', count: 3 }, { name: '정교한 총기 부품', count: 3 }, { name: '퀸 원자로', count: 1 }] }
+        ]
+    },
+    {
+        name: 'Hullcracker', nameKr: '헐크래커', grade: 'Epic', image: '/MP/hullcracker.png', // Needs upload or placeholder
+        description: '아크에 명중할 때만 폭발하는 발사체를 발사합니다.',
+        ammoType: '발사기 탄약 (Launcher)',
+        magazineSize: '5',
+        fireMode: '펌프 액션 (Pump Action)',
+        penetration: '매우 강력',
+        stats: { damage: 100, fireRate: 20.3, range: 38.9, stability: 97.2, mobility: 67.9, stealth: 1 },
+        weight: 7.0,
+        crafting: [
+            { level: 1, cost: 10000, bonusStats: '-', materials: [{ name: '헐크래커 설계도', count: 1 }, { name: '자성 가속기', count: 1 }, { name: '중량 총기 부품', count: 3 }, { name: '엑소더스 모듈', count: 1 }] },
+            { level: 2, cost: 13000, bonusStats: '발사 속도 +18%\n내구력 +10', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 2 }] },
+            { level: 3, cost: 17000, bonusStats: '발사 속도 +25%\n내구력 +20', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 1 }] },
+            { level: 4, cost: 22000, bonusStats: '발사 속도 +53%\n내구력 +30', materials: [{ name: '고급 기계 부품', count: 2 }, { name: '중량 총기 부품', count: 3 }] }
+        ]
+    },
+
+
+    // --- Existing Verified (Torrente) ---
     {
         name: 'Torrente',
         nameKr: '토렌테',
@@ -374,7 +429,7 @@ const seedWeapons = async () => {
             name: `${item.name} (${item.nameKr})`,
             type: 'Main',
             grade: item.grade,
-            imageUrl: item.image,
+            imageUrl: item.image || '/logo.png', // Safe fallback
             description: item.description,
             ammoType: item.ammoType || '일반 탄약',
             magazineSize: item.magazineSize || '30',
