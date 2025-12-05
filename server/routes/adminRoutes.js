@@ -6,7 +6,8 @@ import {
     getBlacklist,
     addToBlacklist,
     removeFromBlacklist,
-    getUserDetails
+    getUserDetails,
+    getVisitorStats
 } from '../controllers/adminController.js';
 
 const router = express.Router();
@@ -14,6 +15,8 @@ const router = express.Router();
 // All routes are protected and admin-only
 router.use(protect);
 router.use(admin);
+
+router.get('/stats', getVisitorStats);
 
 router.route('/users')
     .get(getUsers);
