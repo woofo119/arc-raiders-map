@@ -142,7 +142,9 @@ const WeaponDBPage = () => {
                                                             )}
 
                                                             {/* Grade Label */}
-                                                            {GRADE_KR[weapon.grade] || weapon.grade}
+                                                            <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white font-bold uppercase tracking-wider backdrop-blur-sm border border-white/10">
+                                                                {GRADE_KR[weapon.grade] || weapon.grade}
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -165,20 +167,19 @@ const WeaponDBPage = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                            </div>
-                                            </div>
                                         ))}
+                                            </div>
                                 </div>
-                                </div>
-                );
+                                    );
                         })}
-            </div>
-                )}
+                                </div>
+                            )
+                        }
         </div>
 
-            { isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} /> }
-        </div >
-    );
+            {isUploadModalOpen && <WeaponUploadModal onClose={() => setIsUploadModalOpen(false)} />}
+            </div >
+            );
 };
 
-export default WeaponDBPage;
+            export default WeaponDBPage;
