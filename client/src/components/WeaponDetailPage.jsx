@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import useStore from '../store/useStore';
 import { ArrowLeft, Share2, AlertCircle } from 'lucide-react';
 
 const GRADE_COLORS = {
