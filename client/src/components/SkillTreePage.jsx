@@ -91,16 +91,34 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
                 {/* Icon */}
                 <div className="w-full h-full p-1 rounded-full overflow-hidden relative flex items-center justify-center">
                     {skill.icon ? (
-                        <img
-                            src={skill.icon}
-                            alt={skill.name}
-                            className={`w-3/4 h-3/4 object-contain transition-all duration-300 ${isActive ? 'opacity-100 grayscale-0' : 'opacity-50 grayscale md:group-hover:grayscale-0 md:group-hover:opacity-80'
-                                }`}
-                            onError={(e) => {
-                                e.target.style.display = 'none';
-                                e.target.parentElement.innerHTML = `<div class="text-[8px] text-center">${skill.name}</div>`;
-                            }}
-                        />
+                        isActive ? (
+                            /* Active State: Colored using CSS Mask */
+                            <div
+                                className="w-3/4 h-3/4 transition-all duration-300"
+                                style={{
+                                    maskImage: `url(${skill.icon})`,
+                                    maskSize: 'contain',
+                                    maskRepeat: 'no-repeat',
+                                    maskPosition: 'center',
+                                    WebkitMaskImage: `url(${skill.icon})`,
+                                    WebkitMaskSize: 'contain',
+                                    WebkitMaskRepeat: 'no-repeat',
+                                    WebkitMaskPosition: 'center',
+                                    backgroundColor: color === 'green-500' ? '#22c55e' : color === 'yellow-500' ? '#eab308' : '#ef4444'
+                                }}
+                            />
+                        ) : (
+                            /* Inactive State: Grayscale Image */
+                            <img
+                                src={skill.icon}
+                                alt={skill.name}
+                                className="w-3/4 h-3/4 object-contain transition-all duration-300 opacity-50 grayscale md:group-hover:grayscale-0 md:group-hover:opacity-80"
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.parentElement.innerHTML = `<div class="text-[8px] text-center">${skill.name}</div>`;
+                                }}
+                            />
+                        )
                     ) : (
                         <div className="w-full h-full flex items-center justify-center">
                             <div className="text-xs font-bold">{skill.name.slice(0, 1)}</div>
