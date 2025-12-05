@@ -255,24 +255,24 @@ const AdminPage = () => {
                     {/* Stats Cards */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-6xl mx-auto">
                         <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col">
-                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">Today's Visitors</span>
+                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">오늘 방문자 (전체)</span>
                             <span className="text-3xl font-black text-white">{stats.today.toLocaleString()}</span>
-                            <span className="text-gray-600 text-xs mt-1">오늘 방문자 수</span>
+                            <span className="text-gray-600 text-xs mt-1">비회원 포함 모든 접속</span>
                         </div>
                         <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col">
-                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">Weekly Visitors</span>
+                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">주간 방문자 (전체)</span>
                             <span className="text-3xl font-black text-arc-accent">{stats.weekly.toLocaleString()}</span>
                             <span className="text-gray-600 text-xs mt-1">최근 7일간 방문자 수</span>
                         </div>
                         <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col">
-                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">Total Users</span>
+                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">총 가입 유저</span>
                             <span className="text-3xl font-black text-white">{stats.totalUsers ? stats.totalUsers.toLocaleString() : 0}</span>
-                            <span className="text-gray-600 text-xs mt-1">총 가입 유저 수</span>
+                            <span className="text-gray-600 text-xs mt-1">현재까지 가입한 모든 회원</span>
                         </div>
                         <div className="bg-[#121212] p-6 rounded-xl border border-gray-800 flex flex-col">
-                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">Active Now</span>
+                            <span className="text-gray-500 text-sm font-bold uppercase mb-2">실시간 접속자 (회원)</span>
                             <span className="text-3xl font-black text-white">{stats.activeUsers ? stats.activeUsers.toLocaleString() : 0}</span>
-                            <span className="text-gray-600 text-xs mt-1">실시간 접속자 (5분 이내)</span>
+                            <span className="text-gray-600 text-xs mt-1">로그인 중인 유저 (5분 이내)</span>
                         </div>
                     </div>
 
