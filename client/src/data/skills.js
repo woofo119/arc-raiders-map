@@ -40,7 +40,7 @@ export const SKILL_DATA = {
             { id: "m3", name: "혈기 왕성 뜀박질", maxLevel: 1, description: "기력 소진 상태에서 더는 뛰어넘기 속도가 느려지지 않습니다.", reqPoints: 0, x: 50, y: 25, icon: skillIcons.m3, prerequisites: ["m14"] },
             { id: "m5", name: "날렵한 등반가", maxLevel: 5, description: "더 빨리 기어오르고 뛰어 넘을 수 있습니다.", reqPoints: 0, x: 50, y: 75, icon: skillIcons.m5, prerequisites: [] },
             { id: "m6", name: "구를 준비 완료", maxLevel: 5, description: "낙하 시, 낙법을 시전할 수 있는 타이밍이 길어집니다.", reqPoints: 0, x: 55, y: 25, icon: skillIcons.m6, prerequisites: ["m12"] },
-            { id: "m9", name: "재빠른 재장전", maxLevel: 5, description: "재장전 속도 증가", reqPoints: 0, x: 45, y: 45, icon: skillIcons.m9, prerequisites: ["m2"] },
+            { id: "m9", name: "추진력을 얻기 위함", maxLevel: 1, description: "전력 질주 회피 구르기 후, 잠깐 전력 질주가 기력을 소모하지 않습니다. 쿨다운 시간이 적용됩니다. 약 2초간 기력을 소모하지 않는다. 쿨은 약 15초.", reqPoints: 15, x: 45, y: 45, icon: skillIcons.m9, prerequisites: ["m2"] },
             { id: "m10", name: "영웅적 도약", maxLevel: 5, description: "전력 질주 회피 구르기를 더 멀리까지 시전할 수 있습니다. 구르기 거리가 약 5~10% 증가한다.", reqPoints: 0, x: 45, y: 25, icon: skillIcons.m10, prerequisites: ["m7"] },
             { id: "m11", name: "튼튼한 발목", maxLevel: 5, description: "치명적이지 않은 높이에서 떨어질 때 받는 낙상 피해가 줄어듭니다.", reqPoints: 0, x: 55, y: 55, icon: skillIcons.m11, prerequisites: ["m13"] },
             { id: "m12", name: "미친 듯 벽 타기", maxLevel: 5, description: "더 멀리 벽 도약을 시전할 수 있습니다. 도약 거리가 약 10% 증가한다.", reqPoints: 0, x: 55, y: 35, icon: skillIcons.m12, prerequisites: ["m1"] },
