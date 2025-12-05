@@ -71,7 +71,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, onAdd, onRem
             style={{ left: `${skill.x}%`, top: `${skill.y}%` }}
         >
             <div
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation active:scale-95 md:active:scale-100
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full ${isActive ? 'border-4' : 'border-2'} flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation active:scale-95 md:active:scale-100
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
