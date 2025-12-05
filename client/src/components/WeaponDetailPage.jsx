@@ -41,6 +41,13 @@ const WeaponDetailPage = () => {
         }
     }, [safeWeapons, id]);
 
+    // 🛡️ Safety Warning: If ID mismatch occurs after DB reset (stale client cache)
+    useEffect(() => {
+        if (id && weapons.length > 0 && !weapon) {
+            console.warn(`Weapon ID ${id} not found in loaded list. Stale cache suspected.`);
+        }
+    }, [id, weapons, weapon]);
+
     if (!weapon && safeWeapons.length === 0) return <div className="flex items-center justify-center h-screen text-white">Loading...</div>;
     if (!weapon && safeWeapons.length > 0) return (
         <div className="flex flex-col items-center justify-center h-screen text-white gap-4">
@@ -84,12 +91,7 @@ const WeaponDetailPage = () => {
     const crafting = (weapon && weapon.crafting && Array.isArray(weapon.crafting)) ? weapon.crafting : [];
     const getLevelData = (lvl) => crafting.find(c => c.level === lvl) || {};
 
-    // 🛡️ Safety Warning: If ID mismatch occurs after DB reset (stale client cache)
-    useEffect(() => {
-        if (id && weapons.length > 0 && !weapon) {
-            console.warn(`Weapon ID ${id} not found in loaded list. Stale cache suspected.`);
-        }
-    }, [id, weapons, weapon]);
+
 
     return (
         <div className="min-h-screen bg-black text-white p-4 md:p-8 overflow-y-auto pb-20">
