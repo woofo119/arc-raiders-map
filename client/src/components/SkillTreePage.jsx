@@ -59,8 +59,10 @@ const decodeSkills = (code) => {
 };
 
 // Long Press Hook for Mobile
+// Long Press Hook for Mobile
 const useLongPress = (onLongPress, onClick, { delay = 500 } = {}) => {
     const [startLongPress, setStartLongPress] = useState(false);
+    const isTouch = React.useRef(false); // Flag to ignore ghost mouse events
 
     useEffect(() => {
         let timerId;
@@ -80,11 +82,25 @@ const useLongPress = (onLongPress, onClick, { delay = 500 } = {}) => {
 
     const start = (e) => {
         // Prevent default context menu on touch devices
-        // e.preventDefault(); // Don't prevent default here, might block scrolling
+        if (e.type === 'touchstart') {
+            isTouch.current = true;
+        } else if (e.type === 'mousedown' && isTouch.current) {
+            // Ignore mouse down if it came from touch
+            return;
+        }
         setStartLongPress(true);
     };
 
     const stop = (e) => {
+        if (e.type === 'mouseup' && isTouch.current) {
+            // Reset touch flag after a specific delay or just ignore this event
+            // Ghost clicks usually happen immediately after touchend.
+            // We can reset isTouch later if needed, but usually a user won't switch input methods that fast.
+            // For safety, let's just ignore this mouseup.
+            isTouch.current = false;
+            return;
+        }
+
         if (startLongPress) {
             // Short press (Tap)
             if (onClick) onClick(e);
