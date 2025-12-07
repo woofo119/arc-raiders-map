@@ -58,12 +58,69 @@ const decodeSkills = (code) => {
     return newState;
 };
 
+// Long Press Hook for Mobile
+const useLongPress = (onLongPress, onClick, { delay = 500 } = {}) => {
+    const [startLongPress, setStartLongPress] = useState(false);
+
+    useEffect(() => {
+        let timerId;
+        if (startLongPress) {
+            timerId = setTimeout(() => {
+                onLongPress();
+                setStartLongPress(false);
+            }, delay);
+        } else {
+            clearTimeout(timerId);
+        }
+
+        return () => {
+            clearTimeout(timerId);
+        };
+    }, [startLongPress, onLongPress, delay]);
+
+    const start = (e) => {
+        // Prevent default context menu on touch devices
+        // e.preventDefault(); // Don't prevent default here, might block scrolling
+        setStartLongPress(true);
+    };
+
+    const stop = (e) => {
+        if (startLongPress) {
+            // Short press (Tap)
+            if (onClick) onClick(e);
+        }
+        setStartLongPress(false);
+    };
+
+    return {
+        onMouseDown: start,
+        onMouseUp: stop,
+        onMouseLeave: () => setStartLongPress(false),
+        onTouchStart: start,
+        onTouchEnd: stop,
+        onContextMenu: (e) => e.preventDefault() // Block default context menu
+    };
+};
+
 const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLocked, onAdd, onRemove, color }) => {
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
 
     // Position tooltip below for top-row skills (y < 30), otherwise above
     const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
+
+    // Long Press Handlers
+    const longPressHandlers = useLongPress(
+        () => {
+            // Long Press -> Remove
+            onRemove(skill.id);
+        },
+        () => {
+            // Click/Tap -> Add (Always fire to show tooltip, logic handled in parent)
+            onAdd(skill.id);
+        },
+        { delay: 500 }
+    );
 
     return (
         <div
@@ -72,7 +129,8 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
         >
             {/* Skill Icon Circle - Interactive Part */}
             <div
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto
+                {...longPressHandlers}
+                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -81,13 +139,6 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
                     }
                     ${isMaxed ? `bg-${color}/10 shadow-[0_0_10px_rgba(var(--color-${color}),0.3)]` : ''}
                 `}
-                onClick={(e) => {
-                    if (!isLocked) onAdd(skill.id);
-                }}
-                onContextMenu={(e) => {
-                    e.preventDefault();
-                    onRemove(skill.id);
-                }}
             >
                 {/* Icon */}
                 <div className="w-full h-full p-1 rounded-full overflow-hidden relative flex items-center justify-center">
@@ -167,6 +218,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
         </div>
     );
 };
+
 
 const SkillTreePage = () => {
     const [skillsState, setSkillsState] = useState({});
@@ -421,11 +473,7 @@ const SkillTreePage = () => {
                                         color={skill.category === 'conditioning' ? 'green-500' : skill.category === 'mobility' ? 'yellow-500' : 'red-500'}
                                         onAdd={(id) => {
                                             if (window.innerWidth < 768) {
-                                                // 모바일: 레벨업 수행
-                                                if (skillsState[id] < skill.maxLevel) {
-                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
-                                                }
-                                                // 동시에 툴팁 표시
+                                                // 모바일: 툴팁을 항상 표시 (잠김 여부와 관계없이)
                                                 const el = document.getElementById(`skill-node-${skill.id}`);
                                                 if (el) {
                                                     const rect = el.getBoundingClientRect();
@@ -434,18 +482,23 @@ const SkillTreePage = () => {
                                                         rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
                                                     });
                                                 }
+
+                                                // 잠겨있다면 레벨업 하지 않음
+                                                if (isLocked) return;
+
+                                                // 레벨업 수행
+                                                if (!skillsState[id] || skillsState[id] < skill.maxLevel) {
+                                                    handleSkillChange(id, (skillsState[id] || 0) + 1);
+                                                }
                                             } else {
+                                                if (isLocked) return;
                                                 if (skillsState[id] >= skill.maxLevel) return;
                                                 handleSkillChange(id, (skillsState[id] || 0) + 1);
                                             }
                                         }}
                                         onRemove={(id) => {
                                             if (window.innerWidth < 768) {
-                                                // 모바일: 레벨다운 수행
-                                                if (skillsState[id] && skillsState[id] > 0) {
-                                                    handleSkillChange(id, skillsState[id] - 1);
-                                                }
-                                                // 동시에 툴팁 표시
+                                                // 모바일: 툴팁 표시
                                                 const el = document.getElementById(`skill-node-${skill.id}`);
                                                 if (el) {
                                                     const rect = el.getBoundingClientRect();
@@ -453,6 +506,11 @@ const SkillTreePage = () => {
                                                         skill,
                                                         rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
                                                     });
+                                                }
+
+                                                // 레벨다운 수행
+                                                if (skillsState[id] && skillsState[id] > 0) {
+                                                    handleSkillChange(id, skillsState[id] - 1);
                                                 }
                                             } else {
                                                 if (!skillsState[id] || skillsState[id] <= 0) return;
