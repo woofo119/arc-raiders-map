@@ -23,7 +23,7 @@ const MapPage = () => {
                 {/* Mobile Sidebar Toggle Button - Only visible on small screens since Sidebar forces open on desktop */}
                 <button
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="lg:hidden absolute top-4 left-4 z-[50] p-2 bg-black/80 text-white rounded-lg border border-gray-700 backdrop-blur-sm"
+                    className="lg:hidden absolute top-4 left-4 z-[3010] p-2 bg-black/80 text-white rounded-lg border border-gray-700 backdrop-blur-sm"
                 >
                     <PanelLeft size={20} />
                 </button>
