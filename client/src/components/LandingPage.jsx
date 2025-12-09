@@ -313,7 +313,7 @@ const LandingPage = () => {
 
             {/* Footer */}
             <footer className="relative z-10 py-12 px-8 border-t border-white/10 bg-black text-center text-gray-600 text-sm">
-                <p>&copy; 2025 ARCR MAP. All rights reserved.</p>
+                <p>&copy; 2025 ARCR MAP. All rights reserved. 🚀</p>
                 <p className="mt-2">This is a fan-made site and is not affiliated with Embark Studios.</p>
             </footer>
         </div>
