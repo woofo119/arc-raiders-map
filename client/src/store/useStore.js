@@ -357,7 +357,7 @@ const useStore = create((set, get) => ({
         }
     },
 
-    addComment: async (postId, content) => {
+    addComment: async (postId, content, parentId = null) => {
         const { user } = get();
         if (!user) return { success: false, message: '로그인이 필요합니다.' };
 
@@ -365,7 +365,8 @@ const useStore = create((set, get) => ({
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const response = await axios.post(`${API_URL}/posts/${postId}/comments`, { content }, config);
+            // parentId param added
+            const response = await axios.post(`${API_URL}/posts/${postId}/comments`, { content, parentId }, config);
             set({ currentPost: response.data });
             return { success: true };
         } catch (error) {
@@ -389,7 +390,7 @@ const useStore = create((set, get) => ({
         }
     },
 
-    toggleLike: async (postId) => {
+    toggleLike: async (postId, target = 'post', commentId = null) => {
         const { user } = get();
         if (!user) return { success: false, message: '로그인이 필요합니다.' };
 
@@ -397,13 +398,29 @@ const useStore = create((set, get) => ({
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const response = await axios.put(`${API_URL}/posts/${postId}/like`, {}, config);
-            const updatedPost = response.data;
+            // Updated payload for generic like toggle
+            const response = await axios.put(`${API_URL}/posts/${postId}/like`, { target, commentId }, config);
+            const updatedData = response.data; // This returns { likes, dislikes, target } but we need full post update for simpler state management?
+            // Actually controller returns: res.json({ likes: targetObj.likes, dislikes: targetObj.dislikes, target: target });
+            // This is insufficient to update key parts of state if we rely on full object replacement.
+            // However, we can re-fetch the post or manually update the local state. 
+            // Better to Re-fetch post to ensure consistency or update blindly.
+            // Let's refetch post for simplicity and correctness, or manually patch.
 
-            set((state) => ({
-                currentPost: state.currentPost?._id === postId ? updatedPost : state.currentPost,
-                posts: state.posts.map(p => p._id === postId ? updatedPost : p)
-            }));
+            // To be safe and see points update etc, let's just refetch the post.
+            // Or rely on the fact that existing code expected updatedPost object.
+            // The previous controller returned updatedPost. My new controller returned partial data. 
+            // Wait, previous controller: `res.json(updatedPost);`
+            // My new controller: `res.json({ likes: targetObj.likes ... })`
+            // This BREAKS existing frontend expectation which sets `currentPost: updatedPost`.
+
+            // I should FIX THE CONTROLLER to return the full Post object, 
+            // OR update Frontend to handle partial update. Refetching is safest but slower.
+            // Let's change this to refetch.
+
+            const postRes = await axios.get(`${API_URL}/posts/${postId}`);
+            set({ currentPost: postRes.data });
+
             return { success: true };
         } catch (error) {
             return { success: false, message: error.response?.data?.message || '좋아요 처리 실패' };

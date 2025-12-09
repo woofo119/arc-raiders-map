@@ -28,6 +28,10 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     views: {
         type: Number,
         default: 0
@@ -41,6 +45,18 @@ const postSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true
+        },
+        likes: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        dislikes: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        parentId: {
+            type: mongoose.Schema.Types.ObjectId,
+            default: null
         },
         createdAt: {
             type: Date,

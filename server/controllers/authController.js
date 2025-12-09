@@ -69,6 +69,7 @@ export const registerUser = async (req, res) => {
                 nickname: user.nickname,
                 email: user.email,
                 role: user.role,
+                points: user.points,
                 token: generateToken(user._id),
             });
         } else {
@@ -112,6 +113,7 @@ export const loginUser = async (req, res) => {
                 nickname: user.nickname || user.username, // ë‹‰ë„¤ìž„ ì—†ìœ¼ë©´ ì•„ì´ë”” ë°˜í™˜
                 email: user.email,
                 role: user.role,
+                points: user.points,
                 token: generateToken(user._id),
                 isBanned: user.isBanned
             });
@@ -198,5 +200,30 @@ export const toggleBan = async (req, res) => {
     } catch (error) {
         console.error('Register Error:', error);
         res.status(500).json({ message: 'ì„œë²„ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.' });
+    }
+};
+
+// @desc    ³» Á¤º¸ Á¶È¸ (Æ÷ÀÎÆ® Æ÷ÇÔ)
+// @route   GET /api/auth/me
+// @access  Private
+export const getMe = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if (user) {
+            res.json({
+                _id: user._id,
+                username: user.username,
+                nickname: user.nickname,
+                email: user.email,
+                role: user.role,
+                points: user.points,
+                isBanned: user.isBanned
+            });
+        } else {
+            res.status(404).json({ message: '»ç¿ëÀÚ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: '¼­¹ö ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù.' });
     }
 };

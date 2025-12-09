@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as ImageIcon } from 'lucide-react';
+import { getRankIcon } from '../utils/rankUtils';
 
 const CommunityPage = () => {
     const navigate = useNavigate();
@@ -152,7 +153,7 @@ const CommunityPage = () => {
                                         <td className="p-4 text-center text-gray-400 text-sm">
                                             <div className="flex items-center justify-center gap-1">
                                                 <img
-                                                    src={`/levels/level_${post.author?.level || 1}.png`}
+                                                    src={getRankIcon(post.author?.level || 1)}
                                                     alt={`Lv.${post.author?.level || 1}`}
                                                     className="w-4 h-4 object-contain"
                                                 />
@@ -212,7 +213,7 @@ const CommunityPage = () => {
                                     <div className="flex items-center gap-2">
                                         <div className="flex items-center gap-1">
                                             <img
-                                                src={`/levels/level_${post.author?.level || 1}.png`}
+                                                src={getRankIcon(post.author?.level || 1)}
                                                 alt={`Lv.${post.author?.level || 1}`}
                                                 className="w-3 h-3 object-contain"
                                             />

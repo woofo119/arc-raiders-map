@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { MAPS, MARKER_CATEGORIES } from '../constants';
 import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap, Users } from 'lucide-react';
+import { getRankIcon } from '../utils/rankUtils';
 
 const Sidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
@@ -130,12 +131,19 @@ const Sidebar = ({ isOpen = false }) => {
                             </div>
                             <div className="flex flex-col opacity-100 flex">
                                 <span className="text-xs text-gray-500 font-bold uppercase">Operator</span>
-                                <button
-                                    onClick={openMyPageModal}
-                                    className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors"
-                                >
-                                    {user.nickname || user.username}
-                                </button>
+                                <div className="flex items-center gap-1">
+                                    <img
+                                        src={getRankIcon(user.level || 1)}
+                                        alt={`Lv.${user.level || 1}`}
+                                        className="w-3 h-3 object-contain"
+                                    />
+                                    <button
+                                        onClick={openMyPageModal}
+                                        className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors"
+                                    >
+                                        {user.nickname || user.username}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <button

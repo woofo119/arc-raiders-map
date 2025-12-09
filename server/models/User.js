@@ -49,6 +49,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    points: {
+        type: Number,
+        default: 0
+    },
     // 이력 관리 필드
     ipHistory: [{
         ip: String,
