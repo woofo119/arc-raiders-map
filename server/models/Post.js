@@ -24,6 +24,10 @@ const postSchema = new mongoose.Schema({
     images: [{
         type: String // 이미지 URL 배열
     }],
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     views: {
         type: Number,
         default: 0

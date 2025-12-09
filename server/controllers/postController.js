@@ -175,3 +175,37 @@ export const deleteComment = async (req, res) => {
         res.status(500).json({ message: '댓글 삭제 실패' });
     }
 };
+
+// @desc    게시글 좋아???��?
+// @route   PUT /api/posts/:id/like
+// @access  Private
+export const toggleLike = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (post) {
+            const alreadyLiked = post.likes.includes(req.user._id);
+
+            if (alreadyLiked) {
+                // 좋아??취소
+                post.likes = post.likes.filter(id => id.toString() !== req.user._id.toString());
+            } else {
+                // 좋아??추�?
+                post.likes.push(req.user._id);
+            }
+
+            await post.save();
+            
+            // ?�데?�트??게시글 반환 (?�요???�보 populate)
+             const updatedPost = await Post.findById(req.params.id)
+                .populate('author', 'nickname username level')
+                .populate('comments.author', 'nickname username level');
+
+            res.json(updatedPost);
+        } else {
+            res.status(404).json({ message: '게시글??찾을 ???�습?�다.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: '좋아??처리 ?�패' });
+    }
+};

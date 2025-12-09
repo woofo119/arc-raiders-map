@@ -142,6 +142,27 @@ const PostDetailPage = () => {
                     </div>
                 </div>
 
+                {/* Like Button */}
+                <div className="flex justify-center mb-8">
+                    <button
+                        onClick={async () => {
+                            if (!user) {
+                                alert('로그인이 필요합니다.');
+                                return;
+                            }
+                            await useStore.getState().toggleLike(currentPost._id);
+                        }}
+                        className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all ${user && currentPost.likes?.includes(user._id)
+                                ? 'bg-arc-accent text-white shadow-[0_0_15px_rgba(255,100,0,0.5)]'
+                                : 'bg-[#2a2a2a] text-gray-400 hover:bg-[#3a3a3a] hover:text-white'
+                            }`}
+                    >
+                        <span className="text-xl">👍</span>
+                        <span className="font-bold">{currentPost.likes?.length || 0}</span>
+                        <span className="text-sm">추천</span>
+                    </button>
+                </div>
+
                 {/* Comments */}
                 <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden p-6">
                     <h3 className="text-lg font-bold mb-6 flex items-center gap-2">

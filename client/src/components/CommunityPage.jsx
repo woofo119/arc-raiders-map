@@ -163,7 +163,16 @@ const CommunityPage = () => {
                                             {formatDate(post.createdAt)}
                                         </td>
                                         <td className="p-4 text-center text-gray-500 text-sm">
-                                            {post.views}
+                                            <div className="flex items-center justify-center gap-4">
+                                                <div className="flex items-center gap-1">
+                                                    <span className="text-sm">👍</span>
+                                                    <span>{post.likes?.length || 0}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <Eye size={14} />
+                                                    <span>{post.views}</span>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
@@ -214,9 +223,15 @@ const CommunityPage = () => {
                                         <span>•</span>
                                         <span>{formatDate(post.createdAt)}</span>
                                     </div>
-                                    <div className="flex items-center gap-1">
-                                        <Eye size={12} />
-                                        <span>{post.views}</span>
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-1">
+                                            <span className="text-xs">👍</span>
+                                            <span>{post.likes?.length || 0}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <Eye size={12} />
+                                            <span>{post.views}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

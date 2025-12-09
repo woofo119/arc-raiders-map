@@ -389,6 +389,27 @@ const useStore = create((set, get) => ({
         }
     },
 
+    toggleLike: async (postId) => {
+        const { user } = get();
+        if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.put(`${API_URL}/posts/${postId}/like`, {}, config);
+            const updatedPost = response.data;
+
+            set((state) => ({
+                currentPost: state.currentPost?._id === postId ? updatedPost : state.currentPost,
+                posts: state.posts.map(p => p._id === postId ? updatedPost : p)
+            }));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || '좋아요 처리 실패' };
+        }
+    },
+
     // --------------------------------------------------------------------------
     // 💾 UI 상태 (Persisted UI State) - 마커 생성 폼 설정 기억
     fetchWeapons: async () => {
