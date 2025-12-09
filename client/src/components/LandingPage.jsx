@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield, Users, LogIn, LogOut, User } from 'lucide-react';
 import useStore from '../store/useStore';
 import LevelBadge from './LevelBadge';
+import { calculateLevelInfo } from '../utils/levelLogic';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ const LandingPage = () => {
                                     onClick={openMyPageModal}
                                     className="hover:text-arc-accent transition-colors flex items-center gap-1"
                                 >
-                                    <LevelBadge level={user.level || 1} size="w-5 h-5" />
+                                    <LevelBadge level={calculateLevelInfo(user.points || 0).level} size="w-5 h-5" />
                                     <span className="text-white font-bold">{user.nickname || user.username}</span>
                                     <span className="hidden md:inline">님</span>
                                 </button>

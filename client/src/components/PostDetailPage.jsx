@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { ArrowLeft, User, Clock, Eye, MoreVertical, Trash2, Edit, MessageSquare, Heart, CornerDownRight } from 'lucide-react';
 import LevelBadge from './LevelBadge';
+import { calculateLevelInfo } from '../utils/levelLogic';
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -124,7 +125,7 @@ const PostDetailPage = () => {
                             <div className="flex items-center gap-4">
                                 <span className="flex items-center gap-1 text-gray-300 font-bold">
                                     <User size={14} />
-                                    <LevelBadge level={currentPost.author?.level || 1} size="w-5 h-5" className="mx-1" />
+                                    <LevelBadge level={calculateLevelInfo(currentPost.author?.points || 0).level} size="w-5 h-5" className="mx-1" />
                                     {currentPost.author?.nickname || currentPost.author?.username || '익명'}
                                 </span>
                                 <span className="flex items-center gap-1">
@@ -263,7 +264,7 @@ const CommentItem = ({
                 <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-2">
                         <span className="font-bold text-gray-300 flex items-center gap-1">
-                            <LevelBadge level={comment.author?.level || 1} size="w-5 h-5" />
+                            <LevelBadge level={calculateLevelInfo(comment.author?.points || 0).level} size="w-5 h-5" />
                             <span className="ml-1">
                                 {comment.author?.nickname || comment.author?.username || '익명'}
                             </span>

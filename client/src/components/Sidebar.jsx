@@ -5,6 +5,7 @@ import { MAPS, MARKER_CATEGORIES } from '../constants';
 import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap, Users } from 'lucide-react';
 import LevelBadge from './LevelBadge';
 import ExperienceBar from './ExperienceBar';
+import { calculateLevelInfo } from '../utils/levelLogic';
 
 const Sidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
@@ -133,7 +134,7 @@ const Sidebar = ({ isOpen = false }) => {
                             <div className="flex flex-col opacity-100 flex flex-1 min-w-0">
                                 <span className="text-xs text-gray-500 font-bold uppercase mb-1">Operator</span>
                                 <div className="flex items-center gap-2">
-                                    <LevelBadge level={user.level || 1} size="w-5 h-5" />
+                                    <LevelBadge level={calculateLevelInfo(user.points || 0).level} size="w-5 h-5" />
                                     <button
                                         onClick={openMyPageModal}
                                         className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors truncate"
