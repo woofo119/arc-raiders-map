@@ -77,6 +77,13 @@ app.use((req, res, next) => {
 });
 
 // 라우트 설정
+import notificationRoutes from './routes/notificationRoutes.js';
+
+// ... (imports)
+
+// ...
+
+app.use('/api/notifications', notificationRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/markers', markerRoutes);
 app.use('/api/posts', postRoutes);

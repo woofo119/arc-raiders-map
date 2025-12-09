@@ -4,6 +4,7 @@ import { ArrowRight, Map as MapIcon, BookOpen, Zap, Box, Crosshair, Shield, User
 import useStore from '../store/useStore';
 import LevelBadge from './LevelBadge';
 import { calculateLevelInfo } from '../utils/levelLogic';
+import NotificationDropdown from './NotificationDropdown';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -69,11 +70,14 @@ const LandingPage = () => {
                     <div className="flex items-center gap-2 md:gap-6 text-xs md:text-sm font-medium text-gray-300">
                         <button
                             onClick={() => navigate('/community')}
-                            className="hover:text-arc-accent transition-colors"
+                            className="hover:text-arc-accent transition-colors mr-2"
                         >
                             커뮤니티
                         </button>
-                        <span className="text-gray-700 hidden md:inline">|</span>
+
+                        {user && <NotificationDropdown />}
+
+                        <span className="text-gray-700 hidden md:inline mx-2">|</span>
 
                         {user ? (
                             <>
@@ -152,7 +156,10 @@ const LandingPage = () => {
                                     <div className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold border border-blue-500/30">NEW</div>
                                 </div>
                                 <h3 className="text-3xl font-bold mb-2 group-hover:text-yellow-400 relative z-10">스킬 트리 (Skill Tree)</h3>
-                                <p className="text-gray-300 text-lg mb-4 relative z-10 max-w-xl">나만의 최적화된 스킬 트리를 구성하고 공유하세요. 생존을 위한 전략의 시작입니다.</p>
+                                <p className="text-gray-300 text-lg mb-4 relative z-10 max-w-xl">
+                                    나만의 최적화된 스킬 트리를 구성하고 공유하세요.<br />
+                                    생존을 위한 전략의 시작입니다.
+                                </p>
                                 <button className="bg-yellow-500 text-black px-6 py-3 rounded-xl text-base font-bold hover:bg-yellow-400 transition-colors relative z-10 flex items-center gap-2">
                                     <span>구성하기</span>
                                     <ArrowRight size={18} />
@@ -260,7 +267,7 @@ const LandingPage = () => {
                             title: "The Evolution of ARC Raiders EP2: The Life of a Raider",
                             date: "2024. 10. 21",
                             link: "https://arcraiders.nexon.com/ko-KR/news/39",
-                            image: "https://img.youtube.com/vi/C8w79-x1gqE/maxresdefault.jpg"
+                            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/capsule_616x353.jpg"
                         },
                         {
                             id: 38,
@@ -274,7 +281,7 @@ const LandingPage = () => {
                             title: "A Scrappy origin story",
                             date: "2024. 10. 16",
                             link: "https://arcraiders.nexon.com/ko-KR/news/37",
-                            image: "https://img.youtube.com/vi/QjJ2wKCMq5w/maxresdefault.jpg"
+                            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/capsule_616x353.jpg"
                         }
                     ].map((item) => (
                         <div

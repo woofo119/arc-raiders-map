@@ -1,4 +1,5 @@
 import Post from '../models/Post.js';
+import Notification from '../models/Notification.js';
 import User from '../models/User.js';
 import { calculateLevel } from '../utils/levelUtils.js';
 
@@ -150,13 +151,45 @@ export const addComment = async (req, res) => {
                 parentId: parentId || null // 대댓글인 경우 부모 댓글 ID 저장
             };
 
+            // 알림 생성 로직
+            // 1. 게시글 작성자에게 알림 (내 글이 아닐 경우)
+            if (post.author.toString() !== req.user._id.toString()) {
+                await Notification.create({
+                    recipient: post.author,
+                    sender: req.user._id,
+                    type: 'comment',
+                    post: post._id,
+                    commentId: comment._id,
+                    isRead: false
+                });
+            }
+
+            // 2. 답글일 경우, 원 댓글 작성자에게 알림 (내 댓글이 아닐 경우)
+            if (parentId) {
+                const parentComment = post.comments.id(parentId);
+                if (parentComment && parentComment.author.toString() !== req.user._id.toString()) {
+                    // 게시글 작성자와 원 댓글 작성자가 다를 때만 'reply' 알림 수신 (중복 방지)
+                    if (parentComment.author.toString() !== post.author.toString()) {
+                        await Notification.create({
+                            recipient: parentComment.author,
+                            sender: req.user._id,
+                            type: 'reply',
+                            post: post._id,
+                            commentId: comment._id,
+                            isRead: false
+                        });
+                    }
+                    // 만약 같다면 위에서 'comment'로 알림이 갔음.
+                }
+            }
+
             post.comments.push(comment);
             await post.save();
 
             // 포인트 지급: 댓글 작성 +5
             await updatePoints(req.user._id, 5);
 
-            // Populate author info for the updated post
+            // Populate author info
             await post.populate('content author', 'nickname username level points');
             await post.populate('comments.author', 'nickname username level points');
 

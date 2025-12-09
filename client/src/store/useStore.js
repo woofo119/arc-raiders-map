@@ -51,6 +51,7 @@ const useStore = create((set, get) => ({
 
             localStorage.setItem('user', JSON.stringify(updatedUser)); // Persist update
             set({ user: updatedUser });
+            get().fetchNotifications(); // 알림 불러오기
         } catch (error) {
             console.error('Auth check failed:', error);
             // Optional: if 401, logout? For now just log error.
@@ -486,6 +487,69 @@ const useStore = create((set, get) => ({
             return { success: true };
         } catch (error) {
             return { success: false, message: error.response?.data?.message || '무기 삭제 실패' };
+        }
+    },
+
+    // --------------------------------------------------------------------------
+    // 🔔 알림 상태 (Notification State)
+    // --------------------------------------------------------------------------
+    notifications: [],
+    unreadCount: 0,
+
+    fetchNotifications: async () => {
+        const { user } = get();
+        if (!user) return;
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.get(`${API_URL}/notifications`, config);
+            const notifications = response.data;
+            const unreadCount = notifications.filter(n => !n.isRead).length;
+
+            set({ notifications, unreadCount });
+        } catch (error) {
+            console.error('알림 불러오기 실패:', error);
+        }
+    },
+
+    markNotificationAsRead: async (id) => {
+        const { user, notifications } = get();
+        if (!user) return;
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            await axios.put(`${API_URL}/notifications/${id}/read`, {}, config);
+
+            // 로컬 상태 업데이트
+            const updatedNotifications = notifications.map(n =>
+                n._id === id ? { ...n, isRead: true } : n
+            );
+            const unreadCount = updatedNotifications.filter(n => !n.isRead).length;
+
+            set({ notifications: updatedNotifications, unreadCount });
+        } catch (error) {
+            console.error('알림 읽음 처리 실패:', error);
+        }
+    },
+
+    markAllNotificationsAsRead: async () => {
+        const { user, notifications } = get();
+        if (!user) return;
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            await axios.put(`${API_URL}/notifications/read-all`, {}, config);
+
+            const updatedNotifications = notifications.map(n => ({ ...n, isRead: true }));
+            set({ notifications: updatedNotifications, unreadCount: 0 });
+        } catch (error) {
+            console.error('전체 알림 읽음 처리 실패:', error);
         }
     },
 }));
