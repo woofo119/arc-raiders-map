@@ -141,7 +141,7 @@ const CommunityPage = () => {
                                                     {post.title}
                                                 </span>
                                                 {post.comments?.length > 0 && (
-                                                    <span className="flex items-center gap-1 text-arc-accent text-xs">
+                                                    <span className="flex items-center gap-1 text-gray-400 text-xs">
                                                         <MessageSquare size={12} fill="currentColor" />
                                                         <span>{post.comments.length}</span>
                                                     </span>
@@ -170,7 +170,7 @@ const CommunityPage = () => {
                                         <td className="p-4 text-center text-gray-500 text-sm">
                                             <div className="flex items-center justify-center gap-4">
                                                 <div className="flex items-center gap-1">
-                                                    <Heart size={14} className={post.likes?.includes(user?._id) ? "text-arc-accent fill-arc-accent" : ""} />
+                                                    <Heart size={14} className="text-gray-500" />
                                                     <span>{post.likes?.length || 0}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1">
@@ -207,7 +207,7 @@ const CommunityPage = () => {
                                         <h3 className="text-white font-bold text-lg line-clamp-2">
                                             {post.title}
                                             {post.comments?.length > 0 && (
-                                                <span className="inline-flex items-center gap-0.5 text-arc-accent text-sm ml-2 align-middle">
+                                                <span className="inline-flex items-center gap-0.5 text-gray-400 text-sm ml-2 align-middle">
                                                     <MessageSquare size={12} fill="currentColor" />
                                                     <span>{post.comments.length}</span>
                                                 </span>
@@ -232,7 +232,7 @@ const CommunityPage = () => {
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <div className="flex items-center gap-1">
-                                            <Heart size={12} className={post.likes?.includes(user?._id) ? "text-arc-accent fill-arc-accent" : ""} />
+                                            <Heart size={12} className="text-gray-500" />
                                             <span>{post.likes?.length || 0}</span>
                                         </div>
                                         <div className="flex items-center gap-1">

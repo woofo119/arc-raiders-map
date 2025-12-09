@@ -28,6 +28,7 @@ const updatePoints = async (userId, amount) => {
 export const getPosts = async (req, res) => {
     try {
         const posts = await Post.find({})
+            .select('-content') // Exclude content field for performance
             .populate('author', 'nickname username level points')
             .sort({ createdAt: -1 });
         res.json(posts);
