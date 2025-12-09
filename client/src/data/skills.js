@@ -52,7 +52,7 @@ export const SKILL_DATA = {
 
             // Tier 1
             { id: "m4", name: "마라톤 선수", maxLevel: 5, description: "이동으로 소모하는 기력이 줄어듭니다. 기력 소모가 최대 25% 감소한다.", reqPoints: 0, x: 44, y: 61, icon: skillIcons.m4, prerequisites: ["m5"] },
-            { id: "m7", name: "힘들이지 않고 구르기", maxLevel: 5, description: "회피 구르기로 소모하는 기력이 줄어듭니다. 3레벨에서 기력 감소가 최소가 되며, 구르기 횟수가 추가된다.", reqPoints: 0, x: 44, y: 43, icon: skillIcons.m7, prerequisites: ["m9"] },
+            { id: "m7", name: "힘들이지 않고 구르기", maxLevel: 5, description: "회피 구르기로 소모하는 기력이 줄어듭니다. 3레벨에서 기력 감소가 최소가 되며, 구르기 횟수가 추가된다.", reqPoints: 0, x: 44, y: 34, icon: skillIcons.m7, prerequisites: ["m9"] },
 
             // Tier 2
             { id: "m14", name: "걷기 전에 기기", maxLevel: 5, description: "쓰러졌을 때 기어가는 속도가 빨라집니다. 기어가는 속도가 최대 35% 증가한다.", reqPoints: 0, x: 50, y: 34, icon: skillIcons.m14, prerequisites: ["m9", "m1"] },
