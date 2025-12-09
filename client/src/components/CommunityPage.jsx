@@ -168,6 +168,10 @@ const CommunityPage = () => {
                                                     <span>{post.likes?.length || 0}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1">
+                                                    <MessageSquare size={14} />
+                                                    <span>{post.comments?.length || 0}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1">
                                                     <Eye size={14} />
                                                     <span>{post.views}</span>
                                                 </div>
@@ -222,6 +226,10 @@ const CommunityPage = () => {
                                         <div className="flex items-center gap-1">
                                             <span className="text-xs">👍</span>
                                             <span>{post.likes?.length || 0}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <MessageSquare size={12} />
+                                            <span>{post.comments?.length || 0}</span>
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <Eye size={12} />

@@ -94,98 +94,12 @@ const PostDetailPage = () => {
         }
     };
 
-    // Recursive component for comments
-    const CommentItem = ({ comment, depth = 0 }) => {
-        const isReplying = activeReplyId === comment._id;
-        const replies = currentPost.comments.filter(c => c.parentId === comment._id);
-
-        return (
-            <div className={`border-b border-gray-800 last:border-0 ${depth > 0 ? 'ml-8 border-l-2 border-l-gray-800 pl-4' : ''}`}>
-                <div className="py-6">
-                    <div className="flex justify-between items-start mb-2">
-                        <div className="flex items-center gap-2">
-                            <span className="font-bold text-gray-300 flex items-center gap-1">
-                                <LevelBadge level={comment.author?.level || 1} size="w-5 h-5" />
-                                <span className="ml-1">
-                                    {comment.author?.nickname || comment.author?.username || '익명'}
-                                </span>
-                            </span>
-                            <span className="text-xs text-gray-500">
-                                {formatDate(comment.createdAt)}
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            {/* Comment Like Button */}
-                            <button
-                                onClick={() => handleLike('comment', comment._id)}
-                                className={`flex items-center gap-1 text-xs px-2 py-1 rounded hover:bg-white/10 transition-colors ${comment.likes?.includes(user?._id) ? 'text-arc-accent' : 'text-gray-500'}`}
-                            >
-                                <Heart size={14} fill={comment.likes?.includes(user?._id) ? "currentColor" : "none"} />
-                                <span>{comment.likes?.length || 0}</span>
-                            </button>
-
-                            {/* Reply Toggle */}
-                            <button
-                                onClick={() => setActiveReplyId(isReplying ? null : comment._id)}
-                                className="text-gray-500 hover:text-blue-400 transition-colors text-xs flex items-center gap-1"
-                            >
-                                <MessageSquare size={14} />
-                                답글
-                            </button>
-
-                            {(user && (user._id === comment.author?._id || user.role === 'admin')) && (
-                                <button
-                                    onClick={() => handleCommentDelete(comment._id)}
-                                    className="text-gray-500 hover:text-red-400 transition-colors"
-                                >
-                                    <Trash2 size={14} />
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
-                        {comment.content}
-                    </p>
-
-                    {/* Reply Form */}
-                    {isReplying && (
-                        <div className="mt-4 mb-4 flex gap-2 pl-4 border-l-2 border-arc-accent">
-                            <input
-                                type="text"
-                                value={replyContent[comment._id] || ''}
-                                onChange={(e) => setReplyContent({ ...replyContent, [comment._id]: e.target.value })}
-                                placeholder="답글을 입력하세요..."
-                                className="flex-1 bg-black/50 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:border-arc-accent focus:outline-none"
-                                autoFocus
-                            />
-                            <button
-                                onClick={() => handleReplySubmit(comment._id)}
-                                className="bg-arc-accent hover:bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded transition-colors"
-                            >
-                                등록
-                            </button>
-                        </div>
-                    )}
-                </div>
-
-                {/* Render Replies */}
-                {replies.length > 0 && (
-                    <div className="mt-2">
-                        {replies.map(reply => (
-                            <CommentItem key={reply._id} comment={reply} depth={depth + 1} />
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
-    };
-
-    if (!currentPost) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">로딩 중...</div>;
-
-    const isAuthor = user && currentPost.author && (user._id === currentPost.author._id || user.role === 'admin');
-
     // Initial Filter: Only show root comments (parentId is null or missing)
     const rootComments = currentPost.comments?.filter(c => !c.parentId) || [];
+
+    const handleReplyChange = (commentId, value) => {
+        setReplyContent(prev => ({ ...prev, [commentId]: value }));
+    };
 
     return (
         <div className="flex-1 bg-[#0f0f0f] text-white overflow-y-auto h-screen p-8">
@@ -294,7 +208,20 @@ const PostDetailPage = () => {
                     <div className="space-y-2">
                         {rootComments.length > 0 ? (
                             rootComments.map((comment) => (
-                                <CommentItem key={comment._id} comment={comment} />
+                                <CommentItem
+                                    key={comment._id}
+                                    comment={comment}
+                                    activeReplyId={activeReplyId}
+                                    setActiveReplyId={setActiveReplyId}
+                                    replyContent={replyContent}
+                                    onReplyChange={handleReplyChange}
+                                    onReplySubmit={handleReplySubmit}
+                                    onLike={handleLike}
+                                    onDelete={handleCommentDelete}
+                                    user={user}
+                                    allComments={currentPost.comments}
+                                    formatDate={formatDate}
+                                />
                             ))
                         ) : (
                             <div className="text-center text-gray-500 py-4">
@@ -304,6 +231,119 @@ const PostDetailPage = () => {
                     </div>
                 </div>
             </div>
+        </div>
+    );
+};
+
+// Extracted CommentItem Component
+const CommentItem = ({
+    comment,
+    depth = 0,
+    activeReplyId,
+    setActiveReplyId,
+    replyContent,
+    onReplyChange,
+    onReplySubmit,
+    onLike,
+    onDelete,
+    user,
+    allComments,
+    formatDate
+}) => {
+    const isReplying = activeReplyId === comment._id;
+    const replies = allComments.filter(c => c.parentId === comment._id);
+
+    return (
+        <div className={`border-b border-gray-800 last:border-0 ${depth > 0 ? 'ml-8 border-l-2 border-l-gray-800 pl-4' : ''}`}>
+            <div className="py-6">
+                <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center gap-2">
+                        <span className="font-bold text-gray-300 flex items-center gap-1">
+                            <LevelBadge level={comment.author?.level || 1} size="w-5 h-5" />
+                            <span className="ml-1">
+                                {comment.author?.nickname || comment.author?.username || '익명'}
+                            </span>
+                        </span>
+                        <span className="text-xs text-gray-500">
+                            {formatDate(comment.createdAt)}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        {/* Comment Like Button */}
+                        <button
+                            onClick={() => onLike('comment', comment._id)}
+                            className={`flex items-center gap-1 text-xs px-2 py-1 rounded hover:bg-white/10 transition-colors ${comment.likes?.includes(user?._id) ? 'text-arc-accent' : 'text-gray-500'}`}
+                        >
+                            <Heart size={14} fill={comment.likes?.includes(user?._id) ? "currentColor" : "none"} />
+                            <span>{comment.likes?.length || 0}</span>
+                        </button>
+
+                        {/* Reply Toggle */}
+                        <button
+                            onClick={() => setActiveReplyId(isReplying ? null : comment._id)}
+                            className="text-gray-500 hover:text-blue-400 transition-colors text-xs flex items-center gap-1"
+                        >
+                            <MessageSquare size={14} />
+                            답글
+                        </button>
+
+                        {(user && (user._id === comment.author?._id || user.role === 'admin')) && (
+                            <button
+                                onClick={() => onDelete(comment._id)}
+                                className="text-gray-500 hover:text-red-400 transition-colors"
+                            >
+                                <Trash2 size={14} />
+                            </button>
+                        )}
+                    </div>
+                </div>
+                <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                    {comment.content}
+                </p>
+
+                {/* Reply Form */}
+                {isReplying && (
+                    <div className="mt-4 mb-4 flex gap-2 pl-4 border-l-2 border-arc-accent">
+                        <input
+                            type="text"
+                            value={replyContent[comment._id] || ''}
+                            onChange={(e) => onReplyChange(comment._id, e.target.value)}
+                            placeholder="답글을 입력하세요..."
+                            className="flex-1 bg-black/50 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:border-arc-accent focus:outline-none"
+                            autoFocus
+                        />
+                        <button
+                            onClick={() => onReplySubmit(comment._id)}
+                            className="bg-arc-accent hover:bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded transition-colors"
+                        >
+                            등록
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Render Replies */}
+            {replies.length > 0 && (
+                <div className="mt-2">
+                    {replies.map(reply => (
+                        <CommentItem
+                            key={reply._id}
+                            comment={reply}
+                            depth={depth + 1}
+                            activeReplyId={activeReplyId}
+                            setActiveReplyId={setActiveReplyId}
+                            replyContent={replyContent}
+                            onReplyChange={onReplyChange}
+                            onReplySubmit={onReplySubmit}
+                            onLike={onLike}
+                            onDelete={onDelete}
+                            user={user}
+                            allComments={allComments}
+                            formatDate={formatDate}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
