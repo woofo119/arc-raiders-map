@@ -105,7 +105,7 @@ const PostDetailPage = () => {
                     <div className="flex justify-between items-start mb-2">
                         <div className="flex items-center gap-2">
                             <span className="font-bold text-gray-300 flex items-center gap-1">
-                                <LevelBadge level={comment.author?.level || 1} size="w-4 h-4" />
+                                <LevelBadge level={comment.author?.level || 1} size="w-5 h-5" />
                                 <span className="ml-1">
                                     {comment.author?.nickname || comment.author?.username || '익명'}
                                 </span>

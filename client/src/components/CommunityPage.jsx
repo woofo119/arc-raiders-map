@@ -152,7 +152,7 @@ const CommunityPage = () => {
                                         </td>
                                         <td className="p-4 text-center text-gray-400 text-sm">
                                             <div className="flex items-center justify-center gap-1">
-                                                <LevelBadge level={post.author?.level || 1} size="w-5 h-5" />
+                                                <LevelBadge level={post.author?.level || 1} size="w-6 h-6" />
                                                 <span className="ml-1">
                                                     {post.author?.nickname || post.author?.username || '익명'}
                                                 </span>
