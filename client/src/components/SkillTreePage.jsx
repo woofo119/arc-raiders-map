@@ -84,9 +84,9 @@ const useLongPress = (onLongPress, onClick, { delay = 500 } = {}) => {
         // Prevent default context menu on touch devices
         if (e.type === 'touchstart') {
             isTouch.current = true;
-        } else if (e.type === 'mousedown' && isTouch.current) {
-            // Ignore mouse down if it came from touch
-            return;
+        } else if (e.type === 'mousedown') {
+            if (isTouch.current) return;
+            if (e.button !== 0) return; // Only left click starts long press/click
         }
         setStartLongPress(true);
     };
@@ -122,6 +122,11 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
     const isMaxed = currentLevel >= skill.maxLevel;
     const isActive = currentLevel > 0;
 
+    // Sizing Logic
+    // Big if: reqPoints > 0 OR it is a root skill (c1, m5, s16)
+    const isRootSkill = ['c1', 'm5', 's16'].includes(skill.id);
+    const isBig = skill.reqPoints > 0 || isRootSkill;
+
     // Position tooltip below for top-row skills (y < 30), otherwise above
     const tooltipPosition = skill.y < 30 ? 'top-full mt-3' : 'bottom-full mb-3';
 
@@ -146,7 +151,11 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
             {/* Skill Icon Circle - Interactive Part */}
             <div
                 {...longPressHandlers}
-                className={`w-14 h-14 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    onRemove(skill.id);
+                }}
+                className={`${isBig ? 'w-14 h-14 md:w-24 md:h-24' : 'w-10 h-10 md:w-16 md:h-16'} rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -407,7 +416,7 @@ const SkillTreePage = () => {
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
                     <div className="absolute top-4 left-0 right-0 h-20 z-20 pointer-events-none w-full">
-                        <div className="absolute left-[25%] -translate-x-1/2 text-center w-1/3">
+                        <div className="absolute left-[20%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-green-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
                             <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
                         </div>
@@ -415,7 +424,7 @@ const SkillTreePage = () => {
                             <h2 className="text-yellow-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.mobility.label}</h2>
                             <p className="text-yellow-400/80 text-sm font-mono">{points.mobility} 포인트</p>
                         </div>
-                        <div className="absolute left-[75%] -translate-x-1/2 text-center w-1/3">
+                        <div className="absolute left-[80%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-red-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.survival.label}</h2>
                             <p className="text-red-400/80 text-sm font-mono">{points.survival} 포인트</p>
                         </div>
