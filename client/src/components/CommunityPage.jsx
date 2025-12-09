@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as ImageIcon } from 'lucide-react';
-import { getRankIcon } from '../utils/rankUtils';
+import LevelBadge from './LevelBadge';
 
 const CommunityPage = () => {
     const navigate = useNavigate();
@@ -152,12 +152,10 @@ const CommunityPage = () => {
                                         </td>
                                         <td className="p-4 text-center text-gray-400 text-sm">
                                             <div className="flex items-center justify-center gap-1">
-                                                <img
-                                                    src={getRankIcon(post.author?.level || 1)}
-                                                    alt={`Lv.${post.author?.level || 1}`}
-                                                    className="w-4 h-4 object-contain"
-                                                />
-                                                {post.author?.nickname || post.author?.username || '익명'}
+                                                <LevelBadge level={post.author?.level || 1} size="w-5 h-5" />
+                                                <span className="ml-1">
+                                                    {post.author?.nickname || post.author?.username || '익명'}
+                                                </span>
                                             </div>
                                         </td>
                                         <td className="p-4 text-center text-gray-500 text-sm">
@@ -212,12 +210,8 @@ const CommunityPage = () => {
                                 <div className="flex items-center justify-between text-xs text-gray-500">
                                     <div className="flex items-center gap-2">
                                         <div className="flex items-center gap-1">
-                                            <img
-                                                src={getRankIcon(post.author?.level || 1)}
-                                                alt={`Lv.${post.author?.level || 1}`}
-                                                className="w-3 h-3 object-contain"
-                                            />
-                                            <span className="text-gray-400">
+                                            <LevelBadge level={post.author?.level || 1} size="w-4 h-4" />
+                                            <span className="text-gray-400 ml-1">
                                                 {post.author?.nickname || post.author?.username || '익명'}
                                             </span>
                                         </div>

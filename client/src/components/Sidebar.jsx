@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
 import { MAPS, MARKER_CATEGORIES } from '../constants';
 import { Map as MapIcon, Filter as FilterIcon, LogOut, User, Layers, Shield, Crosshair, ChevronDown, Home, Zap, Users } from 'lucide-react';
-import { getRankIcon } from '../utils/rankUtils';
+import LevelBadge from './LevelBadge';
+import ExperienceBar from './ExperienceBar';
 
 const Sidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
@@ -125,24 +126,23 @@ const Sidebar = ({ isOpen = false }) => {
 
                 {isAuthenticated ? (
                     <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 w-full">
                             <div className="w-10 h-10 min-w-[2.5rem] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-gray-700">
                                 <User size={20} className="text-gray-300" />
                             </div>
-                            <div className="flex flex-col opacity-100 flex">
-                                <span className="text-xs text-gray-500 font-bold uppercase">Operator</span>
-                                <div className="flex items-center gap-1">
-                                    <img
-                                        src={getRankIcon(user.level || 1)}
-                                        alt={`Lv.${user.level || 1}`}
-                                        className="w-3 h-3 object-contain"
-                                    />
+                            <div className="flex flex-col opacity-100 flex flex-1 min-w-0">
+                                <span className="text-xs text-gray-500 font-bold uppercase mb-1">Operator</span>
+                                <div className="flex items-center gap-2">
+                                    <LevelBadge level={user.level || 1} size="w-5 h-5" />
                                     <button
                                         onClick={openMyPageModal}
-                                        className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors"
+                                        className="text-sm font-bold text-white hover:text-arc-accent text-left transition-colors truncate"
                                     >
                                         {user.nickname || user.username}
                                     </button>
+                                </div>
+                                <div className="mt-2 w-full pr-2">
+                                    <ExperienceBar points={user.points || 0} className="" />
                                 </div>
                             </div>
                         </div>
