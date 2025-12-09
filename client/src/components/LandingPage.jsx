@@ -68,14 +68,14 @@ const LandingPage = () => {
                         <span className="font-bold text-sm md:text-lg tracking-wider drop-shadow-md">ARCR MAP</span>
                     </div>
                     <div className="flex items-center gap-2 md:gap-6 text-xs md:text-sm font-medium text-gray-300">
+                        {user && <NotificationDropdown />}
+
                         <button
                             onClick={() => navigate('/community')}
-                            className="hover:text-arc-accent transition-colors mr-2"
+                            className="hover:text-arc-accent transition-colors ml-4 mr-2"
                         >
                             커뮤니티
                         </button>
-
-                        {user && <NotificationDropdown />}
 
                         <span className="text-gray-700 hidden md:inline mx-2">|</span>
 
