@@ -136,6 +136,15 @@ export const updateProfile = async (req, res) => {
         if (user) {
             // 닉네임 변경 요청 시 중복 확인 및 제한된 단어 체크
             if (req.body.nickname && req.body.nickname !== user.nickname) {
+                // 30일 제한 확인
+                if (user.nicknameChangedAt) {
+                    const lastChange = new Date(user.nicknameChangedAt);
+                    const now = new Date();
+                    const diffDays = Math.floor((now - lastChange) / (1000 * 60 * 60 * 24));
+                    if (diffDays < 30) {
+                        return res.status(400).json({ message: `닉네임은 30일에 한 번만 변경할 수 있습니다. (${30 - diffDays}일 후 변경 가능)` });
+                    }
+                }
                 if (containsRestrictedWord(req.body.nickname)) {
                     return res.status(400).json({ message: '사용할 수 없는 단어가 포함되어 있습니다 (admin, manager 등).' });
                 }
@@ -147,6 +156,7 @@ export const updateProfile = async (req, res) => {
                 // 닉네임 변경 이력 저장
                 user.nicknameHistory.push({ nickname: user.nickname });
                 user.nickname = req.body.nickname;
+                user.nicknameChangedAt = new Date();
             }
 
             // 비밀번호 변경 요청 시
@@ -171,7 +181,8 @@ export const updateProfile = async (req, res) => {
                 email: updatedUser.email,
                 role: updatedUser.role,
                 token: generateToken(updatedUser._id),
-                isBanned: updatedUser.isBanned
+                isBanned: updatedUser.isBanned,
+                nicknameChangedAt: updatedUser.nicknameChangedAt
             });
         } else {
             res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
@@ -203,8 +214,9 @@ export const toggleBan = async (req, res) => {
 
         res.json({
             message: `사용자 ${user.username}의 밴 상태가 ${user.isBanned ? '설정' : '해제'}되었습니다.`,
-            isBanned: user.isBanned
-        });
+            isBanned: user.isBanned,
+                nicknameChangedAt: user.nicknameChangedAt
+            });
     } catch (error) {
         console.error('Register Error:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });

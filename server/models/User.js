@@ -65,6 +65,10 @@ const userSchema = new mongoose.Schema({
     lastActiveAt: {
         type: Date,
         default: Date.now
+    },
+    nicknameChangedAt: {
+        type: Date,
+        default: null
     }
 });
 
