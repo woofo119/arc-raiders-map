@@ -65,14 +65,14 @@ const LandingPage = () => {
                 <div className="flex items-center justify-between px-4 md:px-8 py-3 md:py-4 bg-[#121212]/90 backdrop-blur-md border border-gray-800 rounded-full shadow-2xl pointer-events-auto md:min-w-[600px] max-w-4xl w-full mx-2 md:mx-4">
                     <div className="flex items-center gap-2 md:gap-4 cursor-pointer" onClick={() => navigate('/')}>
                         <img src="/logo_white.png" alt="ARC Raiders" className="h-6 md:h-8 object-contain drop-shadow-lg" />
-                        <span className="font-bold text-sm md:text-lg tracking-wider drop-shadow-md">ARCR MAP</span>
+
                     </div>
                     <div className="flex items-center gap-2 md:gap-6 text-xs md:text-sm font-medium text-gray-300">
                         {user && <NotificationDropdown />}
 
                         <button
                             onClick={() => navigate('/community')}
-                            className="hover:text-arc-accent transition-colors ml-4 mr-2"
+                            className="hover:text-arc-accent transition-colors mr-2"
                         >
                             커뮤니티
                         </button>

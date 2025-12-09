@@ -71,29 +71,25 @@ const NotificationDropdown = () => {
                             알림
                         </h3>
                         <div className="flex items-center gap-2">
-                            {notifications.length > 0 && (
-                                <button
-                                    onClick={() => {
-                                        if (window.confirm('모든 알림을 삭제하시겠습니까?')) {
-                                            deleteAllNotifications();
-                                        }
-                                    }}
-                                    className="text-xs text-gray-500 hover:text-red-400 flex items-center gap-1 transition-colors mr-2"
-                                    title="모두 삭제"
-                                >
-                                    <Trash2 size={12} />
-                                    삭제
-                                </button>
-                            )}
-                            {unreadCount > 0 && (
-                                <button
-                                    onClick={markAllNotificationsAsRead}
-                                    className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors"
-                                >
-                                    <Check size={12} />
-                                    읽음
-                                </button>
-                            )}
+                            <button
+                                onClick={() => {
+                                    if (window.confirm('모든 알림을 삭제하시겠습니까?')) {
+                                        deleteAllNotifications();
+                                    }
+                                }}
+                                className="text-xs text-gray-500 hover:text-red-400 flex items-center gap-1 transition-colors mr-2"
+                                title="모두 삭제"
+                            >
+                                <Trash2 size={12} />
+                                삭제
+                            </button>
+                            <button
+                                onClick={markAllNotificationsAsRead}
+                                className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors"
+                            >
+                                <Check size={12} />
+                                읽음
+                            </button>
                         </div>
                     </div>
 
@@ -127,7 +123,7 @@ const NotificationDropdown = () => {
                                                 {/* 알림 내용 (댓글 내용) */}
                                                 {notification.content && (
                                                     <p className="text-xs text-gray-400 mt-1 line-clamp-2 bg-black/20 p-2 rounded border border-gray-800/50 italic">
-                                                        "{notification.content}"
+                                                        {notification.content}
                                                     </p>
                                                 )}
 
