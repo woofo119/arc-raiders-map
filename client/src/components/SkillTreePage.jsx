@@ -267,7 +267,6 @@ const SkillTreePage = () => {
             }
         }
     }, [searchParams]);
-
     const handleSkillChange = (skillId, newLevel) => {
         setSkillsState(prev => ({
             ...prev,
@@ -320,60 +319,26 @@ const SkillTreePage = () => {
         ];
     }, []);
 
-    // SVG Lines Data (Extracted from skill.txt)
-    const lines = [
-        { x1: 23.74, y1: 72.48, x2: 20.84, y2: 66.68 },
-        { x1: 26.26, y1: 72.48, x2: 29.16, y2: 66.68 },
-        { x1: 20.0, y1: 63.13, x2: 20.0, y2: 56.88 },
-        { x1: 30.0, y1: 63.13, x2: 30.0, y2: 56.88 },
-        { x1: 20.0, y1: 53.13, x2: 20.0, y2: 47.81 },
-        { x1: 30.0, y1: 53.13, x2: 30.0, y2: 47.81 },
-        { x1: 21.26, y1: 42.48, x2: 24.16, y2: 36.68 },
-        { x1: 28.74, y1: 42.48, x2: 25.84, y2: 36.68 },
-        { x1: 20.0, y1: 42.19, x2: 20.0, y2: 36.88 },
-        { x1: 30.0, y1: 42.19, x2: 30.0, y2: 36.88 },
-        { x1: 25.0, y1: 33.13, x2: 25.0, y2: 26.88 },
-        { x1: 20.0, y1: 33.13, x2: 20.0, y2: 26.88 },
-        { x1: 30.0, y1: 33.13, x2: 30.0, y2: 26.88 },
-        { x1: 20.0, y1: 23.13, x2: 20.0, y2: 17.81 },
-        { x1: 24.16, y1: 23.32, x2: 21.26, y2: 17.52 },
-        { x1: 30.0, y1: 23.13, x2: 30.0, y2: 17.81 },
-        { x1: 25.84, y1: 23.32, x2: 28.74, y2: 17.52 },
-        { x1: 48.74, y1: 72.48, x2: 45.84, y2: 66.68 },
-        { x1: 51.26, y1: 72.48, x2: 54.16, y2: 66.68 },
-        { x1: 45.0, y1: 63.13, x2: 45.0, y2: 56.88 },
-        { x1: 55.0, y1: 63.13, x2: 55.0, y2: 56.88 },
-        { x1: 45.0, y1: 53.13, x2: 45.0, y2: 47.81 },
-        { x1: 55.0, y1: 53.13, x2: 55.0, y2: 47.81 },
-        { x1: 46.26, y1: 42.48, x2: 49.16, y2: 36.68 },
-        { x1: 53.74, y1: 42.48, x2: 50.84, y2: 36.68 },
-        { x1: 45.0, y1: 42.19, x2: 45.0, y2: 36.88 },
-        { x1: 55.0, y1: 42.19, x2: 55.0, y2: 36.88 },
-        { x1: 50.0, y1: 33.13, x2: 50.0, y2: 26.88 },
-        { x1: 45.0, y1: 33.13, x2: 45.0, y2: 26.88 },
-        { x1: 55.0, y1: 33.13, x2: 55.0, y2: 26.88 },
-        { x1: 45.0, y1: 23.13, x2: 45.0, y2: 17.81 },
-        { x1: 49.16, y1: 23.32, x2: 46.26, y2: 17.52 },
-        { x1: 55.0, y1: 23.13, x2: 55.0, y2: 17.81 },
-        { x1: 50.84, y1: 23.32, x2: 53.74, y2: 17.52 },
-        { x1: 73.74, y1: 72.48, x2: 70.84, y2: 66.68 },
-        { x1: 76.26, y1: 72.48, x2: 79.16, y2: 66.68 },
-        { x1: 70.0, y1: 63.13, x2: 70.0, y2: 56.88 },
-        { x1: 80.0, y1: 63.13, x2: 80.0, y2: 56.88 },
-        { x1: 70.0, y1: 53.13, x2: 70.0, y2: 47.81 },
-        { x1: 80.0, y1: 53.13, x2: 80.0, y2: 47.81 },
-        { x1: 71.26, y1: 42.48, x2: 74.16, y2: 36.68 },
-        { x1: 78.74, y1: 42.48, x2: 75.84, y2: 36.68 },
-        { x1: 70.0, y1: 42.19, x2: 70.0, y2: 36.88 },
-        { x1: 80.0, y1: 42.19, x2: 80.0, y2: 36.88 },
-        { x1: 75.0, y1: 33.13, x2: 75.0, y2: 26.88 },
-        { x1: 70.0, y1: 33.13, x2: 70.0, y2: 26.88 },
-        { x1: 80.0, y1: 33.13, x2: 80.0, y2: 26.88 },
-        { x1: 70.0, y1: 23.13, x2: 70.0, y2: 17.81 },
-        { x1: 74.16, y1: 23.32, x2: 71.26, y2: 17.52 },
-        { x1: 80.0, y1: 23.13, x2: 80.0, y2: 17.81 },
-        { x1: 75.84, y1: 23.32, x2: 78.74, y2: 17.52 }
-    ];
+    // Generate SVG Lines dynamically based on prerequisites
+    const dynamicLines = useMemo(() => {
+        const lines = [];
+        allSkills.forEach(skill => {
+            if (skill.prerequisites && skill.prerequisites.length > 0) {
+                skill.prerequisites.forEach(prereqId => {
+                    const parent = allSkills.find(s => s.id === prereqId);
+                    if (parent) {
+                        lines.push({
+                            x1: parent.x,
+                            y1: parent.y,
+                            x2: skill.x,
+                            y2: skill.y
+                        });
+                    }
+                });
+            }
+        });
+        return lines;
+    }, [allSkills]);
 
     // Close tooltip on outside click
     useEffect(() => {
@@ -394,6 +359,9 @@ const SkillTreePage = () => {
             {/* Top Navigation Bar */}
             <div className="h-14 border-b border-gray-800 flex items-center justify-between px-4 md:px-6 bg-gray-900/50 backdrop-blur-sm z-30 shrink-0">
                 <div className="flex items-center gap-4">
+                    <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                        <ArrowLeft size={24} />
+                    </Link>
                     <h1 className="text-lg font-bold text-yellow-500">스킬 트리</h1>
                 </div>
 
@@ -455,7 +423,7 @@ const SkillTreePage = () => {
 
                     {/* Background Lines (SVG) */}
                     <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                        {lines.map((line, i) => (
+                        {dynamicLines.map((line, i) => (
                             <line
                                 key={i}
                                 x1={`${line.x1}%`}
