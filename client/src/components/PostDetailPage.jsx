@@ -94,6 +94,10 @@ const PostDetailPage = () => {
         }
     };
 
+    if (!currentPost) return <div className="flex-1 bg-[#0f0f0f] flex items-center justify-center text-gray-500">로딩 중...</div>;
+
+    const isAuthor = user && currentPost.author && (user._id === currentPost.author._id || user.role === 'admin');
+
     // Initial Filter: Only show root comments (parentId is null or missing)
     const rootComments = currentPost.comments?.filter(c => !c.parentId) || [];
 

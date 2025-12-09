@@ -140,6 +140,12 @@ const CommunityPage = () => {
                                                 <span className="text-gray-200 group-hover:text-arc-accent transition-colors">
                                                     {post.title}
                                                 </span>
+                                                {post.comments?.length > 0 && (
+                                                    <span className="flex items-center gap-1 text-arc-accent text-xs">
+                                                        <MessageSquare size={12} fill="currentColor" />
+                                                        <span>{post.comments.length}</span>
+                                                    </span>
+                                                )}
                                                 {post.images && post.images.length > 0 && (
                                                     <span className="text-gray-500" title="이미지 포함">
                                                         <ImageIcon size={14} />
@@ -166,10 +172,6 @@ const CommunityPage = () => {
                                                 <div className="flex items-center gap-1">
                                                     <Heart size={14} className={post.likes?.includes(user?._id) ? "text-arc-accent fill-arc-accent" : ""} />
                                                     <span>{post.likes?.length || 0}</span>
-                                                </div>
-                                                <div className="flex items-center gap-1">
-                                                    <MessageSquare size={14} />
-                                                    <span>{post.comments?.length || 0}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1">
                                                     <Eye size={14} />
@@ -204,6 +206,12 @@ const CommunityPage = () => {
                                         </span>
                                         <h3 className="text-white font-bold text-lg line-clamp-2">
                                             {post.title}
+                                            {post.comments?.length > 0 && (
+                                                <span className="inline-flex items-center gap-0.5 text-arc-accent text-sm ml-2 align-middle">
+                                                    <MessageSquare size={12} fill="currentColor" />
+                                                    <span>{post.comments.length}</span>
+                                                </span>
+                                            )}
                                         </h3>
                                     </div>
                                     {post.images && post.images.length > 0 && (
@@ -226,10 +234,6 @@ const CommunityPage = () => {
                                         <div className="flex items-center gap-1">
                                             <Heart size={12} className={post.likes?.includes(user?._id) ? "text-arc-accent fill-arc-accent" : ""} />
                                             <span>{post.likes?.length || 0}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <MessageSquare size={12} />
-                                            <span>{post.comments?.length || 0}</span>
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <Eye size={12} />
