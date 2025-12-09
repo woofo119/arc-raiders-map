@@ -417,7 +417,7 @@ const SkillTreePage = () => {
                 <div className="relative w-[1280px] h-[1600px] md:w-full md:min-w-[1200px] md:h-auto md:min-h-[1400px]">
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
-                    <div className="absolute top-4 left-0 right-0 h-20 z-20 pointer-events-none w-full">
+                    <div className="absolute top-10 left-0 right-0 h-20 z-20 pointer-events-none w-full">
                         <div className="absolute left-[20%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-green-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
                             <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
