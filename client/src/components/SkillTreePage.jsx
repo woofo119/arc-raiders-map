@@ -217,7 +217,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
                     ? 'bg-gray-900 border-gray-800 text-gray-700'
                     : isMaxed
                         ? `bg-${color} border-${color} text-black`
-                        : `bg-gray-900 border-gray-600 text-${color}`
+                        : `bg-gray-900 border-${color} text-${color}`
                 }
             `}>
                 {currentLevel}/{skill.maxLevel}
