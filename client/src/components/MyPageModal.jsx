@@ -5,6 +5,7 @@ import { X, User, Lock, Save } from 'lucide-react';
 const MyPageModal = ({ onClose }) => {
     const { user, updateProfile } = useStore();
     const [nickname, setNickname] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -18,11 +19,16 @@ const MyPageModal = ({ onClose }) => {
         e.preventDefault();
 
         if (password && password !== confirmPassword) {
-            alert('비밀번호가 일치하지 않습니다.');
+            alert('새 비밀번호가 일치하지 않습니다.');
             return;
         }
 
-        const result = await updateProfile(nickname, password || undefined);
+        if (password && !currentPassword) {
+            alert('현재 비밀번호를 입력해주세요.');
+            return;
+        }
+
+        const result = await updateProfile(nickname, password || undefined, currentPassword || undefined);
         if (result.success) {
             alert('프로필이 업데이트되었습니다.');
             onClose();
@@ -71,7 +77,21 @@ const MyPageModal = ({ onClose }) => {
                     </div>
 
                     <div className="pt-4 border-t border-gray-800">
-                        <label className="block text-sm font-medium text-gray-400 mb-1">새 비밀번호 (변경 시에만 입력)</label>
+                        <label className="block text-sm font-medium text-gray-400 mb-1">비밀번호 변경</label>
+
+                        {/* 현재 비밀번호 */}
+                        <div className="relative mb-3">
+                            <Lock className="absolute left-3 top-3 text-gray-500" size={18} />
+                            <input
+                                type="password"
+                                placeholder="현재 비밀번호"
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
+                                className="w-full bg-black/50 border border-gray-700 rounded-lg py-2 pl-10 pr-4 text-white focus:border-arc-accent focus:outline-none transition-colors"
+                            />
+                        </div>
+
+                        {/* 새 비밀번호 */}
                         <div className="relative mb-3">
                             <Lock className="absolute left-3 top-3 text-gray-500" size={18} />
                             <input
@@ -82,6 +102,8 @@ const MyPageModal = ({ onClose }) => {
                                 className="w-full bg-black/50 border border-gray-700 rounded-lg py-2 pl-10 pr-4 text-white focus:border-arc-accent focus:outline-none transition-colors"
                             />
                         </div>
+
+                        {/* 새 비밀번호 확인 */}
                         <div className="relative">
                             <Lock className="absolute left-3 top-3 text-gray-500" size={18} />
                             <input

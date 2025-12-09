@@ -151,6 +151,14 @@ export const updateProfile = async (req, res) => {
 
             // ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ ìš”ì²­ ì‹œ
             if (req.body.password) {
+                // í˜„ìž¬ ë¹„ë°€ë²ˆí˜¸ í™•ì¸
+                if (!req.body.currentPassword) {
+                    return res.status(400).json({ message: 'í˜„ìž¬ ë¹„ë°€ë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš”.' });
+                }
+                const isMatch = await bcrypt.compare(req.body.currentPassword, user.password);
+                if (!isMatch) {
+                    return res.status(400).json({ message: 'í˜„ìž¬ ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.' });
+                }
                 user.password = req.body.password;
             }
 
@@ -203,7 +211,7 @@ export const toggleBan = async (req, res) => {
     }
 };
 
-// @desc    ³» Á¤º¸ Á¶È¸ (Æ÷ÀÎÆ® Æ÷ÇÔ)
+// @desc    ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ (ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½)
 // @route   GET /api/auth/me
 // @access  Private
 export const getMe = async (req, res) => {
@@ -220,10 +228,10 @@ export const getMe = async (req, res) => {
                 isBanned: user.isBanned
             });
         } else {
-            res.status(404).json({ message: '»ç¿ëÀÚ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.' });
+            res.status(404).json({ message: 'ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.' });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: '¼­¹ö ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù.' });
+        res.status(500).json({ message: 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.' });
     }
 };

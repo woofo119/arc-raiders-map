@@ -58,7 +58,7 @@ const useStore = create((set, get) => ({
         }
     },
 
-    updateProfile: async (nickname, password) => {
+    updateProfile: async (nickname, password, currentPassword) => {
         const { user } = get();
         if (!user) return { success: false, message: '로그인이 필요합니다.' };
 
@@ -66,7 +66,7 @@ const useStore = create((set, get) => ({
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const response = await axios.put(`${API_URL}/auth/profile`, { nickname, password }, config);
+            const response = await axios.put(`${API_URL}/auth/profile`, { nickname, password, currentPassword }, config);
             const updatedUser = response.data;
 
             // 로컬 스토리지 및 상태 업데이트
