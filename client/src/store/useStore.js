@@ -38,6 +38,25 @@ const useStore = create((set, get) => ({
         }
     },
 
+    checkAuth: async () => {
+        const { user } = get();
+        if (!user) return; // Not logged in locally
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            const response = await axios.get(`${API_URL}/auth/me`, config);
+            const updatedUser = { ...user, ...response.data }; // Keep token, update profile info
+
+            localStorage.setItem('user', JSON.stringify(updatedUser)); // Persist update
+            set({ user: updatedUser });
+        } catch (error) {
+            console.error('Auth check failed:', error);
+            // Optional: if 401, logout? For now just log error.
+        }
+    },
+
     updateProfile: async (nickname, password) => {
         const { user } = get();
         if (!user) return { success: false, message: '로그인이 필요합니다.' };

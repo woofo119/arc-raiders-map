@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react'; // Import useEffect
 import LandingPage from './components/LandingPage';
 import MapPage from './components/MapPage';
 import SkillTreePage from './components/SkillTreePage';
@@ -17,7 +18,11 @@ import ErrorBoundary from './components/ErrorBoundary';
 import useStore from './store/useStore';
 
 const App = () => {
-    const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal } = useStore();
+    const { isLoginModalOpen, closeLoginModal, isMyPageModalOpen, closeMyPageModal, checkAuth } = useStore();
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
 
     return (
         <Router>
