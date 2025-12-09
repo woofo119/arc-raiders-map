@@ -155,7 +155,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
                     e.preventDefault();
                     onRemove(skill.id);
                 }}
-                className={`${isBig ? 'w-14 h-14 md:w-24 md:h-24' : 'w-10 h-10 md:w-16 md:h-16'} rounded-full border-2 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
+                className={`${isBig ? 'w-14 h-14 md:w-24 md:h-24' : 'w-10 h-10 md:w-16 md:h-16'} rounded-full border-4 flex items-center justify-center relative transition-all duration-300 cursor-pointer select-none pointer-events-auto touch-manipulation
                     ${isLocked
                         ? 'border-gray-700 bg-gray-900/50 text-gray-700'
                         : isActive
@@ -416,7 +416,8 @@ const SkillTreePage = () => {
 
                     {/* Header / Points Display (Inside Scrollable Area) */}
                     <div className="absolute top-4 left-0 right-0 h-20 z-20 pointer-events-none w-full">
-                        <div className="absolute left-[20%] -translate-x-1/2 text-center w-1/3">
+
+                        <div className="absolute left-[22%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-green-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.conditioning.label}</h2>
                             <p className="text-green-400/80 text-sm font-mono">{points.conditioning} 포인트</p>
                         </div>
@@ -424,7 +425,7 @@ const SkillTreePage = () => {
                             <h2 className="text-yellow-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.mobility.label}</h2>
                             <p className="text-yellow-400/80 text-sm font-mono">{points.mobility} 포인트</p>
                         </div>
-                        <div className="absolute left-[80%] -translate-x-1/2 text-center w-1/3">
+                        <div className="absolute left-[78%] -translate-x-1/2 text-center w-1/3">
                             <h2 className="text-red-500 font-bold text-4xl drop-shadow-lg">{SKILL_DATA.survival.label}</h2>
                             <p className="text-red-400/80 text-sm font-mono">{points.survival} 포인트</p>
                         </div>
