@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import useStore from '../store/useStore';
 import { X, User, Lock, Save, ChevronDown, ChevronUp } from 'lucide-react';
+import LevelBadge from './LevelBadge';
+import { calculateLevelInfo } from '../utils/levelLogic';
 
 const MyPageModal = ({ onClose }) => {
     const { user, updateProfile } = useStore();
@@ -9,6 +11,22 @@ const MyPageModal = ({ onClose }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPasswordSection, setShowPasswordSection] = useState(false);
+    const [animatedProgress, setAnimatedProgress] = useState(0);
+
+    // 레벨 정보 계산
+    const levelInfo = useMemo(() => {
+        if (!user?.points) return { level: 1, progress: 0, currentPoints: 0, nextPoints: 100 };
+        return calculateLevelInfo(user.points);
+    }, [user?.points]);
+
+    // 경험치 바 애니메이션
+    useEffect(() => {
+        setAnimatedProgress(0);
+        const timer = setTimeout(() => {
+            setAnimatedProgress(levelInfo.progress);
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [levelInfo.progress]);
 
     useEffect(() => {
         if (user) {
@@ -32,10 +50,18 @@ const MyPageModal = ({ onClose }) => {
         };
     }, [user?.nicknameChangedAt]);
 
+    // 역할 표시 이름
+    const getRoleName = (role) => {
+        const roles = {
+            admin: 'ADMINISTRATOR',
+            user: 'USER'
+        };
+        return roles[role] || 'USER';
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // 닉네임이 변경되었는지 확인
         const nicknameChanged = nickname !== (user.nickname || user.username);
 
         if (nicknameChanged && !nicknameChangeInfo.canChange) {
@@ -69,14 +95,45 @@ const MyPageModal = ({ onClose }) => {
             <div className="bg-[#1a1a1a] border border-gray-700 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
                 >
                     <X size={20} />
                 </button>
 
-                <div className="text-center mb-6">
-                    <h2 className="text-2xl font-bold text-white mb-1">마이 페이지</h2>
-                    <p className="text-gray-400 text-sm">내 정보를 수정하세요</p>
+                {/* 프로필 헤더 - 레벨 정보 */}
+                <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-4 mb-6 border border-gray-700/50">
+                    <div className="flex items-center gap-4">
+                        {/* 레벨 배지 */}
+                        <LevelBadge level={levelInfo.level} size="w-12 h-12" />
+
+                        {/* 유저 정보 */}
+                        <div className="flex-1">
+                            <p className="text-[10px] text-arc-accent font-bold tracking-wider uppercase">
+                                {getRoleName(user.role)}
+                            </p>
+                            <p className="text-lg font-bold text-white">
+                                {user.nickname || user.username}
+                            </p>
+
+                            {/* 레벨 진행 바 */}
+                            <div className="mt-2">
+                                <div className="flex justify-between text-[10px] text-gray-400 mb-1">
+                                    <span>Lv.{levelInfo.level}</span>
+                                    <span>{Math.floor(levelInfo.progress)}%</span>
+                                    <span>Lv.{levelInfo.level + 1}</span>
+                                </div>
+                                <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-gradient-to-r from-arc-accent to-orange-400 transition-all duration-700 ease-out"
+                                        style={{ width: `${animatedProgress}%` }}
+                                    />
+                                </div>
+                                <p className="text-right text-[10px] text-gray-300 mt-1 font-mono">
+                                    {levelInfo.currentPoints?.toLocaleString() || 0} / {levelInfo.nextPoints?.toLocaleString() || 'MAX'} XP
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -120,9 +177,7 @@ const MyPageModal = ({ onClose }) => {
                             {showPasswordSection ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                         </button>
 
-                        {/* 비밀번호 입력 필드 - 접이식 애니메이션 */}
                         <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showPasswordSection ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
-                            {/* 현재 비밀번호 */}
                             <div className="relative mb-3">
                                 <Lock className="absolute left-3 top-3 text-gray-500" size={18} />
                                 <input
@@ -134,7 +189,6 @@ const MyPageModal = ({ onClose }) => {
                                 />
                             </div>
 
-                            {/* 새 비밀번호 */}
                             <div className="relative mb-3">
                                 <Lock className="absolute left-3 top-3 text-gray-500" size={18} />
                                 <input
@@ -146,7 +200,6 @@ const MyPageModal = ({ onClose }) => {
                                 />
                             </div>
 
-                            {/* 새 비밀번호 확인 */}
                             <div className="relative">
                                 <Lock className="absolute left-3 top-3 text-gray-500" size={18} />
                                 <input
