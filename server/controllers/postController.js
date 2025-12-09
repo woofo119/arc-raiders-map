@@ -151,7 +151,9 @@ export const addComment = async (req, res) => {
                 parentId: parentId || null // 대댓글인 경우 부모 댓글 ID 저장
             };
 
-            // 알림 생성 로직
+            // 알림 생성시 내용 미리보기 포함 (최대 50자)
+            const contentPreview = content.length > 50 ? content.substring(0, 50) + '...' : content;
+
             // 1. 게시글 작성자에게 알림 (내 글이 아닐 경우)
             if (post.author.toString() !== req.user._id.toString()) {
                 await Notification.create({
@@ -160,6 +162,7 @@ export const addComment = async (req, res) => {
                     type: 'comment',
                     post: post._id,
                     commentId: comment._id,
+                    content: contentPreview,
                     isRead: false
                 });
             }
@@ -176,6 +179,7 @@ export const addComment = async (req, res) => {
                             type: 'reply',
                             post: post._id,
                             commentId: comment._id,
+                            content: contentPreview,
                             isRead: false
                         });
                     }

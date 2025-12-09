@@ -24,6 +24,9 @@ const notificationSchema = new mongoose.Schema({
     commentId: { // Optional: specific comment ID to jump to
         type: String,
     },
+    content: { // 알림 내용 미리보기
+        type: String,
+    },
     isRead: {
         type: Boolean,
         default: false

@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../store/useStore';
-import { Bell, Check, MessageSquare } from 'lucide-react';
+import { Bell, Check, MessageSquare, Trash2 } from 'lucide-react';
 
 const NotificationDropdown = () => {
-    const { notifications, unreadCount, markNotificationAsRead, markAllNotificationsAsRead, fetchNotifications } = useStore();
+    const { notifications, unreadCount, markNotificationAsRead, markAllNotificationsAsRead, deleteAllNotifications, fetchNotifications } = useStore();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
@@ -64,21 +64,37 @@ const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-[#1a1a1a] border border-gray-800 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                <div className="fixed top-20 right-4 left-4 md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 md:w-96 bg-[#1a1a1a] border border-gray-800 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                     <div className="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-900/50">
                         <h3 className="text-sm font-bold text-white flex items-center gap-2">
                             <Bell size={14} className="text-arc-accent" />
                             알림
                         </h3>
-                        {unreadCount > 0 && (
-                            <button
-                                onClick={markAllNotificationsAsRead}
-                                className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors"
-                            >
-                                <Check size={12} />
-                                모두 읽음
-                            </button>
-                        )}
+                        <div className="flex items-center gap-2">
+                            {notifications.length > 0 && (
+                                <button
+                                    onClick={() => {
+                                        if (window.confirm('모든 알림을 삭제하시겠습니까?')) {
+                                            deleteAllNotifications();
+                                        }
+                                    }}
+                                    className="text-xs text-gray-500 hover:text-red-400 flex items-center gap-1 transition-colors mr-2"
+                                    title="모두 삭제"
+                                >
+                                    <Trash2 size={12} />
+                                    삭제
+                                </button>
+                            )}
+                            {unreadCount > 0 && (
+                                <button
+                                    onClick={markAllNotificationsAsRead}
+                                    className="text-xs text-gray-500 hover:text-white flex items-center gap-1 transition-colors"
+                                >
+                                    <Check size={12} />
+                                    읽음
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     <div className="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
@@ -101,14 +117,24 @@ const NotificationDropdown = () => {
                                                 </div>
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-sm text-gray-300 line-clamp-2">
+                                                <p className="text-sm text-gray-300">
                                                     <span className="font-bold text-white">{notification.sender?.nickname}</span>
                                                     님이
                                                     {notification.type === 'comment' ? ' 회원님의 게시글에 댓글을 남겼습니다.' :
                                                         notification.type === 'reply' ? ' 회원님의 댓글에 답글을 남겼습니다.' : ' 회원님의 글을 좋아합니다.'}
                                                 </p>
-                                                <p className="text-xs text-gray-500 mt-1 flex justify-between items-center">
-                                                    <span className="line-clamp-1 max-w-[70%]">{notification.post?.title}</span>
+
+                                                {/* 알림 내용 (댓글 내용) */}
+                                                {notification.content && (
+                                                    <p className="text-xs text-gray-400 mt-1 line-clamp-2 bg-black/20 p-2 rounded border border-gray-800/50 italic">
+                                                        "{notification.content}"
+                                                    </p>
+                                                )}
+
+                                                <p className="text-xs text-gray-500 mt-2 flex justify-between items-center">
+                                                    <span className="line-clamp-1 max-w-[70%] font-medium text-gray-600 group-hover:text-gray-500 transition-colors">
+                                                        {notification.post?.title}
+                                                    </span>
                                                     <span>{formatDate(notification.createdAt)}</span>
                                                 </p>
                                             </div>

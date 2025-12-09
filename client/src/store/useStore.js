@@ -552,6 +552,22 @@ const useStore = create((set, get) => ({
             console.error('전체 알림 읽음 처리 실패:', error);
         }
     },
+
+    deleteAllNotifications: async () => {
+        const { user } = get();
+        if (!user) return;
+
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            await axios.delete(`${API_URL}/notifications`, config);
+
+            set({ notifications: [], unreadCount: 0 });
+        } catch (error) {
+            console.error('전체 알림 삭제 실패:', error);
+        }
+    },
 }));
 
 export default useStore;

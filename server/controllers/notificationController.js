@@ -57,3 +57,16 @@ export const markAllNotificationsAsRead = async (req, res) => {
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     }
 };
+
+// @desc    Delete all notifications
+// @route   DELETE /api/notifications
+// @access  Private
+export const deleteAllNotifications = async (req, res) => {
+    try {
+        await Notification.deleteMany({ recipient: req.user._id });
+        res.json({ message: '모든 알림을 삭제했습니다.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    }
+};
