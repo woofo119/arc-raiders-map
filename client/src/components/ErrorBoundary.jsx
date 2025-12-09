@@ -21,14 +21,8 @@ class ErrorBoundary extends React.Component {
                 <div className="flex flex-col items-center justify-center h-screen bg-black text-white p-8 text-center">
                     <h1 className="text-3xl font-bold text-red-500 mb-4">오류가 발생했습니다</h1>
                     <p className="text-gray-400 mb-8">앱을 실행하는 도중 문제가 발생했습니다.</p>
-                    <div className="bg-gray-900 p-4 rounded text-left overflow-auto max-w-2xl max-h-64 mb-6 border border-gray-800">
-                        <code className="text-sm text-red-300 font-mono">
-                            {this.state.error && this.state.error.toString()}
-                        </code>
-                        <br />
-                        <code className="text-xs text-gray-500 font-mono mt-2 block whitespace-pre-wrap">
-                            {this.state.errorInfo && this.state.errorInfo.componentStack}
-                        </code>
+                    <div className="bg-gray-900 p-4 rounded text-left overflow-auto max-w-2xl text-gray-400 mb-6 border border-gray-800">
+                        <p>일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p>
                     </div>
                     <button
                         onClick={() => window.location.href = '/'}

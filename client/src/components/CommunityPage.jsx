@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import useStore from '../store/useStore';
-import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as ImageIcon } from 'lucide-react';
+import { Search, PenTool, MessageSquare, Eye, Clock, User, ArrowLeft, Image as ImageIcon, Heart } from 'lucide-react';
 import LevelBadge from './LevelBadge';
 
 const CommunityPage = () => {
@@ -164,7 +164,7 @@ const CommunityPage = () => {
                                         <td className="p-4 text-center text-gray-500 text-sm">
                                             <div className="flex items-center justify-center gap-4">
                                                 <div className="flex items-center gap-1">
-                                                    <span className="text-sm">👍</span>
+                                                    <Heart size={14} className={post.likes?.includes(user?._id) ? "text-arc-accent fill-arc-accent" : ""} />
                                                     <span>{post.likes?.length || 0}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1">
@@ -224,7 +224,7 @@ const CommunityPage = () => {
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <div className="flex items-center gap-1">
-                                            <span className="text-xs">👍</span>
+                                            <Heart size={12} className={post.likes?.includes(user?._id) ? "text-arc-accent fill-arc-accent" : ""} />
                                             <span>{post.likes?.length || 0}</span>
                                         </div>
                                         <div className="flex items-center gap-1">

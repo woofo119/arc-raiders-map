@@ -173,7 +173,7 @@ const PostDetailPage = () => {
                             : 'bg-[#2a2a2a] text-gray-400 hover:bg-[#3a3a3a] hover:text-white'
                             }`}
                     >
-                        <span className="text-xl">👍</span>
+                        <Heart size={24} className={user && currentPost.likes?.includes(user._id) ? "fill-white" : ""} />
                         <span className="font-bold">{currentPost.likes?.length || 0}</span>
                         <span className="text-sm">추천</span>
                     </button>
