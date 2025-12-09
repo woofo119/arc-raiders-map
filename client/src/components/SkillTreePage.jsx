@@ -214,7 +214,7 @@ const SkillNode = ({ skill, currentLevel, isLocked, isPrereqLocked, isPointsLock
             {/* Counter Pill - Positioned Absolutely below the icon */}
             <div className={`absolute top-[85%] left-1/2 transform -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] md:text-sm font-bold border transition-colors whitespace-nowrap z-50 shadow-md pointer-events-auto
                 ${isLocked
-                    ? 'bg-gray-900 border-gray-800 text-gray-700'
+                    ? `bg-gray-900 border-${color} text-gray-700`
                     : isMaxed
                         ? `bg-${color} border-${color} text-black`
                         : `bg-gray-900 border-${color} text-${color}`
