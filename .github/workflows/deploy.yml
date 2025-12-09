@@ -27,7 +27,7 @@ jobs:
           stage: main
           yaml: |
             name: arc-map
-            app: nginx
+            app: web
             options:
               docbase: dist
               spa: true
