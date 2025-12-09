@@ -260,7 +260,7 @@ const CommentItem = ({
 
     return (
         <div className={`border-b border-gray-800 last:border-0 ${depth > 0 ? 'ml-8 border-l-2 border-l-gray-800 pl-4' : ''}`}>
-            <div className="py-6">
+            <div className="py-3">
                 <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-2">
                         <span className="font-bold text-gray-300 flex items-center gap-1">
@@ -302,7 +302,7 @@ const CommentItem = ({
                         )}
                     </div>
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                <p className="text-gray-300 text-sm leading-relaxed">
                     {comment.content}
                 </p>
 
