@@ -1,35 +1,35 @@
 # Handover Context: ARC Raiders Map Development
 
-**Date:** 2025-11-29
-**Status:** Landing Page Redesign & Skill Tree Sharing Completed
+**Date:** 2025-12-09
+**Status:** Skill Tree Refinement & Feature Implementation
 
 ## 1. Key Accomplishments
-- **Skill Tree Sharing:** Implemented Base36 URL encoding/decoding for sharing skill builds.
-- **Landing Page Redesign:**
-    - Replaced the feature grid with a "Masked Background" design.
-    - All cards share a single fixed background image (`/banners/skill_tree.png`), creating a window effect.
-    - Added rounded corners (`rounded-2xl`) and glass-morphism styling.
-    - Implemented a new "Shooting Laser" animation for the hero section.
+- **Skill Tree Refinement:**
+    - **Spacing & Layout:** Vertically shifted entire tree up by **5%** (Bottom 75% -> 70%) to close the gap between headers and icons. Increased header font size to **5xl**.
+    - **Data Fixes:** Corrected overlapping coordinates for `m7` ("힘들이지 않고 구르기").
+- **Post Recommendation System:**
+    - **Backend:** Added `likes` field to `Post` model and `toggleLike` API.
+    - **Frontend:**
+        - **Detail Page:** Added a large, interactive Like button.
+        - **Community Page:** Displayed like usage counts on list items.
+- **Deployment:**
+    - Frontend build artifacts committed and pushed.
+    - Ready for full stack redeploy on Cloudtype.
 
-## 2. Current State & Known Issues
-- **Background Image:** The user explicitly requested to use `skill_tree.png` as the background for the masked effect.
-- **Resolution Issue:** The current `skill_tree.png` is a low-resolution banner (750x128) being stretched to cover the screen. This results in pixelation on larger displays, but the user has decided to proceed with it for now.
+## 2. Current State
+- **Frontend:** Built and pushed to `main`.
+- **Backend:** Code updated and pushed to `main`.
+- **Database:** `Post` schema updated (backward compatible, no migration needed).
 
 ## 3. Next Steps (Immediate)
 1.  **Deployment:**
-    - The frontend code is committed and pushed.
-    - Needs a redeploy on Cloudtype to see the changes live.
+    - Deploy **both** `arc-server` and `arc-map` on Cloudtype.
+    - Verify the Like system in production.
+2.  **Verification:**
+    - Check the skill tree layout on different screen sizes (especially mobile lock icons).
 
 ## 4. File Locations
-- **Landing Page:** `client/src/components/LandingPage.jsx`
-- **Background Images:** `client/public/banners/`
-    - `skill_tree.png` (Current, low-res)
-    - `dashboard_wallpaper.png` (High-res, vertical, unused)
-    - `dashboard_bg.png` (High-res, unused)
-
-## 5. User Preferences
-- **Aesthetic:** Retro-futuristic, dark, diagonal neon stripes (Red, Yellow, Green, Cyan).
-- **Layout:** Grid cards acting as transparent windows to a single background.
-- **Specifics:** Prefers the "Skill Tree" visual theme.
-- **Language:** 작업 내용, 결과, 중간 과정 등 모든 커뮤니케이션은 항상 '한글'로 작성할 것. (메모리 고정)
-- **Deployment:** 배포 시 어떤 서비스(프론트엔드/백엔드)를 재배포해야 하는지 항상 명시할 것.
+- **Skill Data:** `client/src/data/skills.js`
+- **Post Logic:** 
+    - Server: `server/models/Post.js`, `server/controllers/postController.js`
+    - Client: `client/src/store/useStore.js`
