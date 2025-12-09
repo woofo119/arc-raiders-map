@@ -25,7 +25,7 @@ const ExperienceBar = ({ points = 0, className = "" }) => {
                     style={{ width: `${progress}%` }}
                 />
             </div>
-            <div className="text-right text-[10px] text-gray-500 mt-1 font-mono">
+            <div className="text-right text-[10px] text-gray-300 mt-1 font-mono font-bold">
                 {currentPoints.toLocaleString()} / {nextPoints ? nextPoints.toLocaleString() : 'MAX'} XP
             </div>
         </div>

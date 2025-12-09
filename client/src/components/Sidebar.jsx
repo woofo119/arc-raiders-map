@@ -148,7 +148,11 @@ const Sidebar = ({ isOpen = false }) => {
                             </div>
                         </div>
                         <button
-                            onClick={logout}
+                            onClick={() => {
+                                if (window.confirm('정말 로그아웃 하시겠습니까?')) {
+                                    logout();
+                                }
+                            }}
                             className="text-gray-500 hover:text-red-400 p-2 hover:bg-red-500/10 rounded-lg transition-all opacity-100 block"
                             title="로그아웃"
                         >
