@@ -22,7 +22,10 @@ const LevelBadge = ({ level = 1, size = "w-8 h-8", showLevel = true, className =
                 className={`${size} object-contain drop-shadow-md`}
             />
             {showLevel && (
-                <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-[10px] sm:text-xs z-10 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                <span
+                    className="absolute inset-0 flex items-center justify-center text-white font-bold text-[10px] sm:text-xs z-10"
+                    style={{ textShadow: "1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000" }}
+                >
                     {level}
                 </span>
             )}

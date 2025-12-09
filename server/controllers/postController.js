@@ -99,6 +99,10 @@ export const deletePost = async (req, res) => {
             }
 
             await post.deleteOne();
+
+            // 포인트 차감: 게시글 삭제 -10
+            await updatePoints(req.user._id, -10);
+
             res.json({ message: '게시글이 삭제되었습니다.' });
         } else {
             res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
@@ -226,6 +230,9 @@ export const deleteComment = async (req, res) => {
 
             comment.deleteOne(); // Subdocument remove
             await post.save();
+
+            // 포인트 차감: 댓글 삭제 -5
+            await updatePoints(req.user._id, -5);
 
             // Populate author info for the updated post
             await post.populate('author', 'nickname username level points'); // Note: 'content' might be excluded in getPosts but detail view needs it? deleteComment is usually called from detail view where content exists. fetchPost includes content.
