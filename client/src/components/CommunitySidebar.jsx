@@ -3,6 +3,7 @@ import useStore from '../store/useStore';
 import { MessageSquare, PenTool, HelpCircle, Zap, Shield, Activity, User, LogOut, ChevronRight, Map as MapIcon, Sword } from 'lucide-react';
 import LevelBadge from './LevelBadge';
 import ExperienceBar from './ExperienceBar';
+import { calculateLevelInfo } from '../utils/levelLogic';
 
 const CommunitySidebar = ({ isOpen = false }) => {
     const navigate = useNavigate();
@@ -99,7 +100,7 @@ const CommunitySidebar = ({ isOpen = false }) => {
                         <div className="bg-gray-900 rounded-xl p-3 border border-gray-800 flex items-center justify-between group hover:border-gray-700 transition-colors w-full">
                             <div className="flex items-center gap-3 w-full">
                                 <div className="w-10 h-10 min-w-[2.5rem] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center border border-gray-700">
-                                    <LevelBadge level={user.level || 1} size="w-8 h-8" />
+                                    <LevelBadge level={calculateLevelInfo(user.points || 0).level} size="w-8 h-8" />
                                 </div>
                                 <div className="flex flex-col overflow-hidden w-full">
                                     <span className="text-xs text-gray-500 font-bold uppercase">{user.role === 'admin' ? 'Administrator' : 'Operator'}</span>
