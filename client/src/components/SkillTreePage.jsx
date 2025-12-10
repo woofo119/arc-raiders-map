@@ -442,7 +442,7 @@ const SkillTreePage = () => {
                                 x2={`${line.x2}%`}
                                 y2={`${line.y2}%`}
                                 stroke="#333"
-                                strokeWidth="2"
+                                strokeWidth="4"
                                 className="opacity-60"
                             />
                         ))}
