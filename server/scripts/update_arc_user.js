@@ -32,7 +32,7 @@ const updateArcUser = async () => {
             console.log(`   Current: Level ${user.level}, Points ${user.points}`);
 
             user.level = 11;
-            user.points = 1500; // Level 11 minimum points
+            user.points = 1800;
 
             await user.save();
             console.log(`✅ Updated: Level ${user.level}, Points ${user.points}`);

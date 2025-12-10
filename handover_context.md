@@ -33,3 +33,7 @@
 - **Post Logic:** 
     - Server: `server/models/Post.js`, `server/controllers/postController.js`
     - Client: `client/src/store/useStore.js`
+
+## 5. Critical Rules (Memory)
+- **Language:** EVERYTHING must be in **Korean (한글)**. Do not use English for UI labels, messages, or comments unless necessary for code syntax.
+- **Consistency:** Maintain this rule across all future sessions.

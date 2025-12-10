@@ -303,12 +303,14 @@ const AdminPage = () => {
                                         <table className="w-full text-left">
                                             <thead className="bg-gray-900 text-gray-400 text-xs uppercase font-bold">
                                                 <tr>
-                                                    <th className="px-6 py-4">User</th>
-                                                    <th className="px-6 py-4">Role</th>
-                                                    <th className="px-6 py-4">Level</th>
-                                                    <th className="px-6 py-4">Joined</th>
-                                                    <th className="px-6 py-4">Status</th>
-                                                    <th className="px-6 py-4 text-right">Actions</th>
+                                                    <th className="px-6 py-4">유저</th>
+                                                    <th className="px-6 py-4">역할</th>
+                                                    <th className="px-6 py-4">레벨</th>
+                                                    <th className="px-6 py-4">최근 방문</th>
+                                                    <th className="px-6 py-4">누적 방문</th>
+                                                    <th className="px-6 py-4">가입일</th>
+                                                    <th className="px-6 py-4">상태</th>
+                                                    <th className="px-6 py-4 text-right">관리</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-800">
@@ -324,16 +326,22 @@ const AdminPage = () => {
                                                             </span>
                                                         </td>
                                                         <td className="px-6 py-4 text-gray-300">{u.level}</td>
+                                                        <td className="px-6 py-4 text-gray-400 text-sm">
+                                                            {u.lastActiveAt ? new Date(u.lastActiveAt).toLocaleDateString() : '-'}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-gray-400 text-sm">
+                                                            {u.visitCount || 1}회
+                                                        </td>
                                                         <td className="px-6 py-4 text-gray-500 text-sm">
                                                             {new Date(u.createdAt).toLocaleDateString()}
                                                         </td>
                                                         <td className="px-6 py-4">
                                                             {u.isBanned ? (
                                                                 <span className="text-red-500 font-bold flex items-center gap-1">
-                                                                    <Ban size={14} /> Banned
+                                                                    <Ban size={14} /> 차단됨
                                                                 </span>
                                                             ) : (
-                                                                <span className="text-green-500 font-bold">Active</span>
+                                                                <span className="text-green-500 font-bold">정상</span>
                                                             )}
                                                         </td>
                                                         <td className="px-6 py-4 text-right" onClick={(e) => e.stopPropagation()}>
@@ -342,7 +350,7 @@ const AdminPage = () => {
                                                                     onClick={() => handleBanUser(u._id)}
                                                                     className={`px-3 py-1.5 rounded text-xs font-bold transition-colors ${u.isBanned ? 'bg-green-500/10 text-green-500 hover:bg-green-500/20' : 'bg-red-500/10 text-red-500 hover:bg-red-500/20'}`}
                                                                 >
-                                                                    {u.isBanned ? 'Unban' : 'Ban'}
+                                                                    {u.isBanned ? '차단 해제' : '차단'}
                                                                 </button>
                                                             )}
                                                         </td>
@@ -372,10 +380,10 @@ const AdminPage = () => {
                                                 <div className="flex justify-between items-center pt-3 border-t border-gray-800">
                                                     {u.isBanned ? (
                                                         <span className="text-red-500 font-bold flex items-center gap-1 text-sm">
-                                                            <Ban size={14} /> Banned
+                                                            <Ban size={14} /> 차단됨
                                                         </span>
                                                     ) : (
-                                                        <span className="text-green-500 font-bold text-sm">Active</span>
+                                                        <span className="text-green-500 font-bold text-sm">정상</span>
                                                     )}
                                                     {u.role !== 'admin' && (
                                                         <button
@@ -385,7 +393,7 @@ const AdminPage = () => {
                                                             }}
                                                             className={`px-3 py-1.5 rounded text-xs font-bold transition-colors ${u.isBanned ? 'bg-green-500/10 text-green-500 hover:bg-green-500/20' : 'bg-red-500/10 text-red-500 hover:bg-red-500/20'}`}
                                                         >
-                                                            {u.isBanned ? 'Unban' : 'Ban'}
+                                                            {u.isBanned ? '차단 해제' : '차단'}
                                                         </button>
                                                     )}
                                                 </div>

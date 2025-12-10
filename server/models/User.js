@@ -58,6 +58,10 @@ const userSchema = new mongoose.Schema({
         ip: String,
         date: { type: Date, default: Date.now }
     }],
+    visitCount: {
+        type: Number,
+        default: 1
+    },
     nicknameHistory: [{
         nickname: String,
         changedAt: { type: Date, default: Date.now }

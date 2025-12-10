@@ -105,6 +105,7 @@ export const loginUser = async (req, res) => {
                 user.ipHistory.push({ ip: normalizedIp });
             }
             user.lastActiveAt = Date.now();
+            user.visitCount = (user.visitCount || 0) + 1;
             await user.save();
 
             res.json({
@@ -215,8 +216,8 @@ export const toggleBan = async (req, res) => {
         res.json({
             message: `사용자 ${user.username}의 밴 상태가 ${user.isBanned ? '설정' : '해제'}되었습니다.`,
             isBanned: user.isBanned,
-                nicknameChangedAt: user.nicknameChangedAt
-            });
+            nicknameChangedAt: user.nicknameChangedAt
+        });
     } catch (error) {
         console.error('Register Error:', error);
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
