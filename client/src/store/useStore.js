@@ -54,7 +54,10 @@ const useStore = create((set, get) => ({
             get().fetchNotifications(); // 알림 불러오기
         } catch (error) {
             console.error('Auth check failed:', error);
-            // Optional: if 401, logout? For now just log error.
+            // 401 Unauthorized or 403 Forbidden: Token invalid/expired
+            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                get().logout();
+            }
         }
     },
 
