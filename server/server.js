@@ -31,8 +31,14 @@ if (!process.env.JWT_SECRET) {
 }
 
 // MongoDB 연결
+import { fixInactiveUserDates } from './utils/dbMaintenance.js';
+
 mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ MongoDB Connected'))
+    .then(() => {
+        console.log('✅ MongoDB Connected');
+        // 서버 시작 시 비활성 유저 날짜 보정 실행
+        fixInactiveUserDates();
+    })
     .catch(err => console.error('MongoDB Connection Error:', err));
 
 // CORS 설정 (모든 도메인 허용)
